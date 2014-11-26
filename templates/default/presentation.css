@@ -1,0 +1,18 @@
+html,
+body {
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /*overflow: visible !important;*/
+    background-color: #fff !important;
+}
+
+html:before,
+body:before,
+html:after,
+body:after {
+    display: none !important;
+}

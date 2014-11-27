@@ -11,7 +11,6 @@
  * Inspired with concept idea of https://github.com/Joony/styledoc/
  *
  * @todo separate template and skin?
- * @todo better template files structure
  * @todo revise list of supported tags
  * @todo more sophisticated applying of pseudo-class modifiers (instead of adding an attribute)?
  * @todo spaces in selectors (better than wrapping to {})
@@ -55,6 +54,9 @@
     var DEFAULT_TEMPLATE = "default";
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
+
+    var PRESENTATION_SUBDIR = "presentation/";
+
 
     var styledoc = {};
 
@@ -439,7 +441,7 @@
                     page_title: page_title,
                     lang: lang_data,
                     css_url: css_url_presentation,
-                    iframe_url: template_dir + "presentation_" + doctype + ".html",
+                    iframe_url: template_dir + PRESENTATION_SUBDIR + doctype + ".html",
                     items: showcase_data,
                     presenter: displayPresentation
                 });
@@ -521,8 +523,7 @@
         var output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
         output_dir = ensureTrailingSlash(output_dir);
 
-        var presentation_subdir = "presentation/";
-        var presentation_dir = output_dir + presentation_subdir;
+        var presentation_dir = output_dir + PRESENTATION_SUBDIR;
         var template_name = options.template;
         var template_dir = styledoc.templates_dir + template_name + "/";
 
@@ -539,7 +540,7 @@
         // @todo optimize (something better than: force_fs = true)
         var load_index_template = loadFile(template_dir + "index.mustache", false, true);
         var load_main_template = loadFile(template_dir + "main.mustache", false, true); // @todo doctype?
-        var load_presentation_template = loadFile(template_dir + "presentation_" + doctype + ".mustache", false, true);
+        var load_presentation_template = loadFile(template_dir + PRESENTATION_SUBDIR + doctype + ".mustache", false, true);
         var load_lang = loadFile(template_dir + "langs/" + language + ".json", true, true);
 
         var mkdirs = mkdirp(presentation_dir);
@@ -585,7 +586,7 @@
                         subitem_data = showcase_data[i].subitems[j];
                         file_name = subitem_data.id + ".html";
                         file_path = presentation_dir + file_name;
-                        file_path_relative = presentation_subdir + file_name;
+                        file_path_relative = PRESENTATION_SUBDIR + file_name;
                         presentation_content = Mustache.render(presentation_template, {
                             css_url: css_url_presentation,
                             content: subitem_data.presentation

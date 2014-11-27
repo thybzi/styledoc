@@ -289,7 +289,7 @@ On Windows, there are some known problems when installing JSDom, which is requir
 * http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/
 * https://github.com/tmpvar/jsdom#contextify
 
-### It there a grunt wrapper for npm module?
+### Is there a grunt wrapper for npm module?
 *`@todo` make it*
 
 ### Can StyleDoc be used as AMD module?

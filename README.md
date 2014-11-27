@@ -28,23 +28,28 @@ StyleDoc tool **parses CSS file**, extracting styledoc-blocks (like the one abov
 This page contains full list of documented elements and their variations, illustrated with live preview and markup example.
 
 
+Live examples
+---------------
+Coming soon!
+
+
 Quick start
 ---------------
-First of all, **you need a CSS file with some styledoc-blocks** inside. 
-StyleDoc tool will create a showcase page based on such CSS file. 
-It can be created in two ways:
-1. browser way (HTTP)
-2. NodeJS way (filesystem)
+First of all, **you need a CSS file with some styledoc-blocks** inside.
 
+StyleDoc tool will create a showcase page based on such CSS file.
+It can be created in two ways:
+1. *[Browser way](#httpbrowser-way)* (HTTP)
+2. *[NodeJS way](#filesystemnodejs-way)* (filesystem)
 
 
 ### HTTP/browser way
-In this mode, the tool generates showcase page dynamically inside a HTML file opened with browser. 
+In this mode, the tool generates showcase page dynamically inside a HTML file opened with browser.
 All files are loaded via HTTP requests.
 
 1. [Download the archive](https://github.com/thybzi/styledoc/archive/master.zip) and unpack it (you only need `styledoc.js` and `templates` directory).   
-  Using `js/styledoc/` directory is recommended (otherwise you'll need to reconfigure templates path).
-2. Download [jQuery](http://jquery.com/download/) 1.11.1+ or 2.1.1+   
+  Using `js/styledoc/` directory is recommended (otherwise you'll need to [reconfigure templates path](#set-templates-directory)).
+2. Download [jQuery](http://jquery.com/download/) *1.11.1+ or 2.1.1+* ([why these versions?](#why-new-version-of-jquery-is-required))   
   (needed only for separate showcase HTML file, no need to change version on other pages of your website)
 3. Download [mustache.js](https://github.com/janl/mustache.js)
 4. Create a new HTML file with some basic markup, JS library links, and `styledoc.showcaseFile()` call. Something as simple as that:
@@ -70,17 +75,17 @@ All files are loaded via HTTP requests.
 
 ```
 After that, **just open the file with your browser** (use `http://` or `https://`, not `file:///`) and have fun!
+
 CSS file path can be provided as an URL, or a path relative to current location.
 Note that cross-domain URL loading of CSS file may require a [CORS](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing) header (e.g. `Access-Control-Allow-Origin: *`).
 
-#### Configuration: 
-See `Configuration` section below.
+For advanced configuration, see *[Configuration](#configuration)* section.
 
 
 ### Filesystem/NodeJS way
-In this mode, the tool generates showcase HTML files within the filesystem. 
-Browser renders these files faster, because they are "hardcoded" and not formed dynamically. 
-Also, if you have PhantomJS installed, you can minimize iframe loading lag and prevent page height changing (see below).
+In this mode, the tool generates showcase HTML files within the filesystem.
+Browser renders these files faster, because they are "hardcoded" and not formed dynamically.
+Also, if you have [PhantomJS](http://phantomjs.org/) installed, you can minimize iframe loading lag and prevent page height changing ([more details](#phantomjs-advantage) follow).
 Required files are loaded via either filesystem or HTTP requests.
 
 #### Installing:
@@ -99,7 +104,7 @@ styledoc.showcaseFile('css/mystyle.css', {
 ``` 
 CSS file path can be provided as an URL, or a path relative to current location.
 
-The above code will create your presentation files in `showcase/` directory (relative to the current directory). 
+The above code will create your presentation files in `showcase/` directory (relative to the current directory).
 
 You can change the output directory to any other relative path (trailing slash is optional).
 ```javascript
@@ -123,11 +128,11 @@ styledoc.showcaseFile('css/mystyle.css', {
 ```
 
 #### Advanced configuration: 
-See `Configuration` section below. 
+See *[Configuration](#configuration)* section.
 
 #### Windows users
 StyleDoc requires JSDom module when in NodeJS mode.
-JSDom installation could be a bit tricky on Windows (see `I cannot install NodeJS version on Windows` section below).
+JSDom installation could be a bit tricky on Windows (see [corresponding section](#i-cannot-install-nodejs-version-on-windows) for more details).
 If you are not enough lucky or patient, just use StyleDoc in HTTP/browser way.
 
  
@@ -158,7 +163,7 @@ Supported tags list
   *Example:* `@example <button>Sample text</button>`    
   *Alias:* `@markup`    
   Should contain HTML markup for CSS selector determined in `@base`.    
-  Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live presentation, if not overriden by `@presentation`).    
+  Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live presentation, if not overridden by `@presentation`).    
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.
 * **`@presentation`**: HTML code for the live presentation of element (if it should differ from `@example` for some reason)    
   *Example:* `@presentation <div><button>Sample text</button></div>` 
@@ -190,17 +195,21 @@ Any text lines, that go after the first tag encountered, are ignored.
 *`@todo` revise the list, possible removing some strange tags (like `@version` and `@since`)*
 
 
-Configuration:
+Configuration
 ---------------
 
-### Set templates directory:
+### Set templates directory
 To create a showcase, StyleDoc need a template. It looks for this template on path set in `styledoc.templates_dir` property.
-For HTTP/browser mode, default path is `js/styledoc/templates/` (relative to the HTML file)
-For FS/NodeJS mode, default path is `templates/` subdir inside module directory.
-You can change this default value to any URL or relative path (which is relative to HTML file when in browser mode, and is relative to output dir when in NodeJS mode). Trailing slash is optional.
+* *For HTTP/browser mode*, default path is `js/styledoc/templates/` (relative to the HTML file).
+* *For FS/NodeJS mode*, default path is `templates/` subdir inside module directory.
+
+You can change this default value to any URL or relative path.
 ```javascript
 styledoc.templates_dir = 'my/custom/templates/dir';
 ```
+* *In HTTP/browser mode*, path value is relative to the HTML file.
+* *In FS/NodeJS mode*, path value is relative to output directory.
+
 *`@todo` other configurable properties*
 
 ### showcaseFile() method options
@@ -234,7 +243,7 @@ styledoc.showcaseFile('css/mystyle.css', {
   *Default value:* `{ width: 1280, height: 800 }`
 * **silent_mode**: (FS mode only) Disable console messages    
   *Default value:* `false`
- 
+
 
 ### Creating your own template
 *`@todo`*
@@ -250,16 +259,16 @@ Yes, you can. The easiest way is just to compile it CSS, preserving CSS-style co
 Yes, it does. The tool recursively loads and parses all imported CSS-files (as well as imports in that imported files, and so on).
 
 ### Can I load CSS file by HTTP URL?
-Yes, you can. Just provide an URL instead of relative path to CSS when calling `styledoc.showcaseFile()`. 
+Yes, you can. Just provide an URL instead of relative path to CSS when calling `styledoc.showcaseFile()`.
 Also, if you use StyleDoc in browser mode, CORS headers are needed for getting that file.
 
 ### How does live preview work?
-Each element preview is created in separate `<iframe>` with target CSS file linked and HTML content generated. 
+Each element preview is created in separate `<iframe>` with target CSS file linked and HTML content generated.
 Note that some delay needed for those iframes to render.
 
 ### Why `@state :hover` doesn't work?
 Modifiers available for showcase are limited to CSS modifications applicable by adding or altering HTML attributes. `:hover` or `:active` cannot be applied with attributes (unlike `:checked`, `:disabled` or `:readonly`), so they are mainly useless for showcase.
-However, elements in showcase are full functional, so you can see the hover state of just by hovering the element by mouse.   
+However, elements in showcase are full functional, so you can see the hover state of just by hovering the element by mouse.
 
 ### I cannot install NodeJS version on Windows
 On Windows, there are some known problems when installing JSDom, which is required for NodeJS version of the tool.
@@ -278,18 +287,20 @@ Yes, it is AMD-compatible.
 No. It only uses CommonJS module syntax for server-side NodeJS mode.
 (But... Do you really need this?) 
 
-### Why only new versions of jQuery are suitable?
-Because StyleDoc showcase generator needs this particular change in jQuery Sizzle code: https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5.
+### Why new version of jQuery is required?
+StyleDoc *requires jQuery version 1.11.1+ or 2.1.1+*.
+That is because showcase generator tool needs this particular change in jQuery *Sizzle* code:
+https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5.
 Without that, it cannot parse and apply CSS modifiers to HTML code.
 
-### I use an older version of jQuery for my website! What can I do?
+### I use an older version of jQuery on my website. What can I do?
 1. You can just use separate versions of jQuery for your website and showcase file.
 2. You can manually modify your jQuery file, reproducing this change:
-https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5; simplier, just find `function tokenize(` in jquery .js file, and add `Sizzle.tokenize = tokenize;` somewhere after (or before) this function 
+https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5; simplier, just find `function tokenize(` in jquery .js file, and add `Sizzle.tokenize = tokenize;` somewhere after (or before) this function.
 
 ### Why npm module has such heavy dependencies?
 For now, they all are needed for different reasons. I'll try to optimize these dependencies in future.
 
 ### Why the code is so ugly?
-For now, it just does its dirty work. 
-Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beautiful.
+For now, it just does its dirty work.
+Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beautiful :)

@@ -142,16 +142,16 @@ Supported tags list
 * **`@base`**: Base CSS selector and title    
   *Example:* `@base button Normal button`    
   Base selector can contain element name, class or whatever.    
-  All modifiers and states are applied to this kind of element.       
+  All modifiers and states are applied to this kind of element.    
 * **`@modifier`**: CSS selector and title for modifier    
-  *Example:* `@mofifier .large Large sized button`    
+  *Example:* `@modifier .large Large sized button`    
   A selector that modifies `@base` selector by adding class(es) or/and ID or/and any other CSS modification that can by applied by creating or altering some HTML attribute(s).    
   Any number of modifiers can exist within the same section.
 * **`@state`**: CSS selector and title for state    
   *Example:* `@state .active Active state of the button`    
   *Alias:* `@pseudo`    
-  A special kind of modifier that doesn't represent any valuable variation of element, but only some special state (like :checked or .active).    
-  All modifiers are sequentually applied within each showcase subsection, instead of creating a separate subsection.    
+  A special kind of modifier that doesn't represent any valuable variation of element, but only some special state (like `:checked` or `.active`).    
+  All modifiers are sequentially applied within each showcase subsection, instead of creating a separate subsection.    
   Any number of states can exist within the same section.    
   Just like common modifiers, can only represent CSS modification applicable with HTML attributes.
 * **`@example`**: HTML code representing the usage of element    
@@ -160,7 +160,7 @@ Supported tags list
   Should contain HTML markup for CSS selector determined in `@base`.    
   Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live presentation, if not overriden by `@presentation`).    
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.
-* **`@presentation`**: HTML code for the live presentation of element (if it should differ from `@example` for some reason)
+* **`@presentation`**: HTML code for the live presentation of element (if it should differ from `@example` for some reason)    
   *Example:* `@presentation <div><button>Sample text</button></div>` 
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.    
 * **`@author`**: Name, email, etc. of the code block author    
@@ -172,16 +172,16 @@ Supported tags list
   *Example:* `@since 1.1`
 * **`@deprecated`**: Beginning code version and/or reasons for element deprecating    
   *Example:* `@deprecated 1.2 Use .action-button instead`    
-  Either version or description can be omitted.  
+  Either version or description can be omitted.
 * **`@see`**: Some reference to be mentioned    
   *Example:* `@see http://stackoverflow.com/a/428032`    
-  Multiple instances are allowed within the same section.   
-* **`@todo`**: Some matters to be improved within the code   
+  Multiple instances are allowed within the same section.
+* **`@todo`**: Some matters to be improved within the code    
   *Example:* `@todo Replace sprite images with pure CSS`    
-  Multiple instances are allowed within the same section.  
+  Multiple instances are allowed within the same section.
 * **`@fixme`**: Some things needed to be fixed within the code    
   *Example:* `@fixme IE9 fails to draw this element correctly`    
-  Multiple instances are allowed within the same section.  
+  Multiple instances are allowed within the same section.
 
 Also, first text line (e.g. with no tags) is considered to be the **block title**.
 All text lines going after the block title are considered to be **block description**.
@@ -211,29 +211,29 @@ styledoc.showcaseFile('css/mystyle.css', {
 });
 ```
 #### Available options:
-* **$container**: (HTTP mode only) JQuery element for root showcase container        
-  *Default value:* `$('body')` 
-* **output_dir**: (FS mode only) Path for creating to showcase files, relative to current location         
-  *Default value:* `'showcase/'` 
-* **template**: Name of showcase page template                 
-  *Default value:* `'default'`  
-* **language**: Language to apply when creating page (should exist in template's directory)        
-  *Default value:* `'en'` 
-* **doctype**: Name of showcase page template (should exist in template's directory)                 
+* **$container**: (HTTP mode only) JQuery element for root showcase container    
+  *Default value:* `$('body')`
+* **output_dir**: (FS mode only) Path for creating to showcase files, relative to current location    
+  *Default value:* `'showcase/'`
+* **template**: Name of showcase page template    
+  *Default value:* `'default'`
+* **language**: Language to apply when creating page (should exist in template's directory)    
+  *Default value:* `'en'`
+* **doctype**: Name of showcase page template (should exist in template's directory)    
   *Default value:* `'html5'`
-* **page_title**: Main title (`<h1>`) of showcase page                  
-  *Default value for HTTP mode:* `document.title`                  
+* **page_title**: Main title (`<h1>`) of showcase page    
+  *Default value for HTTP mode:* `document.title`    
   *Default value for FS mode:* `''`
-* **iframe_delay**: Delay (ms) before refreshing iframe height                 
-  This delay is needed to render presentation item iframe page, measure its height, and then apply this height to `<iframe>` element itself                  
+* **iframe_delay**: Delay (ms) before refreshing iframe height    
+  This delay is needed to render presentation item iframe page, measure its height, and then apply this height to `<iframe>` element itself    
   *Default value:* `2000`
-* **use_phantomjs**: (FS mode only) Use PhantomJS to pre-count and pre-set  presentation iframes height values (so iframe delay is not needed)                
-  Requires PhantomJS to be installed in system                
+* **use_phantomjs**: (FS mode only) Use PhantomJS to pre-count and pre-set presentation iframes height values (so iframe delay is not needed)    
+  Requires PhantomJS to be installed in system    
   *Default value:* `false`
-* **phantomjs_viewport**: (FS mode only) Viewport size for phantomjs instances                 
+* **phantomjs_viewport**: (FS mode only) Viewport size for PhantomJS instances    
   *Default value:* `{ width: 1280, height: 800 }`
-* **silent_mode**: (FS mode only) Disable console messages                 
-  *Default value:* `false`  
+* **silent_mode**: (FS mode only) Disable console messages    
+  *Default value:* `false`
  
 
 ### Creating your own template
@@ -267,7 +267,7 @@ If you are lucky, following manuals could help (if not, you can still use StyleD
 * http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/
 * https://github.com/tmpvar/jsdom#contextify
 
-### It there a `grunt` wrapper for npm module?
+### It there a grunt wrapper for npm module?
 *`@todo` make it*
 
 ### Can StyleDoc be used as AMD module?

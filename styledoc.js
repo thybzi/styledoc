@@ -11,20 +11,17 @@
  * Inspired with concept idea of https://github.com/Joony/styledoc/
  *
  * @todo separate template and skin?
+ * @todo better template files structure
  * @todo revise list of supported tags
  * @todo more sophisticated applying of pseudo-class modifiers (instead of adding an attribute)?
- * @todo better handling for relative URLs (optimize url handling)
  * @todo spaces in selectors (better than wrapping to {})
- * @todo optional item ID mode (number/selector?)
  * @todo something better than using htmlApplyModifierCustom
  * @todo @item, @item-state, @item-modifier?
  * @todo HTML markup modifiers completely denying auto-modifying?
  * @todo better console messages
  * @todo grunt module
- * @todo customizable ID (html anchor) giving scheme (e.g. button vs .button)
+ * @todo customizable ID (html anchor) giving scheme (e.g. #button vs .button)
  * @todo catch exceptions
- * @todo document code
- * @todo quotes style (" either ")
  * @todo optimize code
  * @todo make examples/demos
  * @todo write more tests

@@ -55,6 +55,7 @@
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
 
+    var LANGUAGE_SUBDIR = "language/";
     var PRESENTATION_SUBDIR = "presentation/";
 
 
@@ -431,7 +432,7 @@
 
         var loadFile = styledoc.getLoader().loadFile;
         var load_main_template = loadFile(template_dir + "main.mustache"); // @todo doctype?
-        var load_lang = loadFile(template_dir + "langs/" + language + ".json", true);
+        var load_lang = loadFile(template_dir + LANGUAGE_SUBDIR + language + ".json", true);
 
         $.when(load_main_template, load_lang).done(
             function (main_template_jqdata, lang_data_jqdata) {
@@ -541,7 +542,7 @@
         var load_index_template = loadFile(template_dir + "index.mustache", false, true);
         var load_main_template = loadFile(template_dir + "main.mustache", false, true); // @todo doctype?
         var load_presentation_template = loadFile(template_dir + PRESENTATION_SUBDIR + doctype + ".mustache", false, true);
-        var load_lang = loadFile(template_dir + "langs/" + language + ".json", true, true);
+        var load_lang = loadFile(template_dir + LANGUAGE_SUBDIR + language + ".json", true, true);
 
         var mkdirs = mkdirp(presentation_dir);
         var copy_main_css = copy(template_dir + "main.css", output_dir + "main.css");

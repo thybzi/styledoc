@@ -1057,7 +1057,7 @@
     function isAbsolutePath(path) {
         var mask = /^(\/|[a-z]+:)/; // @todo what about /home/myuser/myfile.css?
         return !!path.match(mask);
-    };
+    }
 
     /**
      * @param {string} path
@@ -1065,7 +1065,7 @@
      */
     function ensureTrailingSlash(path) {
         return path.replace(/\/$/, "") + "/";
-    };
+    }
 
     /**
      * Generate value for the presentation container "style" attribute

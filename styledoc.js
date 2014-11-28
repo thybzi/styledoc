@@ -816,7 +816,7 @@
      * Load CSS file content including all imports (recursively)
      * Also collects all styledoc data from these files
      * @param {string} url Root CSS file URL or relative path
-     * @param {string} [url] Parent CSS file URL or relative path (if any)
+     * @param {string} [parent_url] Parent CSS file URL or relative path (if any)
      * @param {array} [result] Array to append parsing results to
      * @returns {array} Data describing files loaded and styledocs extracted from them
      */

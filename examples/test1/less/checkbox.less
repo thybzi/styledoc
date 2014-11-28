@@ -1,0 +1,82 @@
+/**
+ * Checkboxes
+ * Using label::before to apply custom box style
+ * @base input[type="checkbox"] Normal checkbox
+ * @modifier .large Large-sized checkbox
+ * @state :checked Pre-checked checkbox
+ * @state :disabled Unchangeble checkbox
+ * @state :disabled:checked Unchangeble pre-checked checkbox
+ * @example
+ *     <input type="checkbox" id="unique_id">
+ *     <label for="unique_id">Checkbox label</label>
+ */
+input[type="checkbox"] {
+    @normal-checkbox-size:      22px;
+    @normal-checkbox-stroke:    2px;
+    @normal-checkbox-rounding:  3px;
+    @normal-checkbox-offset-x:  8px;
+    @normal-checkbox-gap-x:     18px;
+    @normal-font-size:          16px;
+    @large-checkbox-size:       30px;
+    @large-checkbox-stroke:     3px;
+    @large-checkbox-rounding:   4px;
+    @large-checkbox-offset-x:   12px;
+    @large-font-size:           22px;
+    @large-checkbox-gap-x:      30px;
+
+    & {
+        position: absolute;
+        left: -10000px;
+    }
+
+    & + label {
+        display: inline-block;
+        font-size: @normal-font-size;
+        line-height: @normal-checkbox-size;
+        cursor: pointer;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            .box-sizing(border-box);
+            width: @normal-checkbox-size;
+            height: @normal-checkbox-size;
+            margin-right: @normal-checkbox-offset-x;
+            border: @normal-checkbox-stroke solid #ccc;
+            .border-radius(@normal-checkbox-rounding);
+            vertical-align: top;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        & + & {
+            margin-left: @normal-checkbox-gap-x;
+        }
+    }
+
+    &:checked + label:before {
+        content: '✔';
+    }
+
+    &.large + label {
+        font-size: @large-font-size;
+        line-height: @large-checkbox-size;
+
+        &:before {
+            width: @large-checkbox-size;
+            height: @large-checkbox-size;
+            margin-right: @large-checkbox-offset-x;
+            border-width: @large-checkbox-stroke;
+            .border-radius(@large-checkbox-rounding);
+        }
+
+        & + & {
+            margin-left: @large-checkbox-gap-x;
+        }
+    }
+
+    &:disabled + label {
+        opacity: 0.5;
+        cursor: default;
+    }
+}

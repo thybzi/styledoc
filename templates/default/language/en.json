@@ -1,0 +1,12 @@
+{
+    "page_top": "Page top",
+    "tags": {
+        "author":       "Author",
+        "version":      "Version",
+        "since":        "Available since",
+        "deprecated":   "Deprecated",
+        "see":          "See also",
+        "todo":         "Should be done",
+        "fixme":        "Must be fixed"
+    }
+}

@@ -1,0 +1,105 @@
+<div class="container">
+
+    <!-- Navigation block -->
+    <ul class="nav">
+        <li><a href="#top">{{lang.page_top}}</a></li>
+        {{#items}}
+            <li>
+                <div>
+                    <a href="#section_{{#section}}{{section}}{{/section}}{{^section}}{{id}}{{/section}}">
+                        {{#section}}{{section}}. {{/section}}{{title}}
+                    </a>
+                </div>
+                <ul>
+                {{#subitems}}
+                    <li><a href="#item_{{id}}">{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</a></li>
+                {{/subitems}}
+                </ul>
+            </li>
+        {{/items}}
+    </ul>
+    <!-- /Navigation block -->
+
+    <!-- Main block -->
+    <div class="main">
+
+        <a id="top"></a>
+        {{#page_title}}
+            <h1>{{page_title}}</h1>
+        {{/page_title}}
+
+        {{#items}}
+
+            <a id="section_{{#section}}{{section}}{{/section}}{{^section}}{{id}}{{/section}}"></a>
+            {{#title}}
+                <h2>
+                    {{#section}}
+                        {{section}}.
+                    {{/section}}
+                    {{title}}
+                </h2>
+            {{/title}}
+            {{#description}}
+                <div class="description">{{description}}</div>
+            {{/description}}
+
+            {{#author}}
+                <div class="additional"><em>{{lang.tags.author}}:</em> {{.}}</div>
+            {{/author}}
+            {{#version}}
+                <div class="additional"><em>{{lang.tags.version}}:</em> {{version}}</div>
+            {{/version}}
+            {{#since}}
+                <div class="additional"><em>{{lang.tags.since}}:</em> {{since}}</div>
+            {{/since}}
+            {{#is_deprecated}}
+                {{#deprecated_info}}
+                    <div class="additional"><em>{{lang.tags.deprecated}}:</em> {{deprecated_info}}</div>
+                {{/deprecated_info}}
+                {{^deprecated_info}}
+                    <div class="additional"><em>{{lang.tags.deprecated}}</em></div>
+                {{/deprecated_info}}
+            {{/is_deprecated}}
+            {{#see}}
+                <div class="additional"><em>{{lang.tags.see}}:</em> <a href="{{.}}" targe="_blank">{{.}}</a></div>
+            {{/see}}
+            {{#todo}}
+                <div class="additional"><em>{{lang.tags.todo}}:</em> {{.}}</div>
+            {{/todo}}
+            {{#fixme}}
+                <div class="additional"><em>{{lang.tags.fixme}}:</em> {{.}}</div>
+            {{/fixme}}
+
+            {{#subitems}}
+                <a id="item_{{id}}"></a>
+                <div class="showcase">
+                    {{#base}}
+                        <h3>
+                            <code>{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</code>
+                            {{#states}}
+                                <em>[<code title="{{description}}">{{state}}</code>]</em>
+                            {{/states}}
+                        </h3>
+                    {{/base}}
+                    {{#description}}
+                        <div class="description">{{description}}</div>
+                    {{/description}}
+                    {{#presentation}}
+                        <iframe id="presentation_{{id}}" src="{{{iframe_url}}}"
+                            {{#iframe_height}}style="height: {{iframe_height}}px"{{/iframe_height}}
+                            {{^iframe_height}}class="loading"{{/iframe_height}}
+                            {{#iframe_use_onload}}onload="styledoc_iframeOnload(this)"{{/iframe_use_onload}}
+                            scrolling="no"></iframe>
+                    {{/presentation}}
+                    {{presenter}}
+                    {{#example}}
+                        <pre>{{example}}</pre>
+                    {{/example}}
+                </div>
+            {{/subitems}}
+
+        {{/items}}
+    </div>
+    <!-- /Main block -->
+
+</div>

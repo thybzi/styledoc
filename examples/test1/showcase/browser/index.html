@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StyleDoc :: Example 1 :: HTTP/browser showcase</title>
+    <meta charset="utf-8">
+    <script src="../../../lib/jquery-1.11.1.js"></script>
+    <script src="../../../lib/mustache.js"></script>
+    <script src="../../../../styledoc.js"></script>
+</head>
+<body>
+
+<script>
+    styledoc.templates_dir = '../../../../templates/';
+    styledoc.showcaseFile('../../css/main.css', {
+        presentation_pad_bottom: 4 // maximum shadow offset for buttons
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StyleDoc :: Example 1 :: FS&#x2F;NodeJS showcase</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Navigation block -->
+    <ul class="nav">
+        <li><a href="#top">Page top</a></li>
+            <li>
+                <div>
+                    <a href="#section_1">
+                        Buttons
+                    </a>
+                </div>
+                <ul>
+                    <li><a href="#item_button">button</a></li>
+                    <li><a href="#item_button_bright">button<mark>.bright</mark></a></li>
+                    <li><a href="#item_button_large">button<mark>.large</mark></a></li>
+                    <li><a href="#item_button_large_bright">button<mark>.large.bright</mark></a></li>
+                </ul>
+            </li>
+            <li>
+                <div>
+                    <a href="#section_2">
+                        Checkboxes
+                    </a>
+                </div>
+                <ul>
+                    <li><a href="#item_input_type__checkbox__">input[type=&quot;checkbox&quot;]</a></li>
+                    <li><a href="#item_input_type__checkbox___large">input[type=&quot;checkbox&quot;]<mark>.large</mark></a></li>
+                </ul>
+            </li>
+    </ul>
+    <!-- /Navigation block -->
+
+    <!-- Main block -->
+    <div class="main">
+
+        <a id="top"></a>
+            <h1>StyleDoc :: Example 1 :: FS&#x2F;NodeJS showcase</h1>
+
+
+            <a id="section_1"></a>
+                <h2>
+                    Buttons
+                </h2>
+
+
+                <a id="item_button"></a>
+                <div class="showcase">
+                        <h3>
+                            <code>button</code>
+                                <em>[<code title="Unpressable button">:disabled</code>]</em>
+                        </h3>
+                        <div class="description">Normal button</div>
+                        <iframe id="presentation_button" src="presentation/button.html"
+                            
+                            class="loading"
+                            onload="styledoc_iframeOnload(this)"
+                            scrolling="no"></iframe>
+                    
+                        <pre>&lt;button&gt;Button text&lt;&#x2F;button&gt;
+&lt;button disabled=&quot;disabled&quot;&gt;Button text&lt;&#x2F;button&gt;</pre>
+                </div>
+                <a id="item_button_bright"></a>
+                <div class="showcase">
+                        <h3>
+                            <code>button<mark>.bright</mark></code>
+                                <em>[<code title="Unpressable button">:disabled</code>]</em>
+                        </h3>
+                        <div class="description">Bright variation of button</div>
+                        <iframe id="presentation_button_bright" src="presentation/button_bright.html"
+                            
+                            class="loading"
+                            onload="styledoc_iframeOnload(this)"
+                            scrolling="no"></iframe>
+                    
+                        <pre>&lt;button class=&quot;bright&quot;&gt;Button text&lt;&#x2F;button&gt;
+&lt;button class=&quot;bright&quot; disabled=&quot;disabled&quot;&gt;Button text&lt;&#x2F;button&gt;</pre>
+                </div>
+                <a id="item_button_large"></a>
+                <div class="showcase">
+                        <h3>
+                            <code>button<mark>.large</mark></code>
+                                <em>[<code title="Unpressable button">:disabled</code>]</em>
+                        </h3>
+                        <div class="description">Large-sized button</div>
+                        <iframe id="presentation_button_large" src="presentation/button_large.html"
+                            
+                            class="loading"
+                            onload="styledoc_iframeOnload(this)"
+                            scrolling="no"></iframe>
+                    
+                        <pre>&lt;button class=&quot;large&quot;&gt;Button text&lt;&#x2F;button&gt;
+&lt;button class=&quot;large&quot; disabled=&quot;disabled&quot;&gt;Button text&lt;&#x2F;button&gt;</pre>
+                </div>
+                <a id="item_button_large_bright"></a>
+                <div class="showcase">
+                        <h3>
+                            <code>button<mark>.large.bright</mark></code>
+                                <em>[<code title="Unpressable button">:disabled</code>]</em>
+                        </h3>
+                        <div class="description">Large-sized bright button</div>
+                        <iframe id="presentation_button_large_bright" src="presentation/button_large_bright.html"
+                            
+                            class="loading"
+                            onload="styledoc_iframeOnload(this)"
+                            scrolling="no"></iframe>
+                    
+                        <pre>&lt;button class=&quot;large bright&quot;&gt;Button text&lt;&#x2F;button&gt;
+&lt;button class=&quot;large bright&quot; disabled=&quot;disabled&quot;&gt;Button text&lt;&#x2F;button&gt;</pre>
+                </div>
+
+
+            <a id="section_2"></a>
+                <h2>
+                    Checkboxes
+                </h2>
+                <div class="description">Using label::before to apply custom box style</div>
+
+
+                <a id="item_input_type__checkbox__"></a>
+                <div class="showcase">
+                        <h3>
+                            <code>input[type=&quot;checkbox&quot;]</code>
+                                <em>[<code title="Pre-checked checkbox">:checked</code>]</em>
+                                <em>[<code title="Unchangeble checkbox">:disabled</code>]</em>
+                                <em>[<code title="Unchangeble pre-checked checkbox">:disabled:checked</code>]</em>
+                        </h3>
+                        <div class="description">Normal checkbox</div>
+                        <iframe id="presentation_input_type__checkbox__" src="presentation/input_type__checkbox__.html"
+                            
+                            class="loading"
+                            onload="styledoc_iframeOnload(this)"
+                            scrolling="no"></iframe>
+                    
+                        <pre>&lt;input type=&quot;checkbox&quot; id=&quot;unique_id&quot;&gt;
+&lt;label for=&quot;unique_id&quot;&gt;Checkbox label&lt;&#x2F;label&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;unique_id__checked&quot; checked=&quot;checked&quot;&gt;
+&lt;label for=&quot;unique_id__checked&quot;&gt;Checkbox label&lt;&#x2F;label&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;unique_id__disabled&quot; disabled=&quot;disabled&quot;&gt;
+&lt;label for=&quot;unique_id__disabled&quot;&gt;Checkbox label&lt;&#x2F;label&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;unique_id__disabled_checked&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot;&gt;
+&lt;label for=&quot;unique_id__disabled_checked&quot;&gt;Checkbox label&lt;&#x2F;label&gt;</pre>
+                </div>
+                <a id="item_input_type__checkbox___large"></a>
+                <div class="showcase">
+                        <h3>
+                            <code>input[type=&quot;checkbox&quot;]<mark>.large</mark></code>
+                                <em>[<code title="Pre-checked checkbox">:checked</code>]</em>
+                                <em>[<code title="Unchangeble checkbox">:disabled</code>]</em>
+                                <em>[<code title="Unchangeble pre-checked checkbox">:disabled:checked</code>]</em>
+                        </h3>
+                        <div class="description">Large-sized checkbox</div>
+                        <iframe id="presentation_input_type__checkbox___large" src="presentation/input_type__checkbox___large.html"
+                            
+                            class="loading"
+                            onload="styledoc_iframeOnload(this)"
+                            scrolling="no"></iframe>
+                    
+                        <pre>&lt;input type=&quot;checkbox&quot; id=&quot;unique_id&quot; class=&quot;large&quot;&gt;
+&lt;label for=&quot;unique_id&quot;&gt;Checkbox label&lt;&#x2F;label&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;unique_id__checked&quot; class=&quot;large&quot; checked=&quot;checked&quot;&gt;
+&lt;label for=&quot;unique_id__checked&quot;&gt;Checkbox label&lt;&#x2F;label&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;unique_id__disabled&quot; class=&quot;large&quot; disabled=&quot;disabled&quot;&gt;
+&lt;label for=&quot;unique_id__disabled&quot;&gt;Checkbox label&lt;&#x2F;label&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;unique_id__disabled_checked&quot; class=&quot;large&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot;&gt;
+&lt;label for=&quot;unique_id__disabled_checked&quot;&gt;Checkbox label&lt;&#x2F;label&gt;</pre>
+                </div>
+
+    </div>
+    <!-- /Main block -->
+
+</div>
+
+
+<script>
+
+    function styledoc_resizeIframe(iframe) {
+        var iframe_document = iframe.contentDocument || iframe.contentWindow.document;
+        var iframe_classes = iframe.className.split(" ");
+        iframe.style.height = iframe_document.body.offsetHeight + "px";
+
+        var loading_class_index = iframe_classes.indexOf("loading");
+        if (loading_class_index !== -1) {
+           iframe_classes.splice(loading_class_index, 1);
+           iframe.className = iframe_classes.join(" ");
+        }
+    }
+
+    function styledoc_iframeOnload(iframe) {
+        setTimeout(function () {
+            styledoc_resizeIframe(iframe);
+        }, 2000);
+    }
+
+    setTimeout(function () {
+        window.onresize = function () {
+            var iframes = document.getElementsByTagName("iframe");
+            for (var i = 0; i < iframes.length; i++) {
+                styledoc_resizeIframe(iframes[i]);
+            }
+        };
+    }, 2000);
+
+</script>
+
+</body>
+</html>

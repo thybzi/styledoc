@@ -1,0 +1,99 @@
+/**
+ * Buttons
+ * @base button Normal button
+ * @modifier .bright Bright variation of button
+ * @modifier .large Large-sized button
+ * @modifier .large.bright Large-sized bright button
+ * @state :disabled Unpressable button
+ * @example <button>Button text</button>
+ */
+button {
+    @normal-height:         36px;
+    @normal-pad-x:          18px;
+    @normal-rounding:       4px;
+    @normal-shade-offset:   3px;
+    @normal-font-size:      20px;
+    @normal-gap-x:          12px;
+    @large-height:          48px;
+    @large-pad-x:           28px;
+    @large-rounding:        6px;
+    @large-shade-offset:    4px;
+    @large-font-size:       28px;
+    @large-gap-x:           18px;
+
+    & {
+        display: inline-block;
+        position: relative;
+        top: 0; // for smooth pressing transition
+        height: @normal-height;
+        padding: 0 @normal-pad-x;
+        border-width: 0;
+        .border-radius(@normal-rounding);
+        background-color: #c71a1a;
+        color: #fff;
+        font-size: @normal-font-size;
+        line-height: @normal-height;
+        .set-shade-offset(@normal-shade-offset);
+        cursor: pointer;
+        outline: 0;
+        .transition(
+            background-color 0.2s,
+            top 0.1s ease-out,
+            box-shadow 0.1s ease-out;
+        );
+
+        & + & {
+            margin-left: @normal-gap-x;
+        }
+    }
+
+    &:hover,
+    &:active {
+        background-color: #e50000;
+    }
+
+    &.bright {
+        background-color: #ffbd00;
+        color: #6b0000;
+
+        &:hover,
+        &:active {
+            background-color: #ffca50;
+        }
+    }
+
+    &.large {
+        height: @large-height;
+        padding-left: @large-pad-x;
+        padding-right: @large-pad-x;
+        .border-radius(@large-rounding);
+        font-size: @large-font-size;
+        line-height: @large-height;
+        .set-shade-offset(@large-shade-offset);
+
+        & + & {
+            margin-left: @large-gap-x;
+        }
+    }
+
+    &:disabled {
+        background-color: #ccc !important;
+        color: #fff !important;
+        cursor: default;
+    }
+
+
+    // Applies shadow vertical offset
+    .set-shade-offset(@offset-y) {
+        @color: fade(#000, 40%);
+
+        & {
+            .box-shadow(0 @offset-y 0 @color);
+        }
+
+        &:active {
+            top: @offset-y;
+            .box-shadow(0 0 0 @color);
+        }
+    }
+}

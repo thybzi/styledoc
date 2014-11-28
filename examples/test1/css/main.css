@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #222;
+  font: normal 14px/20px Arial, Helvetica, FreeSans, sans-serif;
+}
+/**
+ * Buttons
+ * @base button Normal button
+ * @modifier .bright Bright variation of button
+ * @modifier .large Large-sized button
+ * @modifier .large.bright Large-sized bright button
+ * @state :disabled Unpressable button
+ * @example <button>Button text</button>
+ */
+button {
+  display: inline-block;
+  position: relative;
+  top: 0;
+  height: 36px;
+  padding: 0 18px;
+  border-width: 0;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #c71a1a;
+  color: #fff;
+  font-size: 20px;
+  line-height: 36px;
+  cursor: pointer;
+  outline: 0;
+  -webkit-transition: background-color 0.2s, top 0.1s ease-out, box-shadow 0.1s ease-out;
+  -moz-transition: background-color 0.2s, top 0.1s ease-out, box-shadow 0.1s ease-out;
+  -o-transition: background-color 0.2s, top 0.1s ease-out, box-shadow 0.1s ease-out;
+  transition: background-color 0.2s, top 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+button {
+  -webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+}
+button:active {
+  top: 3px;
+  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+}
+button + button {
+  margin-left: 12px;
+}
+button:hover,
+button:active {
+  background-color: #e50000;
+}
+button.bright {
+  background-color: #ffbd00;
+  color: #6b0000;
+}
+button.bright:hover,
+button.bright:active {
+  background-color: #ffca50;
+}
+button.large {
+  height: 48px;
+  padding-left: 28px;
+  padding-right: 28px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  font-size: 28px;
+  line-height: 48px;
+}
+button.large {
+  -webkit-box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+}
+button.large:active {
+  top: 4px;
+  -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+}
+button.large + button.large {
+  margin-left: 18px;
+}
+button:disabled {
+  background-color: #ccc !important;
+  color: #fff !important;
+  cursor: default;
+}
+/**
+ * Checkboxes
+ * Using label::before to apply custom box style
+ * @base input[type="checkbox"] Normal checkbox
+ * @modifier .large Large-sized checkbox
+ * @state :checked Pre-checked checkbox
+ * @state :disabled Unchangeble checkbox
+ * @state :disabled:checked Unchangeble pre-checked checkbox
+ * @example
+ *     <input type="checkbox" id="unique_id">
+ *     <label for="unique_id">Checkbox label</label>
+ */
+input[type="checkbox"] {
+  position: absolute;
+  left: -10000px;
+}
+input[type="checkbox"] + label {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 22px;
+  cursor: pointer;
+}
+input[type="checkbox"] + label:before {
+  content: '';
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  border: 2px solid #cccccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  vertical-align: top;
+  text-align: center;
+  line-height: 1.1;
+}
+input[type="checkbox"] + label + input[type="checkbox"] + label {
+  margin-left: 18px;
+}
+input[type="checkbox"]:checked + label:before {
+  content: '✔';
+}
+input[type="checkbox"].large + label {
+  font-size: 22px;
+  line-height: 30px;
+}
+input[type="checkbox"].large + label:before {
+  width: 30px;
+  height: 30px;
+  margin-right: 12px;
+  border-width: 3px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+input[type="checkbox"].large + label + input[type="checkbox"].large + label {
+  margin-left: 30px;
+}
+input[type="checkbox"]:disabled + label {
+  opacity: 0.5;
+  cursor: default;
+}

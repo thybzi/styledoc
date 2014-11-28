@@ -334,4 +334,5 @@ Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beauti
 
 Version history
 ---------------
+* **0.0.2** *(2014-11-28)*: Examples added; minor changes, improvements and bugfixes
 * **0.0.1** *(2014-11-27)*: Initial release

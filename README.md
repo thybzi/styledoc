@@ -257,6 +257,15 @@ styledoc.showcaseFile('css/mystyle.css', {
   *Default value:* `{ width: 1280, height: 800 }`
 * **silent_mode**: (FS mode only) Disable console messages    
   *Default value:* `false`
+* **presentation_pad_left**: Left padding for presentation container    
+  Useful if elements have left box-shadow, outline or similar styles that don't affect the container offset size    
+  *Default value:* `undefined`
+* **presentation_pad_right**: Right padding for presentation container (similar to `presentation_pad_left`)    
+  *Default value:* `undefined`
+* **presentation_pad_top**: Top padding for presentation container (similar to `presentation_pad_left`)    
+  *Default value:* `undefined`
+* **presentation_pad_bottom**: Bottom padding for presentation container (similar to `presentation_pad_left`)    
+  *Default value:* `undefined`
 
 
 ### Creating your own template

@@ -110,6 +110,10 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height (FS mode only)
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] No console messages (FS mode only)
+     * @param {number} [options.presentation_pad_left] Left padding for presentation container
+     * @param {number} [options.presentation_pad_right] Right padding for presentation container
+     * @param {number} [options.presentation_pad_top] Top padding for presentation container
+     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
      */
     styledoc.showcaseFile = function (url, options) {
         options = options || {};
@@ -407,6 +411,10 @@
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
      * @param {string} [options.page_title=document.title] Main title of document
      * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
+     * @param {number} [options.presentation_pad_left] Left padding for presentation container
+     * @param {number} [options.presentation_pad_right] Right padding for presentation container
+     * @param {number} [options.presentation_pad_top] Top padding for presentation container
+     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
      */
     styledoc.outputHttp = function (showcase_data, css_url, options) {
 
@@ -427,6 +435,8 @@
         } else {
             css_url_presentation = "//" + document.location.host + dirPath(document.location.pathname) + css_url;
         }
+
+        var presentation_container_style = getPresentationContainerStyle(options);
 
         $("head").append('<link rel="stylesheet" href="' + template_dir + 'main.css">');
 
@@ -475,7 +485,9 @@
                     $iframe.load(function () {
                         var $contents = $iframe.contents();
                         $contents.find("head").append('<link rel="stylesheet" href="' + css_url_presentation + '">');
-                        $contents.find("#styledoc-container").append(data.presentation); // @todo hardcode id
+                        $contents.find("#styledoc-container") // @todo hardcode id
+                            .append(data.presentation)
+                            .attr("style", presentation_container_style);
                         var resizer = function () {
                             resizeIframe($iframe);
                         };
@@ -506,6 +518,10 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height
      * @param {boolean} [options.silent_mode=false] No console messages
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances
+     * @param {number} [options.presentation_pad_left] Left padding for presentation container
+     * @param {number} [options.presentation_pad_right] Right padding for presentation container
+     * @param {number} [options.presentation_pad_top] Top padding for presentation container
+     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
      */
     styledoc.outputFs = function (showcase_data, css_url, options) {
 
@@ -536,6 +552,7 @@
             css_url_presentation = path.relative(realpath + presentation_dir, realpath + css_url);
         }
 
+        var presentation_container_style = getPresentationContainerStyle(options);
 
         var loadFile = styledoc.getLoader().loadFile;
         // @todo optimize (something better than: force_fs = true)
@@ -590,6 +607,7 @@
                         file_path_relative = PRESENTATION_SUBDIR + file_name;
                         presentation_content = Mustache.render(presentation_template, {
                             css_url: css_url_presentation,
+                            container_style: presentation_container_style,
                             content: subitem_data.presentation
                         });
                         subitem_data.iframe_url = file_path_relative; // @todo use separate var without changing showcase_data?
@@ -1048,6 +1066,26 @@
     function ensureTrailingSlash(path) {
         return path.replace(/\/$/, "") + "/";
     };
+
+    /**
+     * Generate value for the presentation container "style" attribute
+     * @param {object} options
+     * @param {number} [options.presentation_pad_left] Left padding for presentation container
+     * @param {number} [options.presentation_pad_right] Right padding for presentation container
+     * @param {number} [options.presentation_pad_top] Top padding for presentation container
+     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @returns {string|undefined} Undefined value denies redundant attribute creating: $elem.attr("style", undefined)
+     */
+    function getPresentationContainerStyle(options) {
+        var presentation_container_style = "";
+        $.each([ "left", "right", "top", "bottom" ], function (i, side) {
+            var value = options["presentation_pad_" + side];
+            if (value) {
+                presentation_container_style += "padding-" + side + ": " + value + "px !important; ";
+            }
+        });
+        return presentation_container_style.replace(/\s$/, "") || undefined;
+    }
 
 
     /**

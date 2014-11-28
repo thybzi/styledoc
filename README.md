@@ -31,7 +31,9 @@ This page contains full list of documented elements and their variations, illust
 
 Live examples
 ---------------
-Coming soon!
+See *[examples](examples/)* folder for LESS/CSS sources and showcase results.
+
+Viewable demos coming soon!
 
 
 Quick start
@@ -325,5 +327,11 @@ simplier, just find `function tokenize(` in jquery .js file, and add `Sizzle.tok
 For now, they all are needed for different reasons. I'll try to optimize these dependencies in future.
 
 ### Why the code is so ugly?
-For now, it just does its dirty work.  
+For now, it just does its dirty work.
+
 Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beautiful :)
+
+
+Version history
+---------------
+* **0.0.1** *(2014-11-27)*: Initial release

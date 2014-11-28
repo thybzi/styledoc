@@ -250,7 +250,7 @@
 
                 // Create base showcase
                 item_data.subitems.push({
-                    id: styledoc.use_selector_based_ids ? styledoc.selectorToId(item_data.base) : item_data.id + "_0",
+                    id: styledoc.use_selector_based_ids ? selectorToId(item_data.base) : item_data.id + "_0",
                     base: item_data.base,
                     modifier: null,
                     description: item_data.base_description || "",
@@ -270,7 +270,7 @@
                             parts = parseComplexContent(tag_content);
                             modifier = parts[0];
                             item_data.subitems.push({
-                                id: styledoc.use_selector_based_ids ? styledoc.selectorToId(item_data.base + modifier) : (item_data.id + "_" + (j + 1)),
+                                id: styledoc.use_selector_based_ids ? selectorToId(item_data.base + modifier) : (item_data.id + "_" + (j + 1)),
                                 base: item_data.base,
                                 modifier: modifier,
                                 description: parts[1],
@@ -1096,10 +1096,10 @@
      * @param {string} selector
      * @returns {string}
      */
-    styledoc.selectorToId = function (selector) {
+    function selectorToId(selector) {
         var mask = /[^a-z0-9_-]/ig;
         return selector.replace(mask, "_");
-    };
+    }
 
     // @todo improve naming and structure
     styledoc.getLoader = function () {

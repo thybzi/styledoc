@@ -1,0 +1,498 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>StyleDoc by thybzi</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>StyleDoc</h1>
+        <p>Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.</p>
+
+        <p class="view"><a href="https://github.com/thybzi/styledoc">View the Project on GitHub <small>thybzi/styledoc</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/thybzi/styledoc/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/thybzi/styledoc/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/thybzi/styledoc">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="styledoc-showcase-you-styles" class="anchor" href="#styledoc-showcase-you-styles" aria-hidden="true"><span class="octicon octicon-link"></span></a>StyleDoc: showcase you styles</h1>
+
+<p>Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.<br>
+Written on Javascript, available for both browser and NodeJS usage.<br>
+Inspired with concept idea of <a href="https://github.com/Joony/styledoc/">https://github.com/Joony/styledoc/</a></p>
+
+<h2>
+<a id="syntax-example" class="anchor" href="#syntax-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Syntax example</h2>
+
+<div class="highlight highlight-css"><pre><span class="pl-c">/**</span>
+<span class="pl-c"> * Buttons</span>
+<span class="pl-c"> * All different kind of buttons used on website pages</span>
+<span class="pl-c"> * @base     button     Normal button</span>
+<span class="pl-c"> * @modifier .large     Large button</span>
+<span class="pl-c"> * @modifier :disabled  Button unable to be pressed</span>
+<span class="pl-c"> * @modifier .large:disabled Large button disabled</span>
+<span class="pl-c"> * @example  &lt;button&gt;Button text&lt;/button&gt;</span>
+<span class="pl-c"> */</span>
+<span class="pl-ent">button</span> {
+    <span class="pl-c">/* styles here */</span>
+} </pre></div>
+
+<h2>
+<a id="what-does-the-tool-do" class="anchor" href="#what-does-the-tool-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>What does the tool do?</h2>
+
+<p>StyleDoc tool <strong>parses CSS file</strong>, extracting styledoc-blocks (like the one above) and <strong>creating showcase page</strong> based on them.</p>
+
+<p>This page contains full list of documented elements and their variations, illustrated with live preview and markup example.</p>
+
+<h2>
+<a id="live-examples" class="anchor" href="#live-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live examples</h2>
+
+<p>See <em><a href="examples/">examples</a></em> folder for LESS/CSS sources and showcase results.</p>
+
+<p>Viewable demos coming soon!</p>
+
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick start</h2>
+
+<p>First of all, <strong>you need a CSS file with some styledoc-blocks</strong> inside.</p>
+
+<p>StyleDoc tool will create a showcase page based on such CSS file.<br>
+It can be created in two ways:</p>
+
+<ol>
+<li>
+<em><a href="#httpbrowser-way">Browser way</a></em> (HTTP)</li>
+<li>
+<em><a href="#filesystemnodejs-way">NodeJS way</a></em> (filesystem)</li>
+</ol>
+
+<h3>
+<a id="httpbrowser-way" class="anchor" href="#httpbrowser-way" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTTP/browser way</h3>
+
+<p>In this mode, the tool generates showcase page dynamically inside a HTML file opened with browser.</p>
+
+<p>All required files are loaded via HTTP requests (Ajax).</p>
+
+<ol>
+<li>
+<a href="https://github.com/thybzi/styledoc/archive/master.zip">Download the archive</a> and unpack it (you only need <code>styledoc.js</code> and <code>templates</code> directory).<br>
+Using <code>js/styledoc/</code> directory is recommended (otherwise you'll need to <a href="#set-templates-directory">reconfigure templates path</a>).</li>
+<li>Download <a href="http://jquery.com/download/">jQuery</a> <em>1.11.1+ or 2.1.1+</em> (<a href="#why-new-version-of-jquery-is-required">why these versions?</a>)<br>
+(needed only for separate showcase HTML file, no need to change version on other pages of your website)</li>
+<li>Download <a href="https://github.com/janl/mustache.js">mustache.js</a>
+</li>
+<li>Create a new HTML file with some basic markup, JS library links, and <code>styledoc.showcaseFile()</code> call. Something as simple as that:</li>
+</ol>
+
+<div class="highlight highlight-html"><pre>&lt;!DOCTYPE html&gt;
+&lt;<span class="pl-ent">html</span>&gt;
+&lt;<span class="pl-ent">head</span>&gt;
+    &lt;<span class="pl-ent">title</span>&gt;My styles demo&lt;/<span class="pl-ent">title</span>&gt;
+    &lt;<span class="pl-ent">meta</span> <span class="pl-e">charset</span>=<span class="pl-s1"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>&gt;
+<span class="pl-s2">    &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>js/jquery-1.11.1.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s2">    &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>js/mustache.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s2">    &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s1"><span class="pl-pds">"</span>js/styledoc/styledoc.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+&lt;/<span class="pl-ent">head</span>&gt;
+&lt;<span class="pl-ent">body</span>&gt;
+
+<span class="pl-s2">&lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s2">    styledoc.showcaseFile(<span class="pl-s1"><span class="pl-pds">'</span>css/mystyle.css<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s2">&lt;/<span class="pl-ent">script</span>&gt;</span>
+
+&lt;/<span class="pl-ent">body</span>&gt;
+&lt;/<span class="pl-ent">html</span>&gt;
+</pre></div>
+
+<p>After that, <strong>just open the file with your browser</strong> (use <code>http://</code> or <code>https://</code>, not <code>file:///</code>) and have fun!</p>
+
+<p>CSS file path can be provided as an URL, or a path relative to current location.</p>
+
+<p>Note that loading CSS file via cross-domain URL file may require a <a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a> header<br>
+(e.g. <code>Access-Control-Allow-Origin: *</code>).</p>
+
+<p>For advanced configuration, see <em><a href="#configuration">Configuration</a></em> section.</p>
+
+<h3>
+<a id="filesystemnodejs-way" class="anchor" href="#filesystemnodejs-way" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filesystem/NodeJS way</h3>
+
+<p>In this mode, the tool generates showcase HTML files within the filesystem.</p>
+
+<p>Browser renders these files faster, because they are "hardcoded" and not formed dynamically.  </p>
+
+<p>Also, if you have <a href="http://phantomjs.org/">PhantomJS</a> installed, you can minimize iframe loading lag and prevent page height changing (<a href="#phantomjs-advantage">more details</a> follow).</p>
+
+<p>Required files are loaded via either filesystem or HTTP requests.</p>
+
+<h4>
+<a id="installing" class="anchor" href="#installing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing</h4>
+
+<p>Assuming you already have <a href="http://nodejs.org/">NodeJS</a> installed.</p>
+
+<pre><code>npm install styledoc
+</code></pre>
+
+<h4>
+<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic usage</h4>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> styledoc <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>styledoc<span class="pl-pds">'</span></span>);
+styledoc.showcaseFile(<span class="pl-s1"><span class="pl-pds">'</span>css/mystyle.css<span class="pl-pds">'</span></span>, {
+    page_title<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>My presentation title<span class="pl-pds">'</span></span>
+});</pre></div>
+
+<p>CSS file path can be provided as an URL, or a path relative to current location.</p>
+
+<p>The above code will create your presentation files in <code>showcase/</code> directory (relative to the current directory).</p>
+
+<p>You can change the output directory to any other relative path (trailing slash is optional).</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> styledoc <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>styledoc<span class="pl-pds">'</span></span>);
+styledoc.showcaseFile(<span class="pl-s1"><span class="pl-pds">'</span>css/mystyle.css<span class="pl-pds">'</span></span>, {
+    page_title<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>My presentation title<span class="pl-pds">'</span></span>,
+    output_dir<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>my/presentation/subdir/<span class="pl-pds">'</span></span>
+});</pre></div>
+
+<h4>
+<a id="phantomjs-advantage" class="anchor" href="#phantomjs-advantage" aria-hidden="true"><span class="octicon octicon-link"></span></a>PhantomJS advantage</h4>
+
+<p><strong>If you have <a href="http://phantomjs.org/">PhantomJS</a> installed</strong> in your system, you can use it to improve showcase generation.</p>
+
+<p>It will pre-measure the height of each presentation iframe item when generating them to <strong>achieve maximum rendering speed</strong> for showcase page (and also to avoid some possible client bugs).</p>
+
+<p>To involve PhantomJS for showcase generation, <strong>just add one more option</strong> (<code>use_phantomjs: true</code>):</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> styledoc <span class="pl-k">=</span> <span class="pl-s3">require</span>(<span class="pl-s1"><span class="pl-pds">'</span>styledoc<span class="pl-pds">'</span></span>);
+styledoc.showcaseFile(<span class="pl-s1"><span class="pl-pds">'</span>css/mystyle.css<span class="pl-pds">'</span></span>, {
+    page_title<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>My presentation title<span class="pl-pds">'</span></span>,
+    use_phantomjs<span class="pl-k">:</span> <span class="pl-c1">true</span>
+});</pre></div>
+
+<h4>
+<a id="advanced-configuration" class="anchor" href="#advanced-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced configuration</h4>
+
+<p>See <em><a href="#configuration">Configuration</a></em> section.</p>
+
+<h4>
+<a id="windows-users" class="anchor" href="#windows-users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Windows users</h4>
+
+<p>StyleDoc requires JSDom module when in NodeJS mode.</p>
+
+<p>JSDom installation could be a bit tricky on Windows (see <a href="#i-cannot-install-nodejs-version-on-windows">corresponding section</a> for more details).<br>
+If you are not enough lucky or patient, just use StyleDoc in HTTP/browser way.</p>
+
+<h2>
+<a id="supported-tags-list" class="anchor" href="#supported-tags-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supported tags list</h2>
+
+<ul>
+<li>
+<strong><code>@section</code></strong>: Section number and title within showcase file<br>
+<em>Example:</em> <code>@section 2.3 Buttons</code><br>
+Sections are sorted by section number<br>
+If section title is omitted, block title or <code>@base</code> title is used instead</li>
+<li>
+<strong><code>@base</code></strong>: Base CSS selector and title<br>
+<em>Example:</em> <code>@base button Normal button</code><br>
+Base selector can contain element name, class or whatever.<br>
+All modifiers and states are applied to this kind of element.<br>
+</li>
+<li>
+<strong><code>@modifier</code></strong>: CSS selector and title for modifier<br>
+<em>Example:</em> <code>@modifier .large Large sized button</code><br>
+A selector that modifies <code>@base</code> selector by adding class(es) or/and ID or/and any other CSS modification that can by applied by creating or altering some HTML attribute(s).<br>
+Any number of modifiers can exist within the same section.</li>
+<li>
+<strong><code>@state</code></strong>: CSS selector and title for state<br>
+<em>Example:</em> <code>@state .active Active state of the button</code><br>
+<em>Alias:</em> <code>@pseudo</code><br>
+A special kind of modifier that doesn't represent any valuable variation of element, but only some special state (like <code>:checked</code> or <code>.active</code>).<br>
+All modifiers are sequentially applied within each showcase subsection, instead of creating a separate subsection.<br>
+Any number of states can exist within the same section.<br>
+Just like common modifiers, can only represent CSS modification applicable with HTML attributes.</li>
+<li>
+<strong><code>@example</code></strong>: HTML code representing the usage of element<br>
+<em>Example:</em> <code>@example &lt;button&gt;Sample text&lt;/button&gt;</code><br>
+<em>Alias:</em> <code>@markup</code><br>
+Should contain HTML markup for CSS selector determined in <code>@base</code>.<br>
+Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live presentation, if not overridden by <code>@presentation</code>).<br>
+Can be multiline (relative indents are respected). Can begin from the next line after the tag.</li>
+<li>
+<strong><code>@presentation</code></strong>: HTML code for the live presentation of element (if it should differ from <code>@example</code> for some reason)<br>
+<em>Example:</em> <code>@presentation &lt;div&gt;&lt;button&gt;Sample text&lt;/button&gt;&lt;/div&gt;</code> 
+Can be multiline (relative indents are respected). Can begin from the next line after the tag.<br>
+</li>
+<li>
+<strong><code>@author</code></strong>: Name, email, etc. of the code block author<br>
+<em>Example:</em> <code>@author John Smith &lt;jsmith@gmail.com&gt;</code><br>
+Multiple instances are allowed within the same section.</li>
+<li>
+<strong><code>@version</code></strong>: Version of code block (if you need to specify it by some reason)<br>
+<em>Example:</em> <code>@version 1.4</code>
+</li>
+<li>
+<strong><code>@since</code></strong>: Code version element exists since<br>
+<em>Example:</em> <code>@since 1.1</code>
+</li>
+<li>
+<strong><code>@deprecated</code></strong>: Beginning code version and/or reasons for element deprecating<br>
+<em>Example:</em> <code>@deprecated 1.2 Use .action-button instead</code><br>
+Either version or description can be omitted.</li>
+<li>
+<strong><code>@see</code></strong>: Some reference to be mentioned<br>
+<em>Example:</em> <code>@see http://stackoverflow.com/a/428032</code><br>
+Multiple instances are allowed within the same section.</li>
+<li>
+<strong><code>@todo</code></strong>: Some matters to be improved within the code<br>
+<em>Example:</em> <code>@todo Replace sprite images with pure CSS</code><br>
+Multiple instances are allowed within the same section.</li>
+<li>
+<strong><code>@fixme</code></strong>: Some things needed to be fixed within the code<br>
+<em>Example:</em> <code>@fixme IE9 fails to draw this element correctly</code><br>
+Multiple instances are allowed within the same section.</li>
+</ul>
+
+<p>Also, first text line (e.g. with no tags) is considered to be the <strong>block title</strong>.<br>
+All text lines going after the block title are considered to be <strong>block description</strong>.<br>
+Any text lines, that go after the first tag encountered, are ignored.</p>
+
+<p><em><code>@todo</code> revise the list, possible removing some strange tags (like <code>@version</code> and <code>@since</code>)</em></p>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<h3>
+<a id="set-templates-directory" class="anchor" href="#set-templates-directory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Set templates directory</h3>
+
+<p>To create a showcase, StyleDoc need a template.</p>
+
+<p>It looks for this template on path set in <code>styledoc.templates_dir</code> property.</p>
+
+<ul>
+<li>
+<em>For HTTP/browser mode</em>, default path is <code>js/styledoc/templates/</code> (relative to the HTML file).</li>
+<li>
+<em>For FS/NodeJS mode</em>, default path is <code>templates/</code> subdir inside module directory.</li>
+</ul>
+
+<p>You can change this default value to any URL or relative path.</p>
+
+<div class="highlight highlight-javascript"><pre>styledoc.templates_dir <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>my/custom/templates/dir<span class="pl-pds">'</span></span>;</pre></div>
+
+<ul>
+<li>
+<em>In HTTP/browser mode</em>, path value is relative to the HTML file.</li>
+<li>
+<em>In FS/NodeJS mode</em>, path value is relative to output directory.</li>
+</ul>
+
+<p><em><code>@todo</code> other configurable properties</em></p>
+
+<h3>
+<a id="showcasefile-method-options" class="anchor" href="#showcasefile-method-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>showcaseFile() method options</h3>
+
+<p>Showcase options can be provided as second argument</p>
+
+<div class="highlight highlight-javascript"><pre>styledoc.showcaseFile(<span class="pl-s1"><span class="pl-pds">'</span>css/mystyle.css<span class="pl-pds">'</span></span>, {
+     <span class="pl-c">/* options here */</span>
+});</pre></div>
+
+<h4>
+<a id="available-options" class="anchor" href="#available-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available options:</h4>
+
+<ul>
+<li>
+<strong>$container</strong>: (HTTP mode only) JQuery element for root showcase container<br>
+<em>Default value:</em> <code>$('body')</code>
+</li>
+<li>
+<strong>output_dir</strong>: (FS mode only) Path for creating to showcase files, relative to current location<br>
+<em>Default value:</em> <code>'showcase/'</code>
+</li>
+<li>
+<strong>template</strong>: Name of showcase page template<br>
+<em>Default value:</em> <code>'default'</code>
+</li>
+<li>
+<strong>language</strong>: Language to apply when creating page (should exist in template's directory)<br>
+<em>Default value:</em> <code>'en'</code>
+</li>
+<li>
+<strong>doctype</strong>: Name of showcase page template (should exist in template's directory)<br>
+<em>Default value:</em> <code>'html5'</code>
+</li>
+<li>
+<strong>page_title</strong>: Main title (<code>&lt;h1&gt;</code>) of showcase page<br>
+<em>Default value for HTTP mode:</em> <code>document.title</code><br>
+<em>Default value for FS mode:</em> <code>''</code>
+</li>
+<li>
+<strong>iframe_delay</strong>: Delay (ms) before refreshing iframe height<br>
+This delay is needed to render presentation item iframe page, measure its height, and then apply this height to <code>&lt;iframe&gt;</code> element itself<br>
+<em>Default value:</em> <code>2000</code>
+</li>
+<li>
+<strong>use_phantomjs</strong>: (FS mode only) Use PhantomJS to pre-count and pre-set presentation iframes height values (so iframe delay is not needed)<br>
+Requires PhantomJS to be installed in system<br>
+<em>Default value:</em> <code>false</code>
+</li>
+<li>
+<strong>phantomjs_viewport</strong>: (FS mode only) Viewport size for PhantomJS instances<br>
+<em>Default value:</em> <code>{ width: 1280, height: 800 }</code>
+</li>
+<li>
+<strong>silent_mode</strong>: (FS mode only) Disable console messages<br>
+<em>Default value:</em> <code>false</code>
+</li>
+<li>
+<strong>presentation_pad_left</strong>: Left padding for presentation container<br>
+Useful if elements have left box-shadow, outline or similar styles that don't affect the container offset size<br>
+<em>Default value:</em> <code>undefined</code>
+</li>
+<li>
+<strong>presentation_pad_right</strong>: Right padding for presentation container (similar to <code>presentation_pad_left</code>)<br>
+<em>Default value:</em> <code>undefined</code>
+</li>
+<li>
+<strong>presentation_pad_top</strong>: Top padding for presentation container (similar to <code>presentation_pad_left</code>)<br>
+<em>Default value:</em> <code>undefined</code>
+</li>
+<li>
+<strong>presentation_pad_bottom</strong>: Bottom padding for presentation container (similar to <code>presentation_pad_left</code>)<br>
+<em>Default value:</em> <code>undefined</code>
+</li>
+</ul>
+
+<h3>
+<a id="creating-your-own-template" class="anchor" href="#creating-your-own-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating your own template</h3>
+
+<p><em><code>@todo</code></em></p>
+
+<h2>
+<a id="q--a" class="anchor" href="#q--a" aria-hidden="true"><span class="octicon octicon-link"></span></a>Q &amp; A</h2>
+
+<h3>
+<a id="can-i-use-styledoc-with-less-sass-etc" class="anchor" href="#can-i-use-styledoc-with-less-sass-etc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Can I use StyleDoc with LESS, SASS, etc.?</h3>
+
+<p>Yes, you can. The easiest way is just to compile it CSS, preserving CSS-style comments, and then apply StyleDoc to the resulting CSS file.</p>
+
+<h3>
+<a id="does-styledoc-respect-import-rules-in-css" class="anchor" href="#does-styledoc-respect-import-rules-in-css" aria-hidden="true"><span class="octicon octicon-link"></span></a>Does StyleDoc respect <code>@import</code> rules in CSS?</h3>
+
+<p>Yes, it does. The tool recursively loads and parses all imported CSS-files (as well as imports in that imported files, and so on).</p>
+
+<h3>
+<a id="can-i-load-css-file-by-http-url" class="anchor" href="#can-i-load-css-file-by-http-url" aria-hidden="true"><span class="octicon octicon-link"></span></a>Can I load CSS file by HTTP URL?</h3>
+
+<p>Yes, you can. Just provide an URL instead of relative path to CSS when calling <code>styledoc.showcaseFile()</code>.<br>
+Also, if you use StyleDoc in browser mode, CORS headers are needed for getting that file.</p>
+
+<h3>
+<a id="how-does-live-preview-work" class="anchor" href="#how-does-live-preview-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>How does live preview work?</h3>
+
+<p>Each element preview is created in separate <code>&lt;iframe&gt;</code> with target CSS file linked and HTML content generated.<br>
+Note that some delay needed for those iframes to render.</p>
+
+<h3>
+<a id="why-state-hover-doesnt-work" class="anchor" href="#why-state-hover-doesnt-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why <code>@state :hover</code> doesn't work?</h3>
+
+<p>Modifiers available for showcase are limited to CSS modifications applicable by adding or altering HTML attributes. <code>:hover</code> or <code>:active</code> cannot be applied with attributes (unlike <code>:checked</code>, <code>:disabled</code> or <code>:readonly</code>), so they are mainly useless for showcase.<br>
+However, elements in showcase are full functional, so you can see the hover state of just by hovering the element by mouse.</p>
+
+<h3>
+<a id="i-cannot-install-nodejs-version-on-windows" class="anchor" href="#i-cannot-install-nodejs-version-on-windows" aria-hidden="true"><span class="octicon octicon-link"></span></a>I cannot install NodeJS version on Windows</h3>
+
+<p>On Windows, there are some known problems when installing JSDom, which is required for NodeJS version of the tool. If you are lucky, following manuals could help (if not, you can still use StyleDoc in HTTP/browser way):  </p>
+
+<ul>
+<li><a href="http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/">http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/</a></li>
+<li><a href="https://github.com/tmpvar/jsdom#contextify">https://github.com/tmpvar/jsdom#contextify</a></li>
+</ul>
+
+<h3>
+<a id="is-there-a-grunt-wrapper-for-npm-module" class="anchor" href="#is-there-a-grunt-wrapper-for-npm-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Is there a grunt wrapper for npm module?</h3>
+
+<p><em><code>@todo</code> make it</em></p>
+
+<h3>
+<a id="can-styledoc-be-used-as-amd-module" class="anchor" href="#can-styledoc-be-used-as-amd-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Can StyleDoc be used as AMD module?</h3>
+
+<p>Yes, it is AMD-compatible.<br>
+<em><code>@todo</code> test it</em></p>
+
+<h3>
+<a id="can-styledoc-be-used-in-browser-as-commonjs-module" class="anchor" href="#can-styledoc-be-used-in-browser-as-commonjs-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Can StyleDoc be used in browser as CommonJS module?</h3>
+
+<p>No. It only uses CommonJS module syntax for server-side NodeJS mode.<br>
+(But... Do you really need this?) </p>
+
+<h3>
+<a id="why-new-version-of-jquery-is-required" class="anchor" href="#why-new-version-of-jquery-is-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why new version of jQuery is required?</h3>
+
+<p>StyleDoc <em>requires jQuery version 1.11.1+ or 2.1.1+</em>.<br>
+That is because showcase generator tool needs this particular change in jQuery <em>Sizzle</em> code:<br>
+<a href="https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5">https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5</a>.<br>
+Without that, it cannot parse and apply CSS modifiers to HTML code.</p>
+
+<h3>
+<a id="i-use-an-older-version-of-jquery-on-my-website-what-can-i-do" class="anchor" href="#i-use-an-older-version-of-jquery-on-my-website-what-can-i-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>I use an older version of jQuery on my website. What can I do?</h3>
+
+<ol>
+<li>You can just use separate versions of jQuery for your website and showcase file.</li>
+<li>You can manually modify your jQuery file, reproducing this change:<br>
+<a href="https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5">https://github.com/jquery/sizzle/commit/ccb809ff416b06ca86abe54ce273c40f2271d3b5</a>;<br>
+simplier, just find <code>function tokenize(</code> in jquery .js file, and add <code>Sizzle.tokenize = tokenize;</code> somewhere after (or before) this function.</li>
+</ol>
+
+<h3>
+<a id="why-npm-module-has-such-heavy-dependencies" class="anchor" href="#why-npm-module-has-such-heavy-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why npm module has such heavy dependencies?</h3>
+
+<p>For now, they all are needed for different reasons. I'll try to optimize these dependencies in future.</p>
+
+<h3>
+<a id="why-the-code-is-so-ugly" class="anchor" href="#why-the-code-is-so-ugly" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why the code is so ugly?</h3>
+
+<p>For now, it just does its dirty work.</p>
+
+<p>Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beautiful :)</p>
+
+<h2>
+<a id="version-history" class="anchor" href="#version-history" aria-hidden="true"><span class="octicon octicon-link"></span></a>Version history</h2>
+
+<ul>
+<li>
+<strong>0.0.2</strong> <em>(2014-11-28)</em>: Examples added; minor changes, improvements and bugfixes</li>
+<li>
+<strong>0.0.1</strong> <em>(2014-11-27)</em>: Initial release</li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/thybzi">thybzi</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-57178371-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>

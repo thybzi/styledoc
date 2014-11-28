@@ -64,6 +64,7 @@
     styledoc.server_mode = !window.document; // @todo revise?
     styledoc.templates_dir = undefined; // defined few lines below
     styledoc.use_selector_based_ids = true; // use selector-based IDs for showcase items (instead of numbers)
+    styledoc.states_modify_unique_attrs = true; // modify "id" and "for" attr values to preserve their uniqueness when generating states
     styledoc.states_html_glue = "\n"; // @todo showcaseFile option?
 
     if (styledoc.server_mode) {
@@ -323,7 +324,7 @@
             var html_base = html,
                 result;
             for (var i = 0; i < states.length; i++) {
-                result = styledoc.htmlApplyModifier(html_base, base, states[i].state, undefined, is_presentation);
+                result = styledoc.htmlApplyModifier(html_base, base, states[i].state, undefined, is_presentation, styledoc.states_modify_unique_attrs);
                 if (result) {
                     html += styledoc.states_html_glue + result;
                 }
@@ -340,14 +341,16 @@
      * @param {string} modifier CSS selector to modify base element
      * @param {array} states List containing CSS selectors for states
      * @param {boolean} is_presentation Use presentation mode instead of HTML markup example mode
+     * @param {boolean} modify_unique_attrs Add suffix to any "id" or "for" attr value found within the code
      * @returns {string}
      */
-    styledoc.htmlApplyModifier = function (html, base, modifier, states, is_presentation) {
+    styledoc.htmlApplyModifier = function (html, base, modifier, states, is_presentation, modify_unique_attrs) {
         var $wrapper = $("<styledoc-wrapper>").append(html); // @todo hardcode tag name
         var $elem = $(base, $wrapper);
 
         // Basic modify
-        if (modifier && $elem.length) {
+        var modify_by_selector = modifier && $elem.length;
+        if (modify_by_selector) {
             var parsed = $.find.tokenize(modifier).pop();
             var item,
                 attr_name,
@@ -379,6 +382,22 @@
                     $elem.attr(attr_name, attr_value);
                 }
             }
+        }
+
+        // Modify "id" and "for" attribute values for any child elements (if enabled)
+        if (modify_unique_attrs) {
+            var suffix = "_" + selectorToId(modifier);
+            $.each([ "id", "for" ], function (i, attr_name) {
+                $("[" + attr_name + "]", $wrapper).each(function (j, elem) {
+                    var $elem = $(elem);
+                    var attr_value = $elem.attr(attr_name);
+                    $elem.attr(attr_name, attr_value + suffix)
+                });
+            });
+        }
+
+        // If input HTML has been modified, saving these modifications
+        if (modify_by_selector || modify_unique_attrs) {
             html = $wrapper.html();
         }
 

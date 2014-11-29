@@ -28,6 +28,19 @@
   "scripts": {
     "test": "make tests"
   },
+  "keywords": [
+    "styledoc",
+    "cssdoc",
+    "docblock",
+    "documentor",
+    "showcase",
+    "presentation",
+    "generator",
+    "css",
+    "less",
+    "sass",
+    "scss"
+  ],
   "author": "Evgeni Dmitriev <thybzi@gmail.com> (http://www.thybzi.com/)",
   "licenses": [
     {

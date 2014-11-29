@@ -38,25 +38,26 @@
         });
     } else if ((typeof module !== "undefined") && module.exports) {
         // Node, CommonJS-like
-        module.exports = factory(root, require("jquery"), require("mustache"), require("jsdom"), require("phantom"), require("fs-extra"), require("path"), require("request"), require("chalk"));
+        module.exports = factory(root, require("jquery"), require("mustache"));
     } else {
         // Browser globals (root is window)
         root.styledoc = factory(root, root.jQuery, root.Mustache);
     }
 
-}(this, function (window, $, Mustache, jsdom, phantom, fs, path, request, chalk) {
+}(this, function (window, $, Mustache) {
     "use strict";
 
     var MODULE_VERSION = "0.0.2";
+
+    var TEMPLATES_SUBDIR = "templates/";
+    var LANGUAGE_SUBDIR = "language/";
+    var PRESENTATION_SUBDIR = "presentation/";
 
     var DEFAULT_LANGUAGE = "en";
     var DEFAULT_DOCTYPE = "html5";
     var DEFAULT_TEMPLATE = "default";
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
-
-    var LANGUAGE_SUBDIR = "language/";
-    var PRESENTATION_SUBDIR = "presentation/";
 
 
     var styledoc = {};
@@ -67,12 +68,37 @@
     styledoc.states_modify_unique_attrs = true; // modify "id" and "for" attr values to preserve their uniqueness when generating states
     styledoc.states_html_glue = "\n"; // @todo showcaseFile option?
 
+    // Vars for npm modules (var declaration should be on top-level of the function)
+    var jsdom,
+        fs,
+        path,
+        request,
+        chalk,
+        phantom;
     if (styledoc.server_mode) {
+        // Connect required npm modules
+        jsdom = require("jsdom");
+        fs = require("fs-extra");
+        path = require("path");
+        request = require("request");
+        chalk = require("chalk");
+
+        // Prepare virtual DOM for jQuery
         window = jsdom.jsdom().parentWindow;
         $ = $(window);
-        styledoc.templates_dir = path.dirname(module.filename) + "/templates/";
+
+        // Check if phantom package is available
+        try {
+            phantom = require("phantom");
+        } catch (e) {
+            phantom = null;
+        }
+
+        // Set default template path for server mode
+        styledoc.templates_dir = path.dirname(module.filename) + "/" + TEMPLATES_SUBDIR;
     } else {
-        styledoc.templates_dir = "js/styledoc/templates/";
+        // Set default template path for browser mode
+        styledoc.templates_dir = "js/styledoc/" + TEMPLATES_SUBDIR;
     }
 
     // tag_name: is_multiline // @todo set is_complex here
@@ -111,10 +137,8 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height (FS mode only)
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] No console messages (FS mode only)
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      */
     styledoc.showcaseFile = function (url, options) {
         options = options || {};
@@ -320,7 +344,7 @@
      * @returns {string}
      */
     styledoc.htmlApplyStates = function (html, base, states, is_presentation) {
-        if (states && states instanceof Array && states.length) {
+        if (isArray(states) && states.length) {
             var html_base = html,
                 result;
             for (var i = 0; i < states.length; i++) {
@@ -430,10 +454,8 @@
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
      * @param {string} [options.page_title=document.title] Main title of document
      * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      */
     styledoc.outputHttp = function (showcase_data, css_url, options) {
 
@@ -458,6 +480,10 @@
         var presentation_container_style = getPresentationContainerStyle(options);
 
         $("head").append('<link rel="stylesheet" href="' + template_dir + 'main.css">');
+
+        if (options.background_color) {
+            $("body").css("background-color", options.background_color);
+        }
 
         var loadFile = styledoc.getLoader().loadFile;
         var load_main_template = loadFile(template_dir + "main.mustache"); // @todo doctype?
@@ -537,10 +563,8 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height
      * @param {boolean} [options.silent_mode=false] No console messages
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      */
     styledoc.outputFs = function (showcase_data, css_url, options) {
 
@@ -549,9 +573,11 @@
         var page_title = options.page_title || "";
         var language = options.language;
         var doctype = options.doctype;
-
         var iframe_delay = options.iframe_delay;
-        var use_phantomjs = !!options.use_phantomjs;
+
+        var use_phantomjs_requested = !!options.use_phantomjs;
+        var use_phantomjs_available = !!phantom;
+        var use_phantomjs = use_phantomjs_requested && use_phantomjs_available;
         var phantomjs_viewport = options.phantomjs_viewport || { width: 1280, height: 800 }; // @todo more convinient way? (e.g. "1280x800")
 
         var silent_mode = !!options.silent_mode;
@@ -572,6 +598,7 @@
         }
 
         var presentation_container_style = getPresentationContainerStyle(options);
+        var background_color = options.background_color;
 
         var loadFile = styledoc.getLoader().loadFile;
         // @todo optimize (something better than: force_fs = true)
@@ -695,6 +722,11 @@
                 presentations_dfd.done(function () {
 
                     if (!silent_mode) {
+
+                        if (use_phantomjs_requested && !use_phantomjs_available) {
+                            console.log(chalk.red('Warning: "use_phantomjs" option ignored, because "phantom" package is not installed'));
+                        }
+
                         console.log("All presentation files created");
                     }
 
@@ -714,6 +746,7 @@
                         output_dir + "index.html",
                         Mustache.render(index_template, {
                             page_title: page_title,
+                            background_color: background_color,
                             content: main_content,
                             use_phantomjs: use_phantomjs,
                             iframe_delay: iframe_delay // @todo unify with http mode
@@ -1070,6 +1103,14 @@
 
 
     /**
+     * @param value
+     * @returns {boolean}
+     */
+    function isArray(value) {
+        return value && (value instanceof Array);
+    }
+
+    /**
      * @param {string} path
      * @returns {boolean}
      */
@@ -1089,20 +1130,26 @@
     /**
      * Generate value for the presentation container "style" attribute
      * @param {object} options
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      * @returns {string|undefined} Undefined value denies redundant attribute creating: $elem.attr("style", undefined)
+     * @todo enable string value for presentation_padding (like "4px 8px")?
      */
     function getPresentationContainerStyle(options) {
         var presentation_container_style = "";
-        $.each([ "left", "right", "top", "bottom" ], function (i, side) {
-            var value = options["presentation_pad_" + side];
-            if (value) {
-                presentation_container_style += "padding-" + side + ": " + value + "px !important; ";
-            }
-        });
+
+        var padding_value = options.presentation_padding;
+        if (typeof padding_value === "number") {
+            padding_value = [ padding_value ];
+        }
+        if (isArray(padding_value)) {
+            presentation_container_style += "padding: " + padding_value.join("px ") + "px !important; ";
+        }
+
+        if (options.background_color) {
+            presentation_container_style += "background-color: " + options.background_color + " !important; ";
+        }
+
         return presentation_container_style.replace(/\s$/, "") || undefined;
     }
 

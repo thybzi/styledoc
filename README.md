@@ -170,51 +170,51 @@ If you are not enough lucky or patient, just use StyleDoc in HTTP/browser way.
 
 Supported tags list
 ---------------
-* **`@section`**: Section number and title within showcase file    
+* **@section**: Section number and title within showcase file    
   *Example:* `@section 2.3 Buttons`    
   Sections are sorted by section number    
   If section title is omitted, block title or `@base` title is used instead
-* **`@base`**: Base CSS selector and title    
+* **@base**: Base CSS selector and title    
   *Example:* `@base button Normal button`    
   Base selector can contain element name, class or whatever.    
   All modifiers and states are applied to this kind of element.    
-* **`@modifier`**: CSS selector and title for modifier    
+* **@modifier**: CSS selector and title for modifier    
   *Example:* `@modifier .large Large sized button`    
   A selector that modifies `@base` selector by adding class(es) or/and ID or/and any other CSS modification that can by applied by creating or altering some HTML attribute(s).    
   Any number of modifiers can exist within the same section.
-* **`@state`**: CSS selector and title for state    
+* **@state**: CSS selector and title for state    
   *Example:* `@state .active Active state of the button`    
   *Alias:* `@pseudo`    
   A special kind of modifier that doesn't represent any valuable variation of element, but only some special state (like `:checked` or `.active`).    
   All modifiers are sequentially applied within each showcase subsection, instead of creating a separate subsection.    
   Any number of states can exist within the same section.    
   Just like common modifiers, can only represent CSS modification applicable with HTML attributes.
-* **`@example`**: HTML code representing the usage of element    
+* **@example**: HTML code representing the usage of element    
   *Example:* `@example <button>Sample text</button>`    
   *Alias:* `@markup`    
   Should contain HTML markup for CSS selector determined in `@base`.    
   Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live presentation, if not overridden by `@presentation`).    
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.
-* **`@presentation`**: HTML code for the live presentation of element (if it should differ from `@example` for some reason)    
+* **@presentation**: HTML code for the live presentation of element (if it should differ from `@example` for some reason)    
   *Example:* `@presentation <div><button>Sample text</button></div>` 
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.    
-* **`@author`**: Name, email, etc. of the code block author    
+* **@author**: Name, email, etc. of the code block author    
   *Example:* `@author John Smith <jsmith@gmail.com>`    
   Multiple instances are allowed within the same section.
-* **`@version`**: Version of code block (if you need to specify it by some reason)    
+* **@version**: Version of code block (if you need to specify it by some reason)    
   *Example:* `@version 1.4`
-* **`@since`**: Code version element exists since    
+* **@since**: Code version element exists since    
   *Example:* `@since 1.1`
-* **`@deprecated`**: Beginning code version and/or reasons for element deprecating    
+* **@deprecated**: Beginning code version and/or reasons for element deprecating    
   *Example:* `@deprecated 1.2 Use .action-button instead`    
   Either version or description can be omitted.
-* **`@see`**: Some reference to be mentioned    
+* **@see**: Some reference to be mentioned    
   *Example:* `@see http://stackoverflow.com/a/428032`    
   Multiple instances are allowed within the same section.
-* **`@todo`**: Some matters to be improved within the code    
+* **@todo**: Some matters to be improved within the code    
   *Example:* `@todo Replace sprite images with pure CSS`    
   Multiple instances are allowed within the same section.
-* **`@fixme`**: Some things needed to be fixed within the code    
+* **@fixme**: Some things needed to be fixed within the code    
   *Example:* `@fixme IE9 fails to draw this element correctly`    
   Multiple instances are allowed within the same section.
 

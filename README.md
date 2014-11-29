@@ -32,7 +32,7 @@ This page contains full list of documented elements and their variations, illust
 Live examples
 ---------------
 
-* **CSS source:** [main.css](https://github.com/thybzi/styledoc/tree/master/examples/test1/css/main.css)    
+* **CSS source:** **[main.css](https://github.com/thybzi/styledoc/tree/master/examples/test1/css/main.css)**    
   Built from following LESS files: 
   [button.less](https://github.com/thybzi/styledoc/tree/master/examples/test1/less/button.less),
   [checkbox.less](https://github.com/thybzi/styledoc/tree/master/examples/test1/less/checkbox.less),

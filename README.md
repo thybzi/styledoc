@@ -162,8 +162,10 @@ See *[Configuration](#configuration)* section.
 #### Windows users
 StyleDoc requires JSDom module when in NodeJS mode.
 
-JSDom installation could be a bit tricky on Windows (see [corresponding section](#i-cannot-install-nodejs-version-on-windows) for more details).  
+JSDom installation could be a bit tricky on Windows (see [corresponding section](#jsdom-dependency) for more details).  
 If you are not enough lucky or patient, just use StyleDoc in HTTP/browser way.
+
+Note that there are also [some PhantomJS usage issues](#phantomjs-optional-dependency) on Windows, but they don't prevent installing or running StyleDoc in non-PhantomJS-mode.
 
  
 
@@ -311,9 +313,19 @@ Modifiers available for showcase are limited to CSS modifications applicable by 
 However, elements in showcase are full functional, so you can see the hover state of just by hovering the element by mouse.
 
 ### I cannot install NodeJS version on Windows
-On Windows, there are some known problems when installing JSDom, which is required for NodeJS version of the tool. If you are lucky, following manuals could help (if not, you can still use StyleDoc in HTTP/browser way):  
+StyleDoc uses two npm modules that could cause problems on Windows.
+
+#### JSDom dependency
+On Windows, there are some known problems when installing **JSDom**, which is **required** for NodeJS version of the tool. If you are lucky, following manuals could help (if not, you can still use StyleDoc in HTTP/browser way):  
 * http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/
 * https://github.com/tmpvar/jsdom#contextify
+
+#### PhantomJS optional dependency
+On Windows, there is also [an issue](http://stackoverflow.com/questions/20628345/node-gyp-rebuild-failed-while-installing-weak-module-on-windows-7-for-phantomj) when installing `phantom` (NodeJS library which used to communicate with **PhantomJS**).
+
+However, *PhantomJS usage is just an option* giving you [some advantages](#phantomjs-advantage), so this dependency is marked **optional**, and StyleDoc installation won't fail if `phantom` couldn't be installed. You'll also see a warning message when generating showcase with `use_phantomjs` option enabled and no `phantom` package installed.
+
+If you succeeded in fixing that issue, you can re-run `npm install`, which will try to install `phantom` package again.
 
 ### Is there a grunt wrapper for npm module?
 *`@todo` make it*

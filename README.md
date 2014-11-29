@@ -32,19 +32,19 @@ This page contains full list of documented elements and their variations, illust
 Live examples
 ---------------
 
-* **CSS source:** **[main.css](https://github.com/thybzi/styledoc/tree/master/examples/test1/css/main.css)**    
+* **CSS source:** **[main.css](https://github.com/thybzi/styledoc/tree/master/examples/ex1/css/main.css)**    
   Built from following LESS files: 
-  [button.less](https://github.com/thybzi/styledoc/tree/master/examples/test1/less/button.less),
-  [checkbox.less](https://github.com/thybzi/styledoc/tree/master/examples/test1/less/checkbox.less),
-  [__mixins.less](https://github.com/thybzi/styledoc/tree/master/examples/test1/less/__mixins.less),
-  [__build.less](https://github.com/thybzi/styledoc/tree/master/examples/test1/less/__build.less)
+  [button.less](https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/button.less),
+  [checkbox.less](https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/checkbox.less),
+  [__mixins.less](https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/__mixins.less),
+  [__build.less](https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/__build.less)
 * **Showcase pages** generated in different ways:    
-  **[Browser](http://thybzi.github.io/styledoc/examples/test1/showcase/browser/)** 
-  ([source](https://github.com/thybzi/styledoc/tree/master/examples/test1/showcase/browser/index.html)),
-  **[NodeJS](http://thybzi.github.io/styledoc/examples/test1/showcase/nodejs/)** 
-  ([source](https://github.com/thybzi/styledoc/tree/master/examples/test1/showcase_nodejs.js)),
-  **[NodeJS + PhantomJS](http://thybzi.github.io/styledoc/examples/test1/showcase/nodejs_phantomjs/)** 
-  ([source](https://github.com/thybzi/styledoc/tree/master/examples/test1/showcase_nodejs_phantomjs.js)),
+  **[Browser](http://thybzi.github.io/styledoc/examples/ex1/showcase/browser/)** 
+  ([source](https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase/browser/index.html)),
+  **[NodeJS](http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs/)** 
+  ([source](https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs.js)),
+  **[NodeJS + PhantomJS](http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs_phantomjs/)** 
+  ([source](https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs_phantomjs.js)),
 
 
 All examples sources are available in *[examples](https://github.com/thybzi/styledoc/tree/master/examples/)* directory of project repository.

@@ -320,7 +320,7 @@
      * @returns {string}
      */
     styledoc.htmlApplyStates = function (html, base, states, is_presentation) {
-        if (states && states instanceof Array && states.length) {
+        if (isArray(states) && states.length) {
             var html_base = html,
                 result;
             for (var i = 0; i < states.length; i++) {
@@ -1068,6 +1068,14 @@
     };
 
 
+
+    /**
+     * @param value
+     * @returns {boolean}
+     */
+    function isArray(value) {
+        return value && (value instanceof Array);
+    }
 
     /**
      * @param {string} path

@@ -279,6 +279,10 @@ styledoc.showcaseFile('css/mystyle.css', {
   Useful if elements have `box-shadow`, `outline` or similar styles that don't affect the container offset size    
   Value can be *number* (`4 => padding: 4px`) or *array of numbers* (`[ 4, 3, 8 ] => padding: 4px 3px 8px`)    
   *Default value:* `undefined`
+* **background_color**: Background color CSS value for both main showcase page and presentation iframe pages (for seemless iframes)    
+  Use when your target body color differs from value proposed by template (`#fff` for `default` template, `#000` for `dark` template, etc.)    
+  Value should be string containing any CSS-valid color value (e.g. `"#f1f1f1"`, `"darkgray"`, or even `"rgb(17, 17, 36)"`)    
+  *Default value:* `undefined`
 
 
 ### Creating your own template

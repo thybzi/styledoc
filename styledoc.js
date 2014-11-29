@@ -112,6 +112,7 @@
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] No console messages (FS mode only)
      * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      */
     styledoc.showcaseFile = function (url, options) {
         options = options || {};
@@ -428,6 +429,7 @@
      * @param {string} [options.page_title=document.title] Main title of document
      * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
      * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      */
     styledoc.outputHttp = function (showcase_data, css_url, options) {
 
@@ -452,6 +454,10 @@
         var presentation_container_style = getPresentationContainerStyle(options);
 
         $("head").append('<link rel="stylesheet" href="' + template_dir + 'main.css">');
+
+        if (options.background_color) {
+            $("body").css("background-color", options.background_color);
+        }
 
         var loadFile = styledoc.getLoader().loadFile;
         var load_main_template = loadFile(template_dir + "main.mustache"); // @todo doctype?
@@ -532,6 +538,7 @@
      * @param {boolean} [options.silent_mode=false] No console messages
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances
      * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      */
     styledoc.outputFs = function (showcase_data, css_url, options) {
 
@@ -563,6 +570,7 @@
         }
 
         var presentation_container_style = getPresentationContainerStyle(options);
+        var background_color = options.background_color;
 
         var loadFile = styledoc.getLoader().loadFile;
         // @todo optimize (something better than: force_fs = true)
@@ -705,6 +713,7 @@
                         output_dir + "index.html",
                         Mustache.render(index_template, {
                             page_title: page_title,
+                            background_color: background_color,
                             content: main_content,
                             use_phantomjs: use_phantomjs,
                             iframe_delay: iframe_delay // @todo unify with http mode
@@ -1089,6 +1098,7 @@
      * Generate value for the presentation container "style" attribute
      * @param {object} options
      * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
      * @returns {string|undefined} Undefined value denies redundant attribute creating: $elem.attr("style", undefined)
      * @todo enable string value for presentation_padding (like "4px 8px")?
      */
@@ -1101,6 +1111,10 @@
         }
         if (isArray(padding_value)) {
             presentation_container_style += "padding: " + padding_value.join("px ") + "px !important; ";
+        }
+
+        if (options.background_color) {
+            presentation_container_style += "background-color: " + options.background_color + " !important; ";
         }
 
         return presentation_container_style.replace(/\s$/, "") || undefined;

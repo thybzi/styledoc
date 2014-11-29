@@ -1,0 +1,226 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', '-g', 'bower' ]
+2 info using npm@1.4.9
+3 info using node@v0.10.28
+4 verbose node symlink /usr/bin/node
+5 verbose cache add [ 'bower', null ]
+6 verbose cache add name=undefined spec="bower" args=["bower",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'bower',
+7 verbose parsed url   path: 'bower',
+7 verbose parsed url   href: 'bower' }
+8 silly lockFile 206e3ce5-bower bower
+9 verbose lock bower /home/thybzi/.npm/206e3ce5-bower.lock
+10 silly lockFile 206e3ce5-bower bower
+11 silly lockFile 206e3ce5-bower bower
+12 verbose addNamed [ 'bower', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 1240aab1-bower bower@
+15 verbose lock bower@ /home/thybzi/.npm/1240aab1-bower.lock
+16 silly addNameRange { name: 'bower', range: '*', hasData: false }
+17 verbose url raw bower
+18 verbose url resolving [ 'https://registry.npmjs.org/', './bower' ]
+19 verbose url resolved https://registry.npmjs.org/bower
+20 info trying registry request attempt 1 at 20:49:19
+21 verbose etag "E6RX7PHVG3Z88XPFXE90YNP2S"
+22 http GET https://registry.npmjs.org/bower
+23 http 200 https://registry.npmjs.org/bower
+24 silly registry.get cb [ 200,
+24 silly registry.get   { date: 'Sat, 29 Nov 2014 16:49:20 GMT',
+24 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+24 silly registry.get     etag: '"779VZMNPAZD7GUQB52S9X6ARC"',
+24 silly registry.get     'content-type': 'application/json',
+24 silly registry.get     'cache-control': 'max-age=60',
+24 silly registry.get     'content-length': '105523',
+24 silly registry.get     'accept-ranges': 'bytes',
+24 silly registry.get     via: '1.1 varnish',
+24 silly registry.get     age: '46',
+24 silly registry.get     'x-served-by': 'cache-ams4140-AMS',
+24 silly registry.get     'x-cache': 'HIT',
+24 silly registry.get     'x-cache-hits': '2',
+24 silly registry.get     'x-timer': 'S1417279760.123047,VS0,VE0',
+24 silly registry.get     vary: 'Accept',
+24 silly registry.get     'keep-alive': 'timeout=10, max=50',
+24 silly registry.get     connection: 'Keep-Alive' } ]
+25 silly addNameRange number 2 { name: 'bower', range: '*', hasData: true }
+26 silly addNameRange versions [ 'bower',
+26 silly addNameRange   [ '0.1.0',
+26 silly addNameRange     '0.1.2',
+26 silly addNameRange     '0.1.3',
+26 silly addNameRange     '0.2.0',
+26 silly addNameRange     '0.3.0',
+26 silly addNameRange     '0.3.1',
+26 silly addNameRange     '0.3.2',
+26 silly addNameRange     '0.4.0',
+26 silly addNameRange     '0.5.0',
+26 silly addNameRange     '0.5.1',
+26 silly addNameRange     '0.6.0',
+26 silly addNameRange     '0.6.1',
+26 silly addNameRange     '0.6.2',
+26 silly addNameRange     '0.6.3',
+26 silly addNameRange     '0.6.4',
+26 silly addNameRange     '0.6.5',
+26 silly addNameRange     '0.6.6',
+26 silly addNameRange     '0.6.7',
+26 silly addNameRange     '0.6.8',
+26 silly addNameRange     '0.7.0',
+26 silly addNameRange     '0.7.1',
+26 silly addNameRange     '0.8.0',
+26 silly addNameRange     '0.8.1',
+26 silly addNameRange     '0.8.2',
+26 silly addNameRange     '0.8.3',
+26 silly addNameRange     '0.8.4',
+26 silly addNameRange     '0.8.5',
+26 silly addNameRange     '0.8.6',
+26 silly addNameRange     '0.9.0',
+26 silly addNameRange     '0.9.1',
+26 silly addNameRange     '0.9.2',
+26 silly addNameRange     '0.10.0',
+26 silly addNameRange     '1.0.0',
+26 silly addNameRange     '1.0.1',
+26 silly addNameRange     '1.0.2',
+26 silly addNameRange     '1.0.3',
+26 silly addNameRange     '1.1.0',
+26 silly addNameRange     '1.1.1',
+26 silly addNameRange     '1.1.2',
+26 silly addNameRange     '1.2.0',
+26 silly addNameRange     '1.2.1',
+26 silly addNameRange     '1.2.2',
+26 silly addNameRange     '1.2.3',
+26 silly addNameRange     '1.2.4',
+26 silly addNameRange     '1.2.5',
+26 silly addNameRange     '1.2.6',
+26 silly addNameRange     '1.2.7',
+26 silly addNameRange     '1.2.8',
+26 silly addNameRange     '1.3.0',
+26 silly addNameRange     '1.3.1',
+26 silly addNameRange     '1.3.2',
+26 silly addNameRange     '1.3.3',
+26 silly addNameRange     '1.3.4',
+26 silly addNameRange     '1.3.5',
+26 silly addNameRange     '1.3.6',
+26 silly addNameRange     '1.3.7',
+26 silly addNameRange     '1.3.8',
+26 silly addNameRange     '1.3.9',
+26 silly addNameRange     '1.3.10',
+26 silly addNameRange     '1.3.11',
+26 silly addNameRange     '1.3.12' ] ]
+27 verbose addNamed [ 'bower', '1.3.12' ]
+28 verbose addNamed [ '1.3.12', '1.3.12' ]
+29 silly lockFile 9819431c-bower-1-3-12 bower@1.3.12
+30 verbose lock bower@1.3.12 /home/thybzi/.npm/9819431c-bower-1-3-12.lock
+31 silly lockFile 9819431c-bower-1-3-12 bower@1.3.12
+32 silly lockFile 9819431c-bower-1-3-12 bower@1.3.12
+33 silly lockFile 1240aab1-bower bower@
+34 silly lockFile 1240aab1-bower bower@
+35 silly resolved [ { name: 'bower',
+35 silly resolved     version: '1.3.12',
+35 silly resolved     description: 'The browser package manager',
+35 silly resolved     author: { name: 'Twitter' },
+35 silly resolved     licenses: [ [Object] ],
+35 silly resolved     repository: { type: 'git', url: 'git://github.com/bower/bower' },
+35 silly resolved     main: 'lib',
+35 silly resolved     homepage: 'http://bower.io',
+35 silly resolved     engines: { node: '>=0.10.0' },
+35 silly resolved     dependencies:
+35 silly resolved      { abbrev: '~1.0.4',
+35 silly resolved        archy: '0.0.2',
+35 silly resolved        'bower-config': '~0.5.2',
+35 silly resolved        'bower-endpoint-parser': '~0.2.2',
+35 silly resolved        'bower-json': '~0.4.0',
+35 silly resolved        'bower-logger': '~0.2.2',
+35 silly resolved        'bower-registry-client': '~0.2.0',
+35 silly resolved        cardinal: '0.4.0',
+35 silly resolved        chalk: '0.5.0',
+35 silly resolved        chmodr: '0.1.0',
+35 silly resolved        'decompress-zip': '0.0.8',
+35 silly resolved        fstream: '~1.0.2',
+35 silly resolved        'fstream-ignore': '~1.0.1',
+35 silly resolved        glob: '~4.0.2',
+35 silly resolved        'graceful-fs': '~3.0.1',
+35 silly resolved        handlebars: '~2.0.0',
+35 silly resolved        inquirer: '0.7.1',
+35 silly resolved        insight: '0.4.3',
+35 silly resolved        'is-root': '~1.0.0',
+35 silly resolved        junk: '~1.0.0',
+35 silly resolved        lockfile: '~1.0.0',
+35 silly resolved        'lru-cache': '~2.5.0',
+35 silly resolved        mkdirp: '0.5.0',
+35 silly resolved        mout: '~0.9.0',
+35 silly resolved        nopt: '~3.0.0',
+35 silly resolved        opn: '~1.0.0',
+35 silly resolved        osenv: '0.1.0',
+35 silly resolved        'p-throttler': '0.1.0',
+35 silly resolved        promptly: '0.2.0',
+35 silly resolved        q: '~1.0.1',
+35 silly resolved        request: '~2.42.0',
+35 silly resolved        'request-progress': '0.3.0',
+35 silly resolved        retry: '0.6.0',
+35 silly resolved        rimraf: '~2.2.0',
+35 silly resolved        semver: '~2.3.0',
+35 silly resolved        'shell-quote': '~1.4.1',
+35 silly resolved        'stringify-object': '~1.0.0',
+35 silly resolved        'tar-fs': '0.5.2',
+35 silly resolved        tmp: '0.0.23',
+35 silly resolved        'update-notifier': '0.2.0',
+35 silly resolved        which: '~1.0.5' },
+35 silly resolved     devDependencies:
+35 silly resolved      { coveralls: '~2.11.0',
+35 silly resolved        'expect.js': '~0.3.1',
+35 silly resolved        grunt: '~0.4.4',
+35 silly resolved        'grunt-cli': '^0.1.13',
+35 silly resolved        'grunt-contrib-jshint': '~0.10.0',
+35 silly resolved        'grunt-contrib-watch': '~0.6.1',
+35 silly resolved        'grunt-exec': '~0.4.2',
+35 silly resolved        'grunt-simple-mocha': '~0.4.0',
+35 silly resolved        istanbul: '~0.3.2',
+35 silly resolved        'load-grunt-tasks': '~0.6.0',
+35 silly resolved        mocha: '~1.21.4',
+35 silly resolved        nock: '~0.46.0',
+35 silly resolved        'node-uuid': '~1.4.1',
+35 silly resolved        proxyquire: '~1.0.1' },
+35 silly resolved     scripts: { test: 'grunt test' },
+35 silly resolved     bin: { bower: 'bin/bower' },
+35 silly resolved     preferGlobal: true,
+35 silly resolved     readme: '# Bower\n\n[![Build Status](https://travis-ci.org/bower/bower.svg?branch=master)](https://travis-ci.org/bower/bower) [![Coverage Status](https://coveralls.io/repos/bower/bower/badge.png?branch=master)](https://coveralls.io/r/bower/bower?branch=master)\n\n<img align="right" height="300" src="http://bower.io/img/bower-logo.png">\n\n> A package manager for the web\n\nBower offers a generic, unopinionated solution to the problem of **front-end package management**, while exposing the package dependency model via an API that can be consumed by a more opinionated build stack. There are no system wide dependencies, no dependencies are shared between different apps, and the dependency tree is flat.\n\nBower runs over Git, and is package-agnostic. A packaged component can be made up of any type of asset, and use any type of transport (e.g., AMD, CommonJS, etc.).\n\n**View complete docs on [bower.io](http://bower.io)**\n\n[View all packages available through Bower\'s registry](http://bower.io/search/).\n\n## Install\n\n```sh\n$ npm install -g bower\n```\n\nBower depends on [Node.js](http://nodejs.org/) and [npm](http://npmjs.org/). Also make sure that [git](http://git-scm.com/) is installed as some bower\npackages require it to be fetched and installed.\n\n\n## Usage\n\nSee complete command line reference at [bower.io/docs/api/](http://bower.io/docs/api/)\n\n### Installing packages and dependencies\n\n```sh\n# install dependencies listed in bower.json\n$ bower install\n\n# install a package and add it to bower.json\n$ bower install <package> --save\n\n# install specific version of a package and add it to bower.json\n$ bower install <package>#<version> --save\n```\n\n### Using packages\n\nWe discourage using bower components statically for performance and security reasons (if component has an `upload.php` file that is not ignored, that can be easily exploited to do malicious stuff).\n\nThe best approach is to process components installed by bower with build tool (like [Grunt](http://gruntjs.com/) or [gulp](http://gulpjs.com/)), and serve them concatenated or using module loader (like [RequireJS](http://requirejs.org/)).\n\n### Uninstalling packages\n\nTo uninstall a locally installed package:\n\n```sh\n$ bower uninstall <package-name>\n```\n\n### prezto and oh-my-zsh users\n\nOn `prezto` or `oh-my-zsh`, do not forget to `alias bower=\'noglob bower\'` or `bower install jquery\\#1.9.1`\n\n### Running commands with sudo\n\nBower is a user command, there is no need to execute it with superuser permissions.\nHowever, if you still want to run commands with sudo, use `--allow-root` option.\n\n### Windows users\n\nTo use Bower on Windows, you must install\n[msysgit](http://msysgit.github.io/) correctly. Be sure to check the\noption shown below:\n\n![msysgit](http://f.cl.ly/items/2V2O3i1p3R2F1r2v0a12/mysgit.png)\n\nNote that if you use TortoiseGit and if Bower keeps asking for your SSH\npassword, you should add the following environment variable: `GIT_SSH -\nC:\\Program Files\\TortoiseGit\\bin\\TortoisePlink.exe`. Adjust the `TortoisePlink`\npath if needed.\n\n## Configuration\n\nBower can be configured using JSON in a `.bowerrc` file. Read over available options at [bower.io/docs/config](http://bower.io/docs/config).\n\n## Completion (experimental)\n\n_NOTE_: Completion is still not implemented for the 1.0.0 release\n\nBower now has an experimental `completion` command that is based on, and works\nsimilarly to the [npm completion](https://npmjs.org/doc/completion.html). It is\nnot available for Windows users.\n\nThis command will output a Bash / ZSH script to put into your `~/.bashrc`,\n`~/.bash_profile`, or `~/.zshrc` file.\n\n```sh\n$ bower completion >> ~/.bash_profile\n```\n\n\n## Support\n\n* [StackOverflow](http://stackoverflow.com/questions/tagged/bower)\n* [Mailinglist](http://groups.google.com/group/twitter-bower) - twitter-bower@googlegroups.com\n* [\\#bower](http://webchat.freenode.net/?channels=bower) on Freenode\n\n\n## Contributing\n\nWe welcome contributions of all kinds from anyone. Please take a moment to\nreview the [guidelines for contributing](CONTRIBUTING.md).\n\n* [Bug reports](CONTRIBUTING.md#bugs)\n* [Feature requests](CONTRIBUTING.md#features)\n* [Pull requests](CONTRIBUTING.md#pull-requests)\n\n\n## Bower Team\n\nBower is made by lots of people across the globe, contributions large and small. Our thanks to everyone who has played a part.\n\n### Core team\n\n* [@satazor](https://github.com/satazor)\n* [@wibblymat](https://github.com/wibblymat)\n* [@paulirish](https://github.com/paulirish)\n* [@benschwarz](https://github.com/benschwarz)\n* [@sindresorhus](https://github.com/sindresorhus)\n* [@svnlto](https://github.com/svnlto)\n* [@sheerun](https://github.com/sheerun)\n\n### Bower Alumni\n\n* [@fat](https://github.com/fat)\n* [@maccman](https://github.com/maccman)\n\n\n## License\n\nCopyright (c) 2014 Twitter and other contributors\n\nLicensed under the MIT License\n',
+35 silly resolved     readmeFilename: 'README.md',
+35 silly resolved     bugs: { url: 'https://github.com/bower/bower/issues' },
+35 silly resolved     _id: 'bower@1.3.12',
+35 silly resolved     _shasum: '37de0edb3904baf90aee13384a1a379a05ee214c',
+35 silly resolved     _from: 'bower@',
+35 silly resolved     _resolved: 'https://registry.npmjs.org/bower/-/bower-1.3.12.tgz' } ]
+36 info install bower@1.3.12 into /usr/lib
+37 info installOne bower@1.3.12
+38 info /usr/lib/node_modules/bower unbuild
+39 info preuninstall bower@1.3.9
+40 info uninstall bower@1.3.9
+41 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild bower@1.3.9
+42 verbose /usr/bin,[object Object] binRoot
+43 info /usr/lib/node_modules/bower unbuild
+44 info preuninstall bower@1.3.9
+45 info uninstall bower@1.3.9
+46 verbose true,/usr/lib/node_modules,/usr/lib/node_modules unbuild bower@1.3.9
+47 verbose /usr/bin,[object Object] binRoot
+48 error error rolling back Error: EACCES, unlink '/usr/bin/bower'
+48 error error rolling back  bower@1.3.12 { [Error: EACCES, unlink '/usr/bin/bower'] errno: 3, code: 'EACCES', path: '/usr/bin/bower' }
+49 error Error: EACCES, unlink '/usr/bin/bower'
+49 error  { [Error: EACCES, unlink '/usr/bin/bower'] errno: 3, code: 'EACCES', path: '/usr/bin/bower' }
+50 error Please try running this command again as root/Administrator.
+51 error System Linux 3.10.27-ivi-srv-alt2
+52 error command "/usr/bin/node" "/usr/bin/npm" "install" "-g" "bower"
+53 error cwd /home/thybzi/work/test/public_html/styledoc_pages
+54 error node -v v0.10.28
+55 error npm -v 1.4.9
+56 error path /usr/bin/bower
+57 error code EACCES
+58 error errno 3
+59 error stack Error: EACCES, unlink '/usr/bin/bower'
+60 verbose exit [ 3, true ]

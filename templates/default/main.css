@@ -71,6 +71,12 @@ a {
     margin: 0 1%;
 }
 
+h1,
+h2,
+h3 {
+    position: relative;
+}
+
 h1 {
     margin: 0 0 24px;
     border-bottom: 1px solid #ddd;
@@ -92,6 +98,29 @@ h3 {
     font-weight: bold;
     font-size: 18px;
     line-height: 24px;
+}
+
+h1 a,
+h2 a,
+h3 a {
+    text-decoration: none;
+}
+
+h1 a:before,
+h2 a:before,
+h3 a:before {
+    content: '#';
+    position: absolute;
+    right: 100%;
+    top: 0;
+    padding-right: 4px;
+    opacity: 0;
+}
+
+h1 a:hover:before,
+h2 a:hover:before,
+h3 a:hover:before {
+    opacity: 0.5;
 }
 
 h3 mark {

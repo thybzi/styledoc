@@ -6,13 +6,13 @@
         {{#items}}
             <li>
                 <div>
-                    <a href="#section_{{#section}}{{section}}{{/section}}{{^section}}{{id}}{{/section}}">
+                    <a href="#{{anchor_name}}">
                         {{#section}}{{section}}. {{/section}}{{title}}
                     </a>
                 </div>
                 <ul>
                 {{#subitems}}
-                    <li><a href="#item_{{id}}">{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</a></li>
+                    <li><a href="#{{anchor_name}}">{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</a></li>
                 {{/subitems}}
                 </ul>
             </li>
@@ -30,13 +30,11 @@
 
         {{#items}}
 
-            <a id="section_{{#section}}{{section}}{{/section}}{{^section}}{{id}}{{/section}}"></a>
             {{#title}}
-                <h2>
-                    {{#section}}
-                        {{section}}.
-                    {{/section}}
-                    {{title}}
+                <h2 id="{{anchor_name}}">
+                    <a href="#{{anchor_name}}">
+                        {{#section}}{{section}}. {{/section}}{{title}}
+                    </a>
                 </h2>
             {{/title}}
             {{#description}}
@@ -71,11 +69,12 @@
             {{/fixme}}
 
             {{#subitems}}
-                <a id="item_{{id}}"></a>
-                <div class="showcase">
+                <div class="showcase" id="{{anchor_name}}">
                     {{#base}}
                         <h3>
-                            <code>{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</code>
+                            <a href="#{{anchor_name}}">
+                                <code>{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</code>
+                            </a>
                             {{#states}}
                                 <em>[<code title="{{description}}">{{state}}</code>]</em>
                             {{/states}}
@@ -85,7 +84,7 @@
                         <div class="description">{{description}}</div>
                     {{/description}}
                     {{#presentation}}
-                        <iframe id="presentation_{{id}}" src="{{{iframe_url}}}"
+                        <iframe id="preview_{{id}}" src="{{{iframe_url}}}"
                             {{#iframe_height}}style="height: {{iframe_height}}px"{{/iframe_height}}
                             {{^iframe_height}}class="loading"{{/iframe_height}}
                             {{#iframe_use_onload}}onload="styledoc_iframeOnload(this)"{{/iframe_use_onload}}

@@ -30,13 +30,11 @@
 
         {{#items}}
 
-            <a id="{{anchor_name}}"></a>
             {{#title}}
-                <h2>
-                    {{#section}}
-                        {{section}}.
-                    {{/section}}
-                    {{title}}
+                <h2 id="{{anchor_name}}">
+                    <a href="#{{anchor_name}}">
+                        {{#section}}{{section}}. {{/section}}{{title}}
+                    </a>
                 </h2>
             {{/title}}
             {{#description}}
@@ -71,11 +69,12 @@
             {{/fixme}}
 
             {{#subitems}}
-                <a id="{{anchor_name}}"></a>
-                <div class="showcase">
+                <div class="showcase" id="{{anchor_name}}">
                     {{#base}}
                         <h3>
-                            <code>{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</code>
+                            <a href="#{{anchor_name}}">
+                                <code>{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</code>
+                            </a>
                             {{#states}}
                                 <em>[<code title="{{description}}">{{state}}</code>]</em>
                             {{/states}}

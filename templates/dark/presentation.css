@@ -3,7 +3,7 @@ body {
     width: auto !important;
     min-width: 0 !important;
     height: auto !important;
-    min-height: auto !important;
+    min-height: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #000 !important;

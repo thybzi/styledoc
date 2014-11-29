@@ -38,13 +38,13 @@
         });
     } else if ((typeof module !== "undefined") && module.exports) {
         // Node, CommonJS-like
-        module.exports = factory(root, require("jquery"), require("mustache"), require("jsdom"), require("phantom"), require("fs-extra"), require("path"), require("request"), require("chalk"));
+        module.exports = factory(root, require("jquery"), require("mustache"), require("jsdom"), require("fs-extra"), require("path"), require("request"), require("chalk"));
     } else {
         // Browser globals (root is window)
         root.styledoc = factory(root, root.jQuery, root.Mustache);
     }
 
-}(this, function (window, $, Mustache, jsdom, phantom, fs, path, request, chalk) {
+}(this, function (window, $, Mustache, jsdom, fs, path, request, chalk) {
     "use strict";
 
     var MODULE_VERSION = "0.0.2";
@@ -67,10 +67,16 @@
     styledoc.states_modify_unique_attrs = true; // modify "id" and "for" attr values to preserve their uniqueness when generating states
     styledoc.states_html_glue = "\n"; // @todo showcaseFile option?
 
+    var phantom;
     if (styledoc.server_mode) {
         window = jsdom.jsdom().parentWindow;
         $ = $(window);
         styledoc.templates_dir = path.dirname(module.filename) + "/templates/";
+        try {
+            phantom = require("phantom"); // check if phantom package is available
+        } catch (e) {
+            phantom = null;
+        }
     } else {
         styledoc.templates_dir = "js/styledoc/templates/";
     }
@@ -547,9 +553,11 @@
         var page_title = options.page_title || "";
         var language = options.language;
         var doctype = options.doctype;
-
         var iframe_delay = options.iframe_delay;
-        var use_phantomjs = !!options.use_phantomjs;
+
+        var use_phantomjs_requested = !!options.use_phantomjs;
+        var use_phantomjs_available = !!phantom;
+        var use_phantomjs = use_phantomjs_requested && use_phantomjs_available;
         var phantomjs_viewport = options.phantomjs_viewport || { width: 1280, height: 800 }; // @todo more convinient way? (e.g. "1280x800")
 
         var silent_mode = !!options.silent_mode;
@@ -694,6 +702,11 @@
                 presentations_dfd.done(function () {
 
                     if (!silent_mode) {
+
+                        if (use_phantomjs_requested && !use_phantomjs_available) {
+                            console.log(chalk.red('Warning: "use_phantomjs" option ignored, because "phantom" package is not installed'));
+                        }
+
                         console.log("All presentation files created");
                     }
 

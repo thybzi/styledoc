@@ -39,7 +39,8 @@
     "css",
     "less",
     "sass",
-    "scss"
+    "scss",
+    "stylus"
   ],
   "author": "Evgeni Dmitriev <thybzi@gmail.com> (http://www.thybzi.com/)",
   "licenses": [

@@ -27,7 +27,8 @@
     "css",
     "less",
     "sass",
-    "scss"
+    "scss",
+    "stylus"
   ],
   "license": "MIT",
   "ignore": [

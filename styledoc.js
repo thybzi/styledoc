@@ -944,7 +944,7 @@
             }
         }
 
-        var doc_mask = /\/\*\*\s+[\S\s]+?\s+\*\//g;
+        var doc_mask = /\/\*[\*\!]\s+[\S\s]+?\s+\*\//g; // @todo dry masks (see parseDoc)
         var docs = file_content.match(doc_mask) || [];
 
         var doc_content,
@@ -1067,7 +1067,7 @@
         }
 
         // Regexp masks for tag name/value and line begin/end
-        var doc_begin_mask = /^\/\*\*\s?/;
+        var doc_begin_mask = /^\/\*[\*\!]\s?/; // @todo dry masks (see parseFileContent)
         var line_begin_mask = /^ \*\s?/;
         var end_mask = /\s*(\*\/)?\s*$/;
         var tag_mask = /^\s*@([a-z0-9_-]+)(\s+(.+))?/i;

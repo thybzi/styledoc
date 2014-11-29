@@ -73,5 +73,29 @@ describe('#parseDoc', function () {
 
     // todo test bug with multiline content going last vs space after */ end
 
+
+    // @todo dry
+    it('stylus persistent doc', function () {
+        var raw = fs.readFileSync('tests/stylus.css', 'utf-8');
+        var doc = pd(raw);
+
+        doc[0][0].should.equal('$title');
+        doc[0][1].should.equal('Buttons');
+        doc[1][0].should.equal('$description');
+        doc[1][1].should.equal('All different kind of buttons,\nwhich are used in application');
+        doc[2][0].should.equal('base');
+        doc[2][1].should.equal('button Normal button');
+
+        doc[3][0].should.equal('modifier');
+        doc[3][1].should.equal('.large Large button');
+        doc[4][0].should.equal('modifier');
+        doc[4][1].should.equal(':disabled Button unable to be pressed');
+        doc[5][0].should.equal('modifier');
+        doc[5][1].should.equal('.large:disabled Large button disabled');
+
+        doc[6][0].should.equal('example');
+        doc[6][1].should.equal('<button>Button text</button>');
+    });
+
 });
 

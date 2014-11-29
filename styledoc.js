@@ -51,7 +51,7 @@
 
     var TEMPLATES_SUBDIR = "templates/";
     var LANGUAGE_SUBDIR = "language/";
-    var PRESENTATION_SUBDIR = "presentation/";
+    var PREVIEW_DIR = "preview/";
 
     var DEFAULT_LANGUAGE = "en";
     var DEFAULT_DOCTYPE = "html5";
@@ -111,11 +111,12 @@
         "section":      false,  // (legacy?)
         "base":         false,  // base selector (e.g. .my-element)
         "modifier":     false,  // CSS-selector based modifier for element (e.g .my-subclass)
-        "state":        false,  // a special kind of modifier, also added to each presentation (e.g. :disabled or .active)
+        "state":        false,  // a special kind of modifier, also added to each showcase item (e.g. :disabled or .active)
         "pseudo":       false,  // (legacy) in this version, just an alias of @state
-        "example":      true,   // HTML to use in both code snippet and live presentation
-        "presentation": true,   // overrides @example for HTML to use in live presentation
+        "example":      true,   // HTML to use in both code snippet and live preview
         "markup":       true,   // (legacy) alias of @example
+        "presentation": true,   // overrides @example for HTML to use in live preview
+        "preview":      true,   // alias of @presentation
         "author":       false,  // author of code block (multiple instances allowed)
         "version":      false,  // version of code block
         "since":        false,  // code version element exists since
@@ -140,8 +141,8 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height (FS mode only)
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] No console messages (FS mode only)
-     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
-     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
+     * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      */
     styledoc.showcaseFile = function (url, options) {
         options = options || {};
@@ -244,6 +245,9 @@
                         item_data.presentation = item_data.presentation || tag_content;
                         break;
                     case "presentation":
+                    case "preview":
+                        item_data.presentation = tag_content;
+                        break;
                     case "version":
                     case "since":
                         item_data[tag_name] = tag_content;
@@ -465,8 +469,8 @@
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
      * @param {string} [options.page_title=document.title] Main title of document
      * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
-     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
-     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
+     * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      */
     styledoc.outputHttp = function (showcase_data, css_url, options) {
 
@@ -481,14 +485,14 @@
         var template_name = options.template;
         var template_dir = styledoc.templates_dir + template_name + "/";
 
-        var css_url_presentation;
+        var css_url_preview;
         if (isAbsolutePath(css_url)) {
-            css_url_presentation = css_url;
+            css_url_preview = css_url;
         } else {
-            css_url_presentation = "//" + document.location.host + dirPath(document.location.pathname) + css_url;
+            css_url_preview = "//" + document.location.host + dirPath(document.location.pathname) + css_url;
         }
 
-        var presentation_container_style = getPresentationContainerStyle(options);
+        var preview_container_style = getPreviewContainerStyle(options);
 
         $("head").append('<link rel="stylesheet" href="' + template_dir + 'main.css">');
 
@@ -507,10 +511,10 @@
                 var main_content = Mustache.render(main_template, {
                     page_title: page_title,
                     lang: lang_data,
-                    css_url: css_url_presentation,
-                    iframe_url: template_dir + PRESENTATION_SUBDIR + doctype + ".html",
+                    css_url: css_url_preview,
+                    iframe_url: template_dir + PREVIEW_DIR + doctype + ".html",
                     items: showcase_data,
-                    presenter: displayPresentation
+                    presenter: displayPreview
                 });
                 $container.append(main_content).trigger("complete");
                 dfd.resolve();
@@ -533,17 +537,17 @@
         }
 
         // @todo optimize (this code vs. index.mustache code)
-        function displayPresentation() {
+        function displayPreview() {
             var data = this;
             $container.on("complete", function () {
-                var $iframe = $("iframe#presentation_" + data.id);
+                var $iframe = $("iframe#preview_" + data.id);
                 if ($iframe.length) {
                     $iframe.load(function () {
                         var $contents = $iframe.contents();
-                        $contents.find("head").append('<link rel="stylesheet" href="' + css_url_presentation + '">');
+                        $contents.find("head").append('<link rel="stylesheet" href="' + css_url_preview + '">');
                         $contents.find("#styledoc-container") // @todo hardcode id
                             .append(data.presentation)
-                            .attr("style", presentation_container_style);
+                            .attr("style", preview_container_style);
                         var resizer = function () {
                             resizeIframe($iframe);
                         };
@@ -574,8 +578,8 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height
      * @param {boolean} [options.silent_mode=false] No console messages
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances
-     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
-     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
+     * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      */
     styledoc.outputFs = function (showcase_data, css_url, options) {
 
@@ -596,31 +600,31 @@
         var output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
         output_dir = ensureTrailingSlash(output_dir);
 
-        var presentation_dir = output_dir + PRESENTATION_SUBDIR;
+        var preview_dir = output_dir + PREVIEW_DIR;
         var template_name = options.template;
         var template_dir = styledoc.templates_dir + template_name + "/";
 
         var realpath = ensureTrailingSlash(fs.realpathSync("./"));
-        var css_url_presentation;
+        var css_url_preview;
         if (isAbsolutePath(css_url)) {
-            css_url_presentation = css_url;
+            css_url_preview = css_url;
         } else {
-            css_url_presentation = path.relative(realpath + presentation_dir, realpath + css_url);
+            css_url_preview = path.relative(realpath + preview_dir, realpath + css_url);
         }
 
-        var presentation_container_style = getPresentationContainerStyle(options);
+        var preview_container_style = getPreviewContainerStyle(options);
         var background_color = options.background_color;
 
         var loadFile = styledoc.getLoader().loadFile;
         // @todo optimize (something better than: force_fs = true)
         var load_index_template = loadFile(template_dir + "index.mustache", false, true);
         var load_main_template = loadFile(template_dir + "main.mustache", false, true); // @todo doctype?
-        var load_presentation_template = loadFile(template_dir + PRESENTATION_SUBDIR + doctype + ".mustache", false, true);
+        var load_preview_template = loadFile(template_dir + PREVIEW_DIR + doctype + ".mustache", false, true);
         var load_lang = loadFile(template_dir + LANGUAGE_SUBDIR + language + ".json", true, true);
 
-        var mkdirs = mkdirp(presentation_dir);
+        var mkdirs = mkdirp(preview_dir);
         var copy_main_css = copy(template_dir + "main.css", output_dir + "main.css");
-        var copy_presentation_css = copy(template_dir + "presentation.css", output_dir + "presentation.css");
+        var copy_preview_css = copy(template_dir + "preview.css", output_dir + "preview.css");
 
 
         if (!silent_mode) {
@@ -630,8 +634,8 @@
         }
 
         // @todo fail?
-        $.when(load_index_template, load_main_template, load_presentation_template, load_lang, mkdirs, copy_main_css, copy_presentation_css).done(
-            function (index_template, main_template, presentation_template, lang_data) {
+        $.when(load_index_template, load_main_template, load_preview_template, load_lang, mkdirs, copy_main_css, copy_preview_css).done(
+            function (index_template, main_template, preview_template, lang_data) {
 
                 if (!silent_mode) {
                     console.log("All resources loaded");
@@ -639,39 +643,39 @@
 
                 var items_count = showcase_data.length,
                     subitems_count = 0,
-                    presentations_count = 0,
-                    presentations_dfd = $.Deferred(),
+                    previews_count = 0,
+                    previews_dfd = $.Deferred(),
                     i,
                     j,
                     subitem_data,
                     file_name,
                     file_path,
                     file_path_relative,
-                    presentation_content;
+                    preview_content;
                 for (i = 0; i < items_count; i++) {
                     subitems_count += showcase_data[i].subitems.length;
                 }
 
                 if (!silent_mode) {
-                    console.log("\nCreating presentation files (" + subitems_count + " total)");
+                    console.log("\nCreating preview files (" + subitems_count + " total)");
                 }
 
                 for (i = 0; i < items_count; i++) {
                     for (j = 0; j < showcase_data[i].subitems.length; j++) {
                         subitem_data = showcase_data[i].subitems[j];
                         file_name = subitem_data.id + ".html";
-                        file_path = presentation_dir + file_name;
-                        file_path_relative = PRESENTATION_SUBDIR + file_name;
-                        presentation_content = Mustache.render(presentation_template, {
-                            css_url: css_url_presentation,
-                            container_style: presentation_container_style,
+                        file_path = preview_dir + file_name;
+                        file_path_relative = PREVIEW_DIR + file_name;
+                        preview_content = Mustache.render(preview_template, {
+                            css_url: css_url_preview,
+                            container_style: preview_container_style,
                             content: subitem_data.presentation
                         });
                         subitem_data.iframe_url = file_path_relative; // @todo use separate var without changing showcase_data?
-                        (function (file_path, presentation_content, subitem_data) {
+                        (function (file_path, preview_content, subitem_data) {
                             fs.writeFile(
                                 file_path,
-                                presentation_content,
+                                preview_content,
                                 function () {
 
                                     if (!silent_mode) {
@@ -680,7 +684,7 @@
 
                                     // iframe delay mode
                                     if (!use_phantomjs) {
-                                        countPresentationItem();
+                                        countPreviewItem();
                                         return;
                                     }
 
@@ -710,7 +714,7 @@
                                                             console.log(chalk.gray("[HEIGHT] " + file_path));
                                                         }
 
-                                                        countPresentationItem();
+                                                        countPreviewItem();
                                                         ph.exit();
                                                     }
                                                 );
@@ -720,17 +724,17 @@
                                     });
                                 }
                             );
-                        })(file_path, presentation_content, subitem_data);
+                        })(file_path, preview_content, subitem_data);
                     }
                 }
 
-                function countPresentationItem() {
-                    if (++presentations_count === subitems_count) {
-                        presentations_dfd.resolve();
+                function countPreviewItem() {
+                    if (++previews_count === subitems_count) {
+                        previews_dfd.resolve();
                     }
                 }
 
-                presentations_dfd.done(function () {
+                previews_dfd.done(function () {
 
                     if (!silent_mode) {
 
@@ -738,7 +742,7 @@
                             console.log(chalk.red('Warning: "use_phantomjs" option ignored, because "phantom" package is not installed'));
                         }
 
-                        console.log("All presentation files created");
+                        console.log("All preview files created");
                     }
 
                     var main_content = Mustache.render(main_template, {
@@ -1139,29 +1143,29 @@
     }
 
     /**
-     * Generate value for the presentation container "style" attribute
+     * Generate value for the preview container "style" attribute
      * @param {object} options
-     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
-     * @param {string} [options.background_color] Background color CSS value for both main showcase page and presentation iframe pages
+     * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
+     * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      * @returns {string|undefined} Undefined value denies redundant attribute creating: $elem.attr("style", undefined)
-     * @todo enable string value for presentation_padding (like "4px 8px")?
+     * @todo enable string value for preview_padding (like "4px 8px")?
      */
-    function getPresentationContainerStyle(options) {
-        var presentation_container_style = "";
+    function getPreviewContainerStyle(options) {
+        var preview_container_style = "";
 
-        var padding_value = options.presentation_padding;
+        var padding_value = options.preview_padding;
         if (typeof padding_value === "number") {
             padding_value = [ padding_value ];
         }
         if (isArray(padding_value)) {
-            presentation_container_style += "padding: " + padding_value.join("px ") + "px !important; ";
+            preview_container_style += "padding: " + padding_value.join("px ") + "px !important; ";
         }
 
         if (options.background_color) {
-            presentation_container_style += "background-color: " + options.background_color + " !important; ";
+            preview_container_style += "background-color: " + options.background_color + " !important; ";
         }
 
-        return presentation_container_style.replace(/\s$/, "") || undefined;
+        return preview_container_style.replace(/\s$/, "") || undefined;
     }
 
 

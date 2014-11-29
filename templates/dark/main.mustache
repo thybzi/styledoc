@@ -84,7 +84,7 @@
                         <div class="description">{{description}}</div>
                     {{/description}}
                     {{#presentation}}
-                        <iframe id="presentation_{{id}}" src="{{{iframe_url}}}"
+                        <iframe id="preview_{{id}}" src="{{{iframe_url}}}"
                             {{#iframe_height}}style="height: {{iframe_height}}px"{{/iframe_height}}
                             {{^iframe_height}}class="loading"{{/iframe_height}}
                             {{#iframe_use_onload}}onload="styledoc_iframeOnload(this)"{{/iframe_use_onload}}

@@ -151,7 +151,7 @@ styledoc.showcaseFile('css/mystyle.css', {
 #### PhantomJS advantage
 **If you have [PhantomJS](http://phantomjs.org/) installed** in your system, you can use it to improve showcase generation.
 
-It will pre-measure the height of each presentation iframe item when generating them to **achieve maximum rendering speed** for showcase page (and also to avoid some possible client bugs).
+It will pre-measure the height of each preview iframe item when generating them to **achieve maximum rendering speed** for showcase page (and also to avoid some possible client bugs).
 
 To involve PhantomJS for showcase generation, **just add one more option** (`use_phantomjs: true`):
 ```javascript
@@ -201,9 +201,10 @@ Supported tags list
   *Example:* `@example <button>Sample text</button>`    
   *Alias:* `@markup`    
   Should contain HTML markup for CSS selector determined in `@base`.    
-  Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live presentation, if not overridden by `@presentation`).    
+  Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live preview, if not overridden by `@presentation`).    
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.
-* **@presentation**: HTML code for the live presentation of element (if it should differ from `@example` for some reason)    
+* **@presentation**: HTML code for the live preview of element (if it should differ from `@example` for some reason)    
+  *Alias:* `@preview`    
   *Example:* `@presentation <div><button>Sample text</button></div>` 
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.    
 * **@author**: Name, email, etc. of the code block author    
@@ -274,20 +275,20 @@ styledoc.showcaseFile('css/mystyle.css', {
   *Default value for HTTP mode:* `document.title`    
   *Default value for FS mode:* `''`
 * **iframe_delay**: Delay (ms) before refreshing iframe height    
-  This delay is needed to render presentation item iframe page, measure its height, and then apply this height to `<iframe>` element itself    
+  This delay is needed to render preview item iframe page, measure its height, and then apply this height to `<iframe>` element itself    
   *Default value:* `2000`
-* **use_phantomjs**: (FS mode only) Use PhantomJS to pre-count and pre-set presentation iframes height values (so iframe delay is not needed)    
+* **use_phantomjs**: (FS mode only) Use PhantomJS to pre-count and pre-set preview iframes height values (so iframe delay is not needed)    
   Requires PhantomJS to be installed in system    
   *Default value:* `false`
 * **phantomjs_viewport**: (FS mode only) Viewport size for PhantomJS instances    
   *Default value:* `{ width: 1280, height: 800 }`
 * **silent_mode**: (FS mode only) Disable console messages    
   *Default value:* `false`
-* **presentation_padding**: Padding value(s) for presentation container    
+* **preview_padding**: Padding value(s) for preview container    
   Useful if elements have `box-shadow`, `outline` or similar styles that don't affect the container offset size    
   Value can be *number* (`4 => padding: 4px`) or *array of numbers* (`[ 4, 3, 8 ] => padding: 4px 3px 8px`)    
   *Default value:* `undefined`
-* **background_color**: Background color CSS value for both main showcase page and presentation iframe pages (for seemless iframes)    
+* **background_color**: Background color CSS value for both main showcase page and iframe preview pages (for seemless iframes)    
   Use when your target body color differs from value proposed by template (`#fff` for `default` template, `#000` for `dark` template, etc.)    
   Value should be string containing any CSS-valid color value (e.g. `"#f1f1f1"`, `"darkgray"`, or even `"rgb(17, 17, 36)"`)    
   *Default value:* `undefined`

@@ -195,7 +195,7 @@
             item_data = {
                 id: id,
                 section: null,
-                anchor: SECTION_ANCHOR_PREFIX + id,
+                anchor_name: SECTION_ANCHOR_PREFIX + id,
                 title: null,
                 description: null,
                 base: null,
@@ -230,7 +230,7 @@
                         parts = parseComplexContent(tag_content); // @todo "is_complex" in tags config, use in parseTag
                         item_data.section = parts[0];
                         item_data.title = item_data.title || parts[1];
-                        item_data.anchor = SECTION_ANCHOR_PREFIX + item_data.section;
+                        item_data.anchor_name = SECTION_ANCHOR_PREFIX + item_data.section;
                         break;
                     case "base":
                         parts = parseComplexContent(tag_content);
@@ -284,7 +284,7 @@
                 id = styledoc.use_selector_based_ids ? selectorToId(item_data.base) : item_data.id + "_0";
                 item_data.subitems.push({
                     id: id,
-                    anchor: ITEM_ANCHOR_PREFIX + id,
+                    anchor_name: ITEM_ANCHOR_PREFIX + id,
                     base: item_data.base,
                     modifier: null,
                     description: item_data.base_description || "",
@@ -306,7 +306,7 @@
                             id = styledoc.use_selector_based_ids ? selectorToId(item_data.base + modifier) : (item_data.id + "_" + (j + 1));
                             item_data.subitems.push({
                                 id: id,
-                                anchor: ITEM_ANCHOR_PREFIX + id,
+                                anchor_name: ITEM_ANCHOR_PREFIX + id,
                                 base: item_data.base,
                                 modifier: modifier,
                                 description: parts[1],

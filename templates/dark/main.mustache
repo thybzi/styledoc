@@ -6,13 +6,13 @@
         {{#items}}
             <li>
                 <div>
-                    <a href="#{{anchor}}">
+                    <a href="#{{anchor_name}}">
                         {{#section}}{{section}}. {{/section}}{{title}}
                     </a>
                 </div>
                 <ul>
                 {{#subitems}}
-                    <li><a href="#{{anchor}}">{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</a></li>
+                    <li><a href="#{{anchor_name}}">{{base}}{{#modifier}}<mark>{{modifier}}</mark>{{/modifier}}</a></li>
                 {{/subitems}}
                 </ul>
             </li>
@@ -30,7 +30,7 @@
 
         {{#items}}
 
-            <a id="{{anchor}}"></a>
+            <a id="{{anchor_name}}"></a>
             {{#title}}
                 <h2>
                     {{#section}}
@@ -71,7 +71,7 @@
             {{/fixme}}
 
             {{#subitems}}
-                <a id="{{anchor}}"></a>
+                <a id="{{anchor_name}}"></a>
                 <div class="showcase">
                     {{#base}}
                         <h3>

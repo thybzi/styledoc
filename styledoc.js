@@ -111,10 +111,7 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height (FS mode only)
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] No console messages (FS mode only)
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      */
     styledoc.showcaseFile = function (url, options) {
         options = options || {};
@@ -430,10 +427,7 @@
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
      * @param {string} [options.page_title=document.title] Main title of document
      * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      */
     styledoc.outputHttp = function (showcase_data, css_url, options) {
 
@@ -537,10 +531,7 @@
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height
      * @param {boolean} [options.silent_mode=false] No console messages
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      */
     styledoc.outputFs = function (showcase_data, css_url, options) {
 
@@ -1097,20 +1088,21 @@
     /**
      * Generate value for the presentation container "style" attribute
      * @param {object} options
-     * @param {number} [options.presentation_pad_left] Left padding for presentation container
-     * @param {number} [options.presentation_pad_right] Right padding for presentation container
-     * @param {number} [options.presentation_pad_top] Top padding for presentation container
-     * @param {number} [options.presentation_pad_bottom] Bottom padding for presentation container
+     * @param {number|number[]} [options.presentation_padding] Padding value(s) for presentation container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @returns {string|undefined} Undefined value denies redundant attribute creating: $elem.attr("style", undefined)
+     * @todo enable string value for presentation_padding (like "4px 8px")?
      */
     function getPresentationContainerStyle(options) {
         var presentation_container_style = "";
-        $.each([ "left", "right", "top", "bottom" ], function (i, side) {
-            var value = options["presentation_pad_" + side];
-            if (value) {
-                presentation_container_style += "padding-" + side + ": " + value + "px !important; ";
-            }
-        });
+
+        var padding_value = options.presentation_padding;
+        if (typeof padding_value === "number") {
+            padding_value = [ padding_value ];
+        }
+        if (isArray(padding_value)) {
+            presentation_container_style += "padding: " + padding_value.join("px ") + "px !important; ";
+        }
+
         return presentation_container_style.replace(/\s$/, "") || undefined;
     }
 

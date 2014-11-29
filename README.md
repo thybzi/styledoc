@@ -275,14 +275,9 @@ styledoc.showcaseFile('css/mystyle.css', {
   *Default value:* `{ width: 1280, height: 800 }`
 * **silent_mode**: (FS mode only) Disable console messages    
   *Default value:* `false`
-* **presentation_pad_left**: Left padding for presentation container    
-  Useful if elements have left box-shadow, outline or similar styles that don't affect the container offset size    
-  *Default value:* `undefined`
-* **presentation_pad_right**: Right padding for presentation container (similar to `presentation_pad_left`)    
-  *Default value:* `undefined`
-* **presentation_pad_top**: Top padding for presentation container (similar to `presentation_pad_left`)    
-  *Default value:* `undefined`
-* **presentation_pad_bottom**: Bottom padding for presentation container (similar to `presentation_pad_left`)    
+* **presentation_padding**: Padding value(s) for presentation container    
+  Useful if elements have `box-shadow`, `outline` or similar styles that don't affect the container offset size    
+  Value can be *number* (`4 => padding: 4px`) or *array of numbers* (`[ 4, 3, 8 ] => padding: 4px 3px 8px`)    
   *Default value:* `undefined`
 
 

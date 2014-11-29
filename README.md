@@ -312,8 +312,25 @@ Yes, you can. Just provide an URL instead of relative path to CSS when calling `
 Also, if you use StyleDoc in browser mode, CORS headers are needed for getting that file.
 
 ### How does live preview work?
-Each element preview is created in separate `<iframe>` with target CSS file linked and HTML content generated.  
-Note that some delay needed for those iframes to render.
+Each element's preview is created in separate `<iframe>` with target CSS file linked and HTML content generated.
+
+This approach prevents styles interference for main page and target CSS.
+
+Also, StyleDoc tool preserves the same background color for main page and iframe live preview, so boudaries of that iframes are seemless.
+
+### Why there is a delay before live preview appears?
+Previews are [loaded within iframes](#how-does-live-preview-work), and it takes some time for them to render. After that, the tool needs to measure inner offset height of each preview and set this height value to the correspondent iframe element. And when this all is done, preview becomes visible.
+
+Also, there is no reliable method for detecting the moment when rendering completes. That's why the tool sets a special delay after iframe reports it is "loaded". This delay defaults to 2000 ms, and could be changed with `iframe_delay` option for [showcaseFile() method](#showcasefile-method-options).
+
+If your styles are light enough and seem to render faster, you may reduce this value, but keep in mind that some slower computers may need more time.
+
+If the delay is too small, iframe could appear with wrong height (less or sometimes more than needed). But after you resizing page window, all iframe heights are remeasured (and probably fixed).
+
+On the contrary, if your styles seem to be too heavy, or the computer is too slow, you can increase the value of `iframe_delay`.
+
+But the best option is to use NodeJS mode [with PhantomJS enabled](#phantomjs-advantage). In this mode, PhantomJS pre-measures the height of each iframe, eliminating the necessity of iframe delay. Note that in that mode iframe heights aren't remeasured on window resize. Offset height for such iframes is measured only once, when PhantomJS renders it within virtual "window" (size of which defaults to 1280×800, and can be overriden with `phantomjs_viewport` option for [showcaseFile() method](#showcasefile-method-options)).
+
 
 ### Why `@state :hover` doesn't work?
 Modifiers available for showcase are limited to CSS modifications applicable by adding or altering HTML attributes. `:hover` or `:active` cannot be applied with attributes (unlike `:checked`, `:disabled` or `:readonly`), so they are mainly useless for showcase.  

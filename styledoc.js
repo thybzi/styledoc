@@ -69,15 +69,21 @@
 
     var phantom;
     if (styledoc.server_mode) {
+        // Prepare virtual DOM for jQuery
         window = jsdom.jsdom().parentWindow;
         $ = $(window);
-        styledoc.templates_dir = path.dirname(module.filename) + "/templates/";
+
+        // Check if phantom package is available
         try {
-            phantom = require("phantom"); // check if phantom package is available
+            phantom = require("phantom");
         } catch (e) {
             phantom = null;
         }
+
+        // Set default template path for server mode
+        styledoc.templates_dir = path.dirname(module.filename) + "/templates/";
     } else {
+        // Set default template path for browser mode
         styledoc.templates_dir = "js/styledoc/templates/";
     }
 

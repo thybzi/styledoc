@@ -55,6 +55,7 @@
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
 
+    var TEMPLATES_SUBDIR = "templates/";
     var LANGUAGE_SUBDIR = "language/";
     var PRESENTATION_SUBDIR = "presentation/";
 
@@ -81,10 +82,10 @@
         }
 
         // Set default template path for server mode
-        styledoc.templates_dir = path.dirname(module.filename) + "/templates/";
+        styledoc.templates_dir = path.dirname(module.filename) + "/" + TEMPLATES_SUBDIR;
     } else {
         // Set default template path for browser mode
-        styledoc.templates_dir = "js/styledoc/templates/";
+        styledoc.templates_dir = "js/styledoc/" + TEMPLATES_SUBDIR;
     }
 
     // tag_name: is_multiline // @todo set is_complex here

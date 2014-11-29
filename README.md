@@ -69,8 +69,8 @@ In this mode, the tool generates showcase page dynamically inside a HTML file op
 
 All required files are loaded via HTTP requests (Ajax).
 
-1. [Download the archive](https://github.com/thybzi/styledoc/archive/master.zip) and unpack it (you only need `styledoc.js` and `templates` directory).   
-  Using `js/styledoc/` directory is recommended (otherwise you'll need to [reconfigure templates path](#set-templates-directory)).
+1. [Download the archive](https://github.com/thybzi/styledoc/archive/master.zip) and unpack it (you only need `styledoc.js` and `templates` directory). You can also use [Bower installation](#bower-installation).    
+  Using `js/styledoc/` directory is recommended (otherwise you'll need to [reconfigure templates path](#set-templates-directory)).    
 2. Download [jQuery](http://jquery.com/download/) *1.11.1+ or 2.1.1+* ([why these versions?](#why-new-version-of-jquery-is-required))   
   (needed only for separate showcase HTML file, no need to change version on other pages of your website)
 3. Download [mustache.js](https://github.com/janl/mustache.js)
@@ -104,6 +104,12 @@ Note that loading CSS file via cross-domain URL file may require a [CORS](http:/
 (e.g. `Access-Control-Allow-Origin: *`).
 
 For advanced configuration, see *[Configuration](#configuration)* section.
+
+#### Bower installation
+StyleDoc is also available in [Bower](http://bower.io/):
+```
+bower install styledoc
+```
 
 
 ### Filesystem/NodeJS way

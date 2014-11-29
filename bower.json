@@ -1,0 +1,39 @@
+{
+  "name": "styledoc",
+  "main": "styledoc.js",
+  "version": "0.0.2",
+  "homepage": "https://github.com/thybzi/styledoc",
+  "authors": [
+    "Evgeni Dmitriev <thybzi@gmail.com>"
+  ],
+  "description": "Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.",
+  "dependencies": {
+    "jquery": "^1.11.1 || ^2.1.1",
+    "mustache": "^0.8.2"
+  },
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "styledoc",
+    "cssdoc",
+    "docblock",
+    "documentor",
+    "showcase",
+    "presentation",
+    "generator",
+    "css",
+    "less",
+    "sass",
+    "scss"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ]
+}

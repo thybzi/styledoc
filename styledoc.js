@@ -49,15 +49,15 @@
 
     var MODULE_VERSION = "0.0.2";
 
+    var TEMPLATES_SUBDIR = "templates/";
+    var LANGUAGE_SUBDIR = "language/";
+    var PRESENTATION_SUBDIR = "presentation/";
+
     var DEFAULT_LANGUAGE = "en";
     var DEFAULT_DOCTYPE = "html5";
     var DEFAULT_TEMPLATE = "default";
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
-
-    var TEMPLATES_SUBDIR = "templates/";
-    var LANGUAGE_SUBDIR = "language/";
-    var PRESENTATION_SUBDIR = "presentation/";
 
 
     var styledoc = {};

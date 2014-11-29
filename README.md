@@ -385,5 +385,13 @@ Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beauti
 
 Version history
 ---------------
+* **0.0.3** *(2014-11-30)*:
+  * Optional dependency for `phantom`;
+  * Support for `/*!` Stylus persistent ("buffered") comments;
+  * Preview basic customization with `preview_padding` and `background_color` options;
+  * Clickable titles (leading to their own anchors) on showcase page;
+  * Bower support;
+  * CommonJS-way require should now work in browser;
+  * Minor improvements and bugfixes
 * **0.0.2** *(2014-11-28)*: Examples added; minor changes, improvements and bugfixes
 * **0.0.1** *(2014-11-27)*: Initial release

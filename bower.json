@@ -1,7 +1,7 @@
 {
   "name": "styledoc",
   "main": "styledoc.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/thybzi/styledoc",
   "authors": [
     "Evgeni Dmitriev <thybzi@gmail.com>"

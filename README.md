@@ -44,7 +44,7 @@ Live examples
   **[NodeJS](http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs/)** 
   ([source](https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs.js)),
   **[NodeJS + PhantomJS](http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs_phantomjs/)** 
-  ([source](https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs_phantomjs.js)),
+  ([source](https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs_phantomjs.js))
 
 
 All examples sources are available in *[examples](https://github.com/thybzi/styledoc/tree/master/examples/)* directory of project repository.

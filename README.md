@@ -334,9 +334,9 @@ If you succeeded in fixing that issue, you can re-run `npm install`, which will 
 Yes, it is AMD-compatible.  
 *`@todo` test it*
 
-### Can StyleDoc be used in browser as CommonJS module?
-No. It only uses CommonJS module syntax for server-side NodeJS mode.  
-(But... Do you really need this?) 
+### Can StyleDoc be used as CommonJS module in browser?
+Yes, it should work.  
+*`@todo` test it*
 
 ### Why new version of jQuery is required?
 StyleDoc *requires jQuery version 1.11.1+ or 2.1.1+*.  

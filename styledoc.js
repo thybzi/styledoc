@@ -38,13 +38,13 @@
         });
     } else if ((typeof module !== "undefined") && module.exports) {
         // Node, CommonJS-like
-        module.exports = factory(root, require("jquery"), require("mustache"), require("jsdom"), require("fs-extra"), require("path"), require("request"), require("chalk"));
+        module.exports = factory(root, require("jquery"), require("mustache"));
     } else {
         // Browser globals (root is window)
         root.styledoc = factory(root, root.jQuery, root.Mustache);
     }
 
-}(this, function (window, $, Mustache, jsdom, fs, path, request, chalk) {
+}(this, function (window, $, Mustache) {
     "use strict";
 
     var MODULE_VERSION = "0.0.2";
@@ -68,8 +68,21 @@
     styledoc.states_modify_unique_attrs = true; // modify "id" and "for" attr values to preserve their uniqueness when generating states
     styledoc.states_html_glue = "\n"; // @todo showcaseFile option?
 
-    var phantom;
+    // Vars for npm modules (var declaration should be on top-level of the function)
+    var jsdom,
+        fs,
+        path,
+        request,
+        chalk,
+        phantom;
     if (styledoc.server_mode) {
+        // Connect required npm modules
+        jsdom = require("jsdom");
+        fs = require("fs-extra");
+        path = require("path");
+        request = require("request");
+        chalk = require("chalk");
+
         // Prepare virtual DOM for jQuery
         window = jsdom.jsdom().parentWindow;
         $ = $(window);

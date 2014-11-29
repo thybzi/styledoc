@@ -59,6 +59,9 @@
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
 
+    var SECTION_ANCHOR_PREFIX = "section_";
+    var ITEM_ANCHOR_PREFIX = "item_";
+
 
     var styledoc = {};
 
@@ -180,6 +183,7 @@
             parts,
             modifier,
             doc,
+            id,
             item_data,
             tag_data,
             tag_name,
@@ -187,9 +191,11 @@
         for (i = 0; i < docs_data.length; i++) {
 
             doc = docs_data[i];
+            id = i + 1;
             item_data = {
-                id: i + 1,
+                id: id,
                 section: null,
+                anchor: SECTION_ANCHOR_PREFIX + id,
                 title: null,
                 description: null,
                 base: null,
@@ -224,6 +230,7 @@
                         parts = parseComplexContent(tag_content); // @todo "is_complex" in tags config, use in parseTag
                         item_data.section = parts[0];
                         item_data.title = item_data.title || parts[1];
+                        item_data.anchor = SECTION_ANCHOR_PREFIX + item_data.section;
                         break;
                     case "base":
                         parts = parseComplexContent(tag_content);
@@ -274,8 +281,10 @@
             if (item_data.base) {
 
                 // Create base showcase
+                id = styledoc.use_selector_based_ids ? selectorToId(item_data.base) : item_data.id + "_0";
                 item_data.subitems.push({
-                    id: styledoc.use_selector_based_ids ? selectorToId(item_data.base) : item_data.id + "_0",
+                    id: id,
+                    anchor: ITEM_ANCHOR_PREFIX + id,
                     base: item_data.base,
                     modifier: null,
                     description: item_data.base_description || "",
@@ -294,8 +303,10 @@
                         case "modifier":
                             parts = parseComplexContent(tag_content);
                             modifier = parts[0];
+                            id = styledoc.use_selector_based_ids ? selectorToId(item_data.base + modifier) : (item_data.id + "_" + (j + 1));
                             item_data.subitems.push({
-                                id: styledoc.use_selector_based_ids ? selectorToId(item_data.base + modifier) : (item_data.id + "_" + (j + 1)),
+                                id: id,
+                                anchor: ITEM_ANCHOR_PREFIX + id,
                                 base: item_data.base,
                                 modifier: modifier,
                                 description: parts[1],

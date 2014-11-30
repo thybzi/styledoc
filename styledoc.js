@@ -518,8 +518,8 @@
      */
     styledoc.showcaseFileInitFs = function (css_url, options) {
         var silent_mode = options.silent_mode = !!options.silent_mode;
-        var output_dir = options.output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
-        output_dir = ensureTrailingSlash(output_dir);
+        var output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
+        options.output_dir = output_dir = ensureTrailingSlash(output_dir);
 
         if (!silent_mode) {
             console.log(chalk.yellow("\nStyleDoc v" + MODULE_VERSION));

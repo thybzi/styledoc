@@ -188,6 +188,31 @@
 </div>
 
 
+<script>
+
+    function styledoc_resizeIframe(iframe) {
+        var iframe_document = iframe.contentDocument || iframe.contentWindow.document;
+        var iframe_classes = iframe.className.split(" ");
+        iframe.style.height = iframe_document.body.offsetHeight + "px";
+
+        var loading_class_index = iframe_classes.indexOf("loading");
+        if (loading_class_index !== -1) {
+           iframe_classes.splice(loading_class_index, 1);
+           iframe.className = iframe_classes.join(" ");
+        }
+    }
+
+
+    setTimeout(function () {
+        window.onresize = function () {
+            var iframes = document.getElementsByTagName("iframe");
+            for (var i = 0; i < iframes.length; i++) {
+                styledoc_resizeIframe(iframes[i]);
+            }
+        };
+    }, 2000);
+
+</script>
 
 </body>
 </html>

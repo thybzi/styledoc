@@ -876,7 +876,7 @@
                             page_title: page_title,
                             background_color: background_color,
                             content: main_content,
-                            use_phantomjs: use_phantomjs,
+                            iframe_use_onload: !use_phantomjs, // @todo unify with http mode
                             iframe_delay: iframe_delay // @todo unify with http mode
                         }),
                         function () {

@@ -274,10 +274,10 @@ styledoc.showcaseFile('css/mystyle.css', {
   *Default value for HTTP mode:* `document.title`    
   *Default value for FS mode:* `''`
 * **iframe_delay**: Delay (ms) before refreshing iframe height    
-  This delay is needed to render preview item iframe page, measure its height, and then apply this height to `<iframe>` element itself
-  Not needed if PhantomJS is used.    
+  This delay is needed to render preview item iframe page, measure its height, and then apply this height to `<iframe>` element itself    
+  Also sets delay before first window resize that resizes iframes
   *Default value:* `2000`
-* **use_phantomjs**: (FS mode only) Use PhantomJS to pre-measure and pre-set preview iframes height values (so iframe delay is not needed)    
+* **use_phantomjs**: (FS mode only) Use PhantomJS to pre-measure and pre-set preview iframes height values (so iframe loads without additional delay)    
   Requires PhantomJS to be installed in system    
   *Default value:* `false`
 * **phantomjs_viewport**: (FS mode only) Viewport size for PhantomJS instances    
@@ -332,7 +332,11 @@ If the delay is too small, iframe could appear with wrong height (less or someti
 
 On the contrary, if your styles seem to be too heavy, or the computer is too slow, you can increase the value of `iframe_delay`.
 
-But the best option is to use NodeJS mode [with PhantomJS enabled](#phantomjs-advantage). In this mode, PhantomJS pre-measures the height of each iframe, eliminating the necessity of iframe delay. Note that in that mode iframe heights aren't remeasured on window resize. Offset height for such iframes is measured only once, when PhantomJS renders it within virtual "window" (size of which defaults to 1280×800, and can be overriden with `phantomjs_viewport` option for [showcaseFile() method](#showcasefile-method-options)).
+But the best option is to use NodeJS mode [with PhantomJS enabled](#phantomjs-advantage). In this mode, PhantomJS pre-measures the height of each iframe, eliminating the necessity of additional iframe delay.
+
+For that purpose, PhantomJS renders it within virtual "window" (size of which defaults to 1280×800, and can be overriden with `phantomjs_viewport` option for [showcaseFile() method](#showcasefile-method-options)). 
+
+However, even these pre-measured iframe heights are also remeasured on window resize. 
 
 
 ### Why `@state :hover` doesn't work?

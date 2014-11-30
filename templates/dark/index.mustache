@@ -9,7 +9,6 @@
 
 {{{content}}}
 
-{{^use_phantomjs}}
 <script>
 
     function styledoc_resizeIframe(iframe) {
@@ -24,11 +23,13 @@
         }
     }
 
+{{#iframe_use_onload}}
     function styledoc_iframeOnload(iframe) {
         setTimeout(function () {
             styledoc_resizeIframe(iframe);
         }, {{iframe_delay}});
     }
+{{/iframe_use_onload}}
 
     setTimeout(function () {
         window.onresize = function () {
@@ -40,7 +41,6 @@
     }, {{iframe_delay}});
 
 </script>
-{{/use_phantomjs}}
 
 </body>
 </html>

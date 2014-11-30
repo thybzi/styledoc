@@ -137,10 +137,10 @@
      * @param {string} [options.language="en"] Language to apply when creating page
      * @param {string} [options.doctype="html5"] Target doctype
      * @param {string} [options.page_title=""] Main title of document (in HTTP mode, defaults to document.title)
-     * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
-     * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height (FS mode only)
-     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances (FS mode only)
-     * @param {boolean} [options.silent_mode=false] No console messages (FS mode only)
+     * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
+     * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
+     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {boolean} [options.silent_mode=false] Disable console messages (FS mode only)
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      * @returns {JQueryPromise<void>}
@@ -479,7 +479,7 @@
      * @param {string} [options.doctype="html5"] Target doctype
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
      * @param {string} [options.page_title=document.title] Main title of document
-     * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
+     * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      * @returns {JQueryPromise<void>}
@@ -588,10 +588,10 @@
      * @param {string} [options.doctype="html5"] Target doctype
      * @param {string} [options.page_title=""] Main title of document
      * @param {string} [options.output_dir="showcase/"] Path to showcase page directory (relative to current location)
-     * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
-     * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to preset iframes height
-     * @param {boolean} [options.silent_mode=false] No console messages
-     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances
+     * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
+     * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
+     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {boolean} [options.silent_mode=false] Disable console messages
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      * @returns {JQueryPromise<void>}

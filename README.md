@@ -22,6 +22,9 @@ button {
 } 
 ```
 
+Besides normal `/**` docblocks, StyleDoc also supports `/*!` docblock format, which [can be used in Stylus](http://learnboost.github.io/stylus/docs/comments.html#multi-line-buffered) CSS preprocessor.
+
+
 What does the tool do?
 ---------------
 StyleDoc tool **parses CSS file**, extracting styledoc-blocks (like the one above) and **creating showcase page** based on them.

@@ -19,7 +19,6 @@
  * @todo HTML markup modifiers completely denying auto-modifying?
  * @todo better console messages
  * @todo grunt module
- * @todo customizable ID (html anchor) giving scheme (e.g. #button vs .button)
  * @todo catch exceptions
  * @todo optimize code
  * @todo make examples/demos
@@ -67,7 +66,6 @@
 
     styledoc.server_mode = !window.document; // @todo revise?
     styledoc.templates_dir = undefined; // defined few lines below
-    styledoc.use_selector_based_ids = true; // use selector-based IDs for showcase items (instead of numbers)
     styledoc.states_modify_unique_attrs = true; // modify "id" and "for" attr values to preserve their uniqueness when generating states
     styledoc.states_html_glue = "\n"; // @todo showcaseFile option?
 
@@ -188,7 +186,9 @@
      * @returns {array}
      */
     styledoc.prepareShowcaseData = function (docs_data) {
-        var result = [];
+        var result = [],
+            used_section_anchors = [],
+            used_item_ids = [];
 
         var i,
             j,
@@ -271,6 +271,7 @@
                         break;
                 }
             }
+            item_data.anchor_name = getUniqueSectionAnchor(item_data.anchor_name);
 
             // Process states
             for (j = 0; j < doc.tags.length; j++) {
@@ -292,7 +293,7 @@
             if (item_data.base) {
 
                 // Create base showcase
-                id = styledoc.use_selector_based_ids ? selectorToId(item_data.base) : item_data.id + "_0";
+                id = getUniqueItemId(item_data.base);
                 item_data.subitems.push({
                     id: id,
                     anchor_name: ITEM_ANCHOR_PREFIX + id,
@@ -312,7 +313,7 @@
                         case "modifier":
                             parts = parseComplexContent(tag_content);
                             modifier = parts[0];
-                            id = styledoc.use_selector_based_ids ? selectorToId(item_data.base + modifier) : (item_data.id + "_" + (j + 1));
+                            id = getUniqueItemId(item_data.base + modifier);
                             item_data.subitems.push({
                                 id: id,
                                 anchor_name: ITEM_ANCHOR_PREFIX + id,
@@ -327,6 +328,47 @@
             }
 
             result.push(item_data);
+        }
+
+
+        /**
+         * Converts selector to ID and assures it is unique
+         * @param {string} selector
+         * @returns {string}
+         * @todo dry?
+         */
+        function getUniqueItemId(selector) {
+
+            var base_id = selectorToId(selector),
+                id = base_id,
+                numeric_suffix = 0;
+
+            while (used_item_ids.indexOf(id) !== -1) {
+                id = base_id + "_" + ++numeric_suffix;
+            }
+
+            used_item_ids.push(id);
+            return id;
+        }
+
+
+        /**
+         * Assures section anchor to be unique
+         * @param {string} anchor
+         * @returns {string}
+         * @todo dry?
+         */
+        function getUniqueSectionAnchor(anchor) {
+
+            var base_anchor = anchor,
+                numeric_suffix = 0;
+
+            while (used_section_anchors.indexOf(anchor) !== -1) {
+                anchor = base_anchor + "_" + ++numeric_suffix;
+            }
+
+            used_section_anchors.push(anchor);
+            return anchor;
         }
 
 
@@ -427,6 +469,8 @@
 
         // Modify "id" and "for" attribute values for any child elements (if enabled)
         if (modify_unique_attrs) {
+            // @todo assure real uniqueness
+            // @todo bad luck when base/modifier contain id selector (and possibly have elems with "for")
             var suffix = "_" + selectorToId(modifier);
             $.each([ "id", "for" ], function (i, attr_name) {
                 $("[" + attr_name + "]", $wrapper).each(function (j, elem) {
@@ -1189,6 +1233,7 @@
         var mask = /[^a-z0-9_-]/ig;
         return selector.replace(mask, "_");
     }
+
 
     // @todo improve naming and structure
     styledoc.getLoader = function () {

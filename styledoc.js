@@ -10,13 +10,11 @@
  * @requires mustache.js
  * Inspired with concept idea of https://github.com/Joony/styledoc/
  *
- * @todo separate template and skin?
+ * @todo cli usage
  * @todo revise list of supported tags
  * @todo more sophisticated applying of pseudo-class modifiers (instead of adding an attribute)?
  * @todo spaces in selectors (better than wrapping to {})
- * @todo something better than using htmlApplyModifierCustom
- * @todo @item, @item-state, @item-modifier?
- * @todo HTML markup modifiers completely denying auto-modifying?
+ * @todo enable multiple @example, applying to item last matching one
  * @todo better console messages
  * @todo grunt module
  * @todo catch exceptions

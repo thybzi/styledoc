@@ -15,7 +15,6 @@
  * @todo more sophisticated applying of pseudo-class modifiers (instead of adding an attribute)?
  * @todo spaces in selectors (better than wrapping to {})
  * @todo enable multiple @example, applying to item last matching one
- * @todo better console messages
  * @todo grunt module
  * @todo catch exceptions
  * @todo optimize code
@@ -144,12 +143,17 @@
     styledoc.showcaseFile = function (url, options) {
         var dfd = $.Deferred();
 
+        // Preprocess common options
         options = options || {};
         options.template = options.template || DEFAULT_TEMPLATE;
         options.language = options.language || DEFAULT_LANGUAGE;
         options.doctype = options.doctype || DEFAULT_DOCTYPE;
         options.iframe_delay = options.iframe_delay || DEFAULT_IFRAME_DELAY;
 
+        // Preprocess mode-specific options, display welcome message, etc.
+        options = styledoc.getShowcaseFileInit()(url, options);
+
+        // Load CSS file including all imports, prepare data and create showcase
         styledoc.loadFileRecursive(url).done(function (files_data) {
             var showcase_data = styledoc.prepareShowcaseData(styledoc.extractDocsData(files_data));
             var output = styledoc.getOutput();
@@ -502,6 +506,41 @@
     styledoc.htmlApplyModifierCustom = null; // @todo find a better way to modify example content?
 
 
+
+
+
+    /**
+     * Preprocess some options and display welcome message
+     * @param {string} css_url URL to CSS file (relative to current location)
+     * @param {object} options
+     * @param {string} [options.output_dir="showcase/"] Path to showcase page directory (relative to current location)
+     * @param {boolean} [options.silent_mode=false] Disable console messages
+     */
+    styledoc.showcaseFileInitFs = function (css_url, options) {
+        var silent_mode = options.silent_mode = !!options.silent_mode;
+        var output_dir = options.output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
+        output_dir = ensureTrailingSlash(output_dir);
+
+        if (!silent_mode) {
+            console.log(chalk.yellow("\nStyleDoc v" + MODULE_VERSION));
+            console.log("Source CSS file:  " + chalk.yellow(css_url));
+            console.log("Target directory: " + chalk.yellow(output_dir));
+            console.log("\nLoading source CSS...");
+        }
+
+        return options;
+    };
+
+    /**
+     * In future, may preprocess some options and display welcome message
+     * @param {string} css_url URL to CSS file (relative to current location)
+     * @param {object} options
+     */
+    styledoc.showcaseFileInitHttp = function (css_url, options) {
+        return options;
+    };
+
+
     /**
      * Create showcase page from data provided (HTTP/browser mode)
      * @param {object} showcase_data Showcase data to be output
@@ -632,6 +671,39 @@
     styledoc.outputFs = function (showcase_data, css_url, options) {
 
         var dfd = $.Deferred();
+        var silent_mode = options.silent_mode;
+
+
+        if (!silent_mode) {
+            console.log("Source CSS loaded");
+        }
+
+        // Counting subitems to display
+        var items_count = showcase_data.length,
+            subitems_count = 0,
+            previews_count = 0,
+            previews_dfd = $.Deferred(),
+            i,
+            j,
+            subitem_data,
+            file_name,
+            file_path,
+            file_path_relative,
+            preview_content;
+        for (i = 0; i < items_count; i++) {
+            subitems_count += showcase_data[i].subitems.length;
+        }
+
+        // If no subitems found, exiting immediately
+        if (!subitems_count) {
+            if (!silent_mode) {
+                console.log(chalk.red("\nNo showcase data found in CSS, exiting\n"));
+            }
+            dfd.resolve(); // or reject?
+            return dfd.promise();
+        }
+
+
 
         var page_title = options.page_title || "";
         var language = options.language;
@@ -643,11 +715,7 @@
         var use_phantomjs = use_phantomjs_requested && use_phantomjs_available;
         var phantomjs_viewport = options.phantomjs_viewport || { width: 1280, height: 800 }; // @todo more convinient way? (e.g. "1280x800")
 
-        var silent_mode = !!options.silent_mode;
-
-        var output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
-        output_dir = ensureTrailingSlash(output_dir);
-
+        var output_dir = options.output_dir;
         var preview_dir = output_dir + PREVIEW_DIR;
         var template_name = options.template;
         var template_dir = styledoc.templates_dir + template_name + "/";
@@ -663,6 +731,11 @@
         var preview_container_style = getPreviewContainerStyle(options);
         var background_color = options.background_color;
 
+
+        if (!silent_mode) {
+            console.log("\nLoading resources...");
+        }
+
         var loadFile = styledoc.getLoader().loadFile;
         // @todo optimize (something better than: force_fs = true)
         var load_index_template = loadFile(template_dir + "index.mustache", false, true);
@@ -674,14 +747,6 @@
         var copy_main_css = copy(template_dir + "main.css", output_dir + "main.css");
         var copy_preview_css = copy(template_dir + "preview.css", output_dir + "preview.css");
 
-
-        if (!silent_mode) {
-            console.log(chalk.yellow("\nStyleDoc v" + MODULE_VERSION));
-            console.log("Creating showcase in directory: " + output_dir);
-            console.log("\nLoading resources...");
-        }
-
-        // @todo fail?
         $.when(load_index_template, load_main_template, load_preview_template, load_lang, mkdirs, copy_main_css, copy_preview_css).done(
             function (index_template, main_template, preview_template, lang_data) {
 
@@ -820,7 +885,7 @@
                                 console.log("Index file created");
                                 console.log(chalk.green("\nAll done!\n"));
                             }
-                            dfd.resolve(); // @todo is it really needed?
+                            dfd.resolve();
                         }
                     );
                 });
@@ -1234,6 +1299,10 @@
 
 
     // @todo improve naming and structure
+    styledoc.getShowcaseFileInit = function () {
+        return styledoc.server_mode ? styledoc.showcaseFileInitFs : styledoc.showcaseFileInitHttp;
+    };
+
     styledoc.getLoader = function () {
         return styledoc.server_mode ? styledoc.loaderFs : styledoc.loaderHttp;
     };

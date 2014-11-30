@@ -356,7 +356,11 @@ However, *PhantomJS usage is just an option* giving you [some advantages](#phant
 If you succeeded in fixing that issue, you can re-run `npm install`, which will try to install `phantom` package again.
 
 ### Is there a grunt wrapper for npm module?
-*`@todo` make it*
+Yes, there is npm package `grunt-styledoc` that is usable for [Grunt](http://gruntjs.com/).
+```
+npm install grunt-styledoc
+```
+For configuration details and additional information, see project repo: https://github.com/thybzi/grunt-styledoc
 
 ### Can StyleDoc be used as AMD module?
 Yes, it is AMD-compatible.  

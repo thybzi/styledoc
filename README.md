@@ -304,6 +304,9 @@ Q & A
 ### Can I use StyleDoc with LESS, SASS, etc.?
 Yes, you can. The easiest way is just to compile it CSS, preserving CSS-style comments, and then apply StyleDoc to the resulting CSS file.
 
+### Why it is named StyleDoc? (not CSSDoc)
+For now, StyleDoc actually supports only CSS docblocks. But in future it should also support docblocks for such LESS/SASS/Stylus constructs as mixins, functions etc. So, the scope of StyleDoc is broader than just CSS.
+
 ### Does StyleDoc respect `@import` rules in CSS?
 Yes, it does. The tool recursively loads and parses all imported CSS-files (as well as imports in that imported files, and so on).
 

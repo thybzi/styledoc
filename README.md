@@ -388,7 +388,7 @@ Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beauti
 
 Version history
 ---------------
-* **0.0.3-1** *(2014-11-30)*: Provide $.Deferred interface for showcaseFile
+* **0.0.4** *(2014-11-30)*: Provide $.Deferred interface for showcaseFile
 * **0.0.3** *(2014-11-30)*:
   * Optional dependency for `phantom`;
   * Support for `/*!` Stylus persistent ("buffered") comments;

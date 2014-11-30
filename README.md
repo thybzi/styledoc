@@ -396,6 +396,12 @@ Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beauti
 
 Version history
 ---------------
+* **0.0.5** *(2014-12-01)*:
+  * Assure uniqueness of anchors and IDs on showcase page;
+  * Better UX when generating showcase in NodeJS mode;
+  * PhantomJS pre-measured iframes are also resized on window resize;
+  * Eliminated presentation and example markup difference (`@presentation` tag is now just an alias of `@example`);
+  * Minor improvements and bugfixes
 * **0.0.4** *(2014-11-30)*: Provide $.Deferred interface for showcaseFile    
   *Same as **0.0.3-1***
 * **0.0.3** *(2014-11-30)*:

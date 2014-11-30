@@ -143,8 +143,11 @@
      * @param {boolean} [options.silent_mode=false] No console messages (FS mode only)
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
+     * @returns {JQueryPromise<void>}
      */
     styledoc.showcaseFile = function (url, options) {
+        var dfd = $.Deferred();
+
         options = options || {};
         options.template = options.template || DEFAULT_TEMPLATE;
         options.language = options.language || DEFAULT_LANGUAGE;
@@ -154,8 +157,16 @@
         styledoc.loadFileRecursive(url).done(function (files_data) {
             var showcase_data = styledoc.prepareShowcaseData(styledoc.extractDocsData(files_data));
             var output = styledoc.getOutput();
-            output(showcase_data, url, options);
+            output(showcase_data, url, options).done(function () {
+                dfd.resolve();
+            }).fail(function (e) {
+                dfd.reject(e)
+            });
+        }).fail(function (e) {
+            dfd.reject(e)
         });
+
+        return dfd.promise();
     };
 
     /**
@@ -471,6 +482,7 @@
      * @param {string} [options.iframe_delay=2000] Delay (ms) before refreshing iframe height
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
+     * @returns {JQueryPromise<void>}
      */
     styledoc.outputHttp = function (showcase_data, css_url, options) {
 
@@ -519,7 +531,9 @@
                 $container.append(main_content).trigger("complete");
                 dfd.resolve();
             }
-        );
+        ).fail(function (e) {
+            dfd.reject(e);
+        });
 
         /**
          * Remove all after the last slash in path
@@ -580,6 +594,7 @@
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for phantomjs instances
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
+     * @returns {JQueryPromise<void>}
      */
     styledoc.outputFs = function (showcase_data, css_url, options) {
 
@@ -778,7 +793,9 @@
                 });
 
             }
-        );
+        ).fail(function (e) {
+            dfd.reject(e);
+        });
 
         function mkdirp(path) {
             var dfd = $.Deferred();

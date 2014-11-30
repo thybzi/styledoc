@@ -115,8 +115,8 @@
         "pseudo":       false,  // (legacy) in this version, just an alias of @state
         "example":      true,   // HTML to use in both code snippet and live preview
         "markup":       true,   // (legacy) alias of @example
-        "presentation": true,   // overrides @example for HTML to use in live preview
-        "preview":      true,   // alias of @presentation
+        "presentation": true,   // (legacy) alias of @example
+        "preview":      true,   // (legacy) alias of @example
         "author":       false,  // author of code block (multiple instances allowed)
         "version":      false,  // version of code block
         "since":        false,  // code version element exists since
@@ -213,7 +213,6 @@
                 base: null,
                 base_description: null,
                 example: null,
-                presentation: null,
                 version: null,
                 author: [],
                 since: null,
@@ -252,12 +251,9 @@
                         break;
                     case "example":
                     case "markup":
-                        item_data.example = item_data.example || tag_content;
-                        item_data.presentation = item_data.presentation || tag_content;
-                        break;
                     case "presentation":
                     case "preview":
-                        item_data.presentation = tag_content;
+                        item_data.example = item_data.example || tag_content; // @todo multiple examples
                         break;
                     case "version":
                     case "since":
@@ -303,10 +299,8 @@
                     base: item_data.base,
                     modifier: null,
                     description: item_data.base_description || "",
-                    //example: styledoc.htmlApplyStates(item_data.example, item_data.base, item_data.states, false),
-                    example: styledoc.htmlApplyModifier(item_data.example, item_data.base, "", item_data.states, false),
-                    //presentation: styledoc.htmlApplyStates(item_data.presentation, item_data.base, item_data.states, true)
-                    presentation: styledoc.htmlApplyModifier(item_data.presentation, item_data.base, "", item_data.states, true)
+                    //example: styledoc.htmlApplyStates(item_data.example, item_data.base, item_data.states),
+                    example: styledoc.htmlApplyModifier(item_data.example, item_data.base, "", item_data.states)
                 });
 
                 // Process subitems
@@ -325,8 +319,7 @@
                                 base: item_data.base,
                                 modifier: modifier,
                                 description: parts[1],
-                                example: styledoc.htmlApplyModifier(item_data.example, item_data.base, modifier, item_data.states, false),
-                                presentation: styledoc.htmlApplyModifier(item_data.presentation, item_data.base, modifier, item_data.states, true)
+                                example: styledoc.htmlApplyModifier(item_data.example, item_data.base, modifier, item_data.states)
                             });
                             break;
                     }
@@ -366,15 +359,14 @@
      * @param {string} html Input HTML markup
      * @param {string} base CSS selector for base element
      * @param {array} states List containing CSS selectors for states
-     * @param {boolean} is_presentation Use presentation mode instead of HTML markup example mode
      * @returns {string}
      */
-    styledoc.htmlApplyStates = function (html, base, states, is_presentation) {
+    styledoc.htmlApplyStates = function (html, base, states) {
         if (isArray(states) && states.length) {
             var html_base = html,
                 result;
             for (var i = 0; i < states.length; i++) {
-                result = styledoc.htmlApplyModifier(html_base, base, states[i].state, undefined, is_presentation, styledoc.states_modify_unique_attrs);
+                result = styledoc.htmlApplyModifier(html_base, base, states[i].state, undefined, styledoc.states_modify_unique_attrs);
                 if (result) {
                     html += styledoc.states_html_glue + result;
                 }
@@ -390,11 +382,10 @@
      * @param {string} base CSS selector for base element
      * @param {string} modifier CSS selector to modify base element
      * @param {array} states List containing CSS selectors for states
-     * @param {boolean} is_presentation Use presentation mode instead of HTML markup example mode
      * @param {boolean} modify_unique_attrs Add suffix to any "id" or "for" attr value found within the code
      * @returns {string}
      */
-    styledoc.htmlApplyModifier = function (html, base, modifier, states, is_presentation, modify_unique_attrs) {
+    styledoc.htmlApplyModifier = function (html, base, modifier, states, modify_unique_attrs) {
         var $wrapper = $("<styledoc-wrapper>").append(html); // @todo hardcode tag name
         var $elem = $(base, $wrapper);
 
@@ -453,14 +444,14 @@
 
         // Post-process with custom modifier if exists
         if (typeof styledoc.htmlApplyModifierCustom === "function") {
-            var result = styledoc.htmlApplyModifierCustom(html, base, modifier, is_presentation, $wrapper, $elem);
+            var result = styledoc.htmlApplyModifierCustom(html, base, modifier, $wrapper, $elem);
             if (typeof result === "string") {
                 html = result;
             }
         }
 
         // Apply states
-        html = styledoc.htmlApplyStates(html, base, states, is_presentation);
+        html = styledoc.htmlApplyStates(html, base, states);
 
 
         return html;
@@ -560,7 +551,7 @@
                         var $contents = $iframe.contents();
                         $contents.find("head").append('<link rel="stylesheet" href="' + css_url_preview + '">');
                         $contents.find("#styledoc-container") // @todo hardcode id
-                            .append(data.presentation)
+                            .append(data.example)
                             .attr("style", preview_container_style);
                         var resizer = function () {
                             resizeIframe($iframe);
@@ -684,7 +675,7 @@
                         preview_content = Mustache.render(preview_template, {
                             css_url: css_url_preview,
                             container_style: preview_container_style,
-                            content: subitem_data.presentation
+                            content: subitem_data.example
                         });
                         subitem_data.iframe_url = file_path_relative; // @todo use separate var without changing showcase_data?
                         (function (file_path, preview_content, subitem_data) {

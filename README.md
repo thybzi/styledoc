@@ -202,14 +202,10 @@ Supported tags list
   Just like common modifiers, can only represent CSS modification applicable with HTML attributes.
 * **@example**: HTML code representing the usage of element    
   *Example:* `@example <button>Sample text</button>`    
-  *Alias:* `@markup`    
+  *Aliases:* `@markup`, `@presentation`, `@preview`    
   Should contain HTML markup for CSS selector determined in `@base`.    
-  Gets altered by all modifiers and states documented, creating code for HTML markup example (and also for live preview, if not overridden by `@presentation`).    
+  Gets altered by all modifiers and states documented, creating code for HTML markup example and also live preview.    
   Can be multiline (relative indents are respected). Can begin from the next line after the tag.
-* **@presentation**: HTML code for the live preview of element (if it should differ from `@example` for some reason)    
-  *Alias:* `@preview`    
-  *Example:* `@presentation <div><button>Sample text</button></div>` 
-  Can be multiline (relative indents are respected). Can begin from the next line after the tag.    
 * **@author**: Name, email, etc. of the code block author    
   *Example:* `@author John Smith <jsmith@gmail.com>`    
   Multiple instances are allowed within the same section.

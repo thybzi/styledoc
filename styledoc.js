@@ -545,13 +545,13 @@
      * Create showcase page from data provided (HTTP/browser mode)
      * @param {object} showcase_data Showcase data to be output
      * @param {string} css_url URL to CSS file (relative to showcase page or absolute)
-     * @param {object|string} [options]
-     * @param {string} [options.template="default"] Name of showcase page template
-     * @param {string} [options.language="en"] Language to apply when creating page
-     * @param {string} [options.doctype="html5"] Target doctype
+     * @param {object} options Some options are already preprocessed in previous methods
+     * @param {string} options.template Name of showcase page template
+     * @param {string} options.language Language to apply when creating page
+     * @param {string} options.doctype Target doctype
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
      * @param {string} [options.page_title=document.title] Main title of document
-     * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
+     * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      * @returns {JQueryPromise<void>}
@@ -654,16 +654,16 @@
      * Create showcase page from data provided (Filesystem/NodeJS mode)
      * @param {object} showcase_data Showcase data to be output
      * @param {string} css_url URL to CSS file (relative to current location)
-     * @param {object} options
-     * @param {string} [options.template="default"] Name of showcase page template
-     * @param {string} [options.language="en"] Language to apply when creating page
-     * @param {string} [options.doctype="html5"] Target doctype
+     * @param {object} options Some options are already preprocessed in previous methods
+     * @param {string} options.template Name of showcase page template
+     * @param {string} options.language Language to apply when creating page
+     * @param {string} options.doctype Target doctype
      * @param {string} [options.page_title=""] Main title of document
-     * @param {string} [options.output_dir="showcase/"] Path to showcase page directory (relative to current location)
-     * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
+     * @param {string} options.output_dir= Path to showcase page directory (relative to current location)
+     * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
-     * @param {boolean} [options.silent_mode=false] Disable console messages
+     * @param {boolean} options.silent_mode Disable console messages
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
      * @returns {JQueryPromise<void>}

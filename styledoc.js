@@ -4,7 +4,7 @@
  *
  * @see https://github.com/thybzi/styledoc
  * @author Evgeni Dmitriev <thybzi@gmail.com>
- * @version 0.0.5
+ * @version 0.0.6
  * @requires jQuery 1.11.1+ or 2.1.1+,
  *     or jQuery 1.7.x+ with Sizzle tokenize() exposed: https://github.com/jquery/sizzle/issues/242
  * @requires mustache.js
@@ -43,7 +43,7 @@
 }(this, function (window, $, Mustache) {
     "use strict";
 
-    var MODULE_VERSION = "0.0.5";
+    var MODULE_VERSION = "0.0.6";
 
     var TEMPLATES_SUBDIR = "templates/";
     var LANGUAGE_SUBDIR = "language/";

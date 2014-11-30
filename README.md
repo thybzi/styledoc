@@ -396,6 +396,7 @@ Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beauti
 
 Version history
 ---------------
+* **0.0.6** *(2014-12-01)*: Hotfix for missing trailing slash when parsing output dir value
 * **0.0.5** *(2014-12-01)*:
   * Assure uniqueness of anchors and IDs on showcase page;
   * Better UX when generating showcase in NodeJS mode;

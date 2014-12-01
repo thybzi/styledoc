@@ -729,6 +729,7 @@
             css_url_preview = css_url;
         } else {
             css_url_preview = path.relative(realpath + preview_dir, realpath + css_url);
+            css_url_preview = css_url_preview.replace(/\\/g, "/"); // avoid backslashes on Windows
         }
 
         var preview_container_style = getPreviewContainerStyle(options);

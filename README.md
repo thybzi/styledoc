@@ -350,6 +350,9 @@ StyleDoc uses two npm modules that could cause problems on Windows.
 On Windows, there are some known problems when installing **JSDom**, which is **required** for NodeJS version of the tool. If you are lucky, following manuals could help (if not, you can still use StyleDoc in HTTP/browser way):  
 * http://www.steveworkman.com/node-js/2012/installing-jsdom-on-windows/
 * https://github.com/tmpvar/jsdom#contextify
+* if everything fails, good idea is to run `npm install styledoc` directly from MS Visual Studio (that worked on my Win7):
+    * http://stackoverflow.com/q/21069699/3027390
+    * http://stackoverflow.com/questions/21476588/where-is-developer-command-prompt-for-vs2013
 
 #### PhantomJS optional dependency
 On Windows, there is also [an issue](http://stackoverflow.com/questions/20628345/node-gyp-rebuild-failed-while-installing-weak-module-on-windows-7-for-phantomj) when installing `phantom` (NodeJS library which used to communicate with **PhantomJS**).

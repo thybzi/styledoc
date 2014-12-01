@@ -135,6 +135,7 @@
      * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {object} [options.phantomjs_noweak=false] Disable "weak" module usage for PhantomJS instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] Disable console messages (FS mode only)
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
@@ -663,6 +664,7 @@
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {object} [options.phantomjs_noweak=false] Disable "weak" module usage for PhantomJS instances (FS mode only)
      * @param {boolean} options.silent_mode Disable console messages
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
@@ -714,6 +716,7 @@
         var use_phantomjs_available = !!phantom;
         var use_phantomjs = use_phantomjs_requested && use_phantomjs_available;
         var phantomjs_viewport = options.phantomjs_viewport || { width: 1280, height: 800 }; // @todo more convinient way? (e.g. "1280x800")
+        var phantomjs_noweak = !!options.phantomjs_noweak;
 
         var output_dir = options.output_dir;
         var preview_dir = output_dir + PREVIEW_DIR;
@@ -834,6 +837,11 @@
                                             });
 
                                         });
+                                    }, {
+                                        /** @see https://github.com/sgentle/phantomjs-node#use-it-in-windows */
+                                        dnodeOpts: {
+                                            weak: !phantomjs_noweak
+                                        }
                                     });
                                 }
                             );

@@ -282,6 +282,9 @@ styledoc.showcaseFile('css/mystyle.css', {
   *Default value:* `false`
 * **phantomjs_viewport**: (FS mode only) Viewport size for PhantomJS instances    
   *Default value:* `{ width: 1280, height: 800 }`
+* **phantomjs_noweak**: (FS mode only) Set to `true` if you expirience `Error: Cannot find module 'weak'` problem on Windows 
+  ([details](#weak-subdependency-in-phantomjs))    
+  *Default value:* `false`
 * **silent_mode**: (FS mode only) Disable console messages    
   *Default value:* `false`
 * **preview_padding**: Padding value(s) for preview container    
@@ -359,7 +362,13 @@ On Windows, there is also [an issue](http://stackoverflow.com/questions/20628345
 
 However, *PhantomJS usage is just an option* giving you [some advantages](#phantomjs-advantage), so this dependency is marked **optional**, and StyleDoc installation won't fail if `phantom` couldn't be installed. You'll also see a warning message when generating showcase with `use_phantomjs` option enabled and no `phantom` package installed.
 
-If you succeeded in fixing that issue, you can re-run `npm install`, which will try to install `phantom` package again.
+If you succeeded in fixing that issue, you can re-run `npm install styledoc`, which will try to install `phantom` package again.
+
+#### Weak subdependency in PhantomJS 
+Also, even with `phantom` successfully installed on Windows you can still expirience problems like `Error: Cannot find module 'weak'`.
+
+That can be solved by enabling `phantomjs_noweak` option for [showcaseFile() method](#showcasefile-method-options)). 
+More details follow here: https://github.com/sgentle/phantomjs-node#use-it-in-windows
 
 ### Is there a grunt wrapper for npm module?
 Yes, there is npm package `grunt-styledoc` that is usable for [Grunt](http://gruntjs.com/).

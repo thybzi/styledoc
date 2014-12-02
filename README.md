@@ -427,3 +427,35 @@ Version history
   * Minor improvements and bugfixes
 * **0.0.2** *(2014-11-28)*: Examples added; minor changes, improvements and bugfixes
 * **0.0.1** *(2014-11-27)*: Initial release
+
+TODO / Wishlist
+* [ ] Utility for cli usage
+* [ ] Wipe redundant underscores from item IDs (and option to disable this wiping)
+* [ ] Avoid circular imports
+* [ ] PhantomJS + Windows = wrong heights?
+* [ ] Option to disable adding states to presentation (and also to specified items)
+* [ ] Enable setting separate values of `preview_padding` for specified items
+* [ ] Option to add custom style (code/file) to presentation
+* [ ] Stick multiple docblocks together by using similar `@base`
+* [ ] Support for multiple `@example` blocks; for `@base` always use first example; for each modifier use first matching from other examples, or base example if none of them matches
+* [ ] Support for pattern tags used to describe nesting and siblings (`%` char defines `@base` selector position): 
+  * `@nested .wrapper %` 
+  * `@nested .parent > %`
+  * `@nested .parent > %.subclass`
+  * `@wrapper .wrapper` (= `@nested .wrapper > %`)
+  * `@parent .parent` (= `@nested .parent %`)
+  * `@sibling .afore ~ %`
+  * `@sibling .prev + %`
+  * `@siblingto .afore` (= `@sibling .afore ~ %`)
+  * `@nextto .prev` (= `@sibling .prev + %`)
+  * `@nested .over-wrapper .parent > %`
+  * `@sibling .afore ~ next + %.subclass`
+  * `@pattern .over-wrapper .afore + .parent > %[rel="license"]`
+* [ ] Safe and reliable way to distinct the boudaries of space-containing selectors (pattern of even base)
+* [ ] Some tags for media queries?
+* [ ] "As is" output for bypass-tags (`@author`, `@since`, `@licence` etc.)
+* [ ] Convert `@see .base.modifier` to correpondent anchor link
+* [ ] Enable processing non-CSS source files (with imports etc.)
+* [ ] Use LESS sourcemaps for additional info in presentation
+* [ ] StyleDoc syntax for mixins/functions
+* [ ] Tags wiki

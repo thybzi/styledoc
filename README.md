@@ -429,10 +429,12 @@ Version history
 * **0.0.1** *(2014-11-27)*: Initial release
 
 TODO / Wishlist
+---------------
 * [ ] Utility for cli usage
 * [ ] Wipe redundant underscores from item IDs (and option to disable this wiping)
 * [ ] Avoid circular imports
 * [ ] PhantomJS + Windows = wrong heights?
+* [ ] More examples (different levels of configuration)
 * [ ] Option to disable adding states to presentation (and also to specified items)
 * [ ] Enable setting separate values of `preview_padding` for specified items
 * [ ] Option to add custom style (code/file) to presentation

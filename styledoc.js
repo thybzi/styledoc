@@ -198,6 +198,7 @@
             parts,
             modifier,
             doc,
+            selector,
             id,
             item_data,
             tag_data,
@@ -296,12 +297,14 @@
             if (item_data.base) {
 
                 // Create base showcase
-                id = getUniqueItemId(item_data.base);
+                selector = item_data.base;
+                id = getUniqueItemId(selector);
                 item_data.subitems.push({
                     id: id,
                     anchor_name: ITEM_ANCHOR_PREFIX + id,
                     base: item_data.base,
                     modifier: null,
+                    selector: selector,
                     description: item_data.base_description || "",
                     //example: styledoc.htmlApplyStates(item_data.example, item_data.base, item_data.states),
                     example: styledoc.htmlApplyModifier(item_data.example, item_data.base, "", item_data.states)
@@ -316,12 +319,14 @@
                         case "modifier":
                             parts = parseComplexContent(tag_content);
                             modifier = parts[0];
-                            id = getUniqueItemId(item_data.base + modifier);
+                            selector = item_data.base + modifier;
+                            id = getUniqueItemId(selector);
                             item_data.subitems.push({
                                 id: id,
                                 anchor_name: ITEM_ANCHOR_PREFIX + id,
                                 base: item_data.base,
                                 modifier: modifier,
+                                selector: selector,
                                 description: parts[1],
                                 example: styledoc.htmlApplyModifier(item_data.example, item_data.base, modifier, item_data.states)
                             });

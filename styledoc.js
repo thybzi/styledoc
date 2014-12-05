@@ -63,6 +63,7 @@
 
     styledoc.server_mode = !window.document; // @todo revise?
     styledoc.templates_dir = undefined; // defined few lines below
+    styledoc.item_id_trim_underscores = true; // trim leading, heading and consecutive underscores in showcase item IDs
     styledoc.states_modify_unique_attrs = true; // modify "id" and "for" attr values to preserve their uniqueness when generating states
     styledoc.states_html_glue = "\n"; // @todo showcaseFile option?
 
@@ -1307,8 +1308,13 @@
      * @returns {string}
      */
     function selectorToId(selector) {
-        var mask = /[^a-z0-9_-]/ig;
-        return selector.replace(mask, "_");
+        var id = selector.replace(/[^a-z0-9_-]/ig, "_");
+
+        if (styledoc.item_id_trim_underscores) {
+            id = id.replace(/_{2,}/g, "_").replace(/^_/, "").replace(/_$/, "");
+        }
+
+        return id;
     }
 
 

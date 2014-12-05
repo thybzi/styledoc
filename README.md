@@ -431,7 +431,7 @@ Version history
 TODO / Wishlist
 ---------------
 * [ ] Utility for cli usage
-* [ ] Wipe redundant underscores from item IDs (and option to disable this wiping)
+* [x] Wipe redundant underscores from item IDs (and option to disable this wiping)
 * [ ] Avoid circular imports
 * [ ] PhantomJS + Windows = wrong heights?
 * [ ] More examples (different levels of configuration)

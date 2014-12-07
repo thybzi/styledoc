@@ -14,15 +14,12 @@
  * @todo revise list of supported tags
  * @todo more sophisticated applying of pseudo-class modifiers (instead of adding an attribute)?
  * @todo spaces in selectors (better than wrapping to {})
- * @todo enable multiple @example, applying to item last matching one
- * @todo grunt module
+ * @todo enable multiple @example, applying to item best matching one
+ * @todo parent and sibling selectors
  * @todo catch exceptions
  * @todo optimize code
- * @todo make examples/demos
+ * @todo make more examples/demos
  * @todo write more tests
- * @todo alternative for newly-modified jQuery Sizzle?
- * @todo get rid of heavy dependencies?
- * @todo actualize dependencies versions
  * @todo hide methods that seem to be private?
  */
 (function (root, factory) {

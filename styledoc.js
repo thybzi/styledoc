@@ -129,7 +129,7 @@
      * @param {string} [options.template="default"] Name of showcase page template
      * @param {string} [options.language="en"] Language to apply when creating page
      * @param {string} [options.doctype="html5"] Target doctype
-     * @param {string} [options.page_title=""] Main title of document (in HTTP mode, defaults to document.title)
+     * @param {string} [options.page_title=""] Main title of showcase page (in HTTP mode, defaults to document.title)
      * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
@@ -144,10 +144,11 @@
 
         // Preprocess common options
         options = options || {};
-        options.template = options.template || DEFAULT_TEMPLATE;
-        options.language = options.language || DEFAULT_LANGUAGE;
-        options.doctype = options.doctype || DEFAULT_DOCTYPE;
-        options.iframe_delay = options.iframe_delay || DEFAULT_IFRAME_DELAY;
+        options.page_title = options.page_title || styledoc.getDefaultPageTitle();
+        options.template = options.template || styledoc.getDefaultTemplate();
+        options.language = options.language || styledoc.getDefaultLanguage();
+        options.doctype = options.doctype || styledoc.getDefaultDoctype();
+        options.iframe_delay = options.iframe_delay || styledoc.getDefaultIframeDelay();
 
         // Preprocess mode-specific options, display welcome message, etc.
         options = styledoc.getShowcaseFileInit()(url, options);
@@ -522,7 +523,7 @@
      */
     styledoc.showcaseFileInitFs = function (css_url, options) {
         var silent_mode = options.silent_mode = !!options.silent_mode;
-        var output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
+        var output_dir = options.output_dir || styledoc.getDefaultOutputDir();
         options.output_dir = output_dir = ensureTrailingSlash(output_dir);
 
         if (!silent_mode) {
@@ -554,7 +555,7 @@
      * @param {string} options.language Language to apply when creating page
      * @param {string} options.doctype Target doctype
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
-     * @param {string} [options.page_title=document.title] Main title of document
+     * @param {string} options.page_title Main title of showcase page
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
@@ -565,7 +566,7 @@
         var dfd = $.Deferred();
 
         var $container = options.$container || $("body");
-        var page_title = options.page_title || document.title;
+        var page_title = options.page_title;
         var language = options.language;
         var doctype = options.doctype;
         var iframe_delay = options.iframe_delay;
@@ -662,7 +663,7 @@
      * @param {string} options.template Name of showcase page template
      * @param {string} options.language Language to apply when creating page
      * @param {string} options.doctype Target doctype
-     * @param {string} [options.page_title=""] Main title of document
+     * @param {string} options.page_title Main title of showcase page
      * @param {string} options.output_dir= Path to showcase page directory (relative to current location)
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
@@ -710,7 +711,7 @@
 
 
 
-        var page_title = options.page_title || "";
+        var page_title = options.page_title;
         var language = options.language;
         var doctype = options.doctype;
         var iframe_delay = options.iframe_delay;
@@ -1380,6 +1381,38 @@
 
     styledoc.getOutput = function () {
         return styledoc.server_mode ? styledoc.outputFs : styledoc.outputHttp;
+    };
+
+
+
+    /** @returns {string} */
+    styledoc.getDefaultLanguage = function () {
+        return DEFAULT_LANGUAGE;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultDoctype = function () {
+        return DEFAULT_DOCTYPE;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultTemplate = function () {
+        return DEFAULT_TEMPLATE;
+    };
+
+    /** @returns {number} */
+    styledoc.getDefaultIframeDelay = function () {
+        return DEFAULT_IFRAME_DELAY;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultOutputDir = function () {
+        return DEFAULT_OUTPUT_DIR;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultPageTitle = function () {
+        return styledoc.server_mode ? "" : document.title;
     };
 
 

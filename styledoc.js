@@ -51,6 +51,7 @@
     var DEFAULT_TEMPLATE = "default";
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
+    var DEFAULT_PHANTOMJS_VIEWPORT = "1280x800";
 
     var SECTION_ANCHOR_PREFIX = "section_";
     var ITEM_ANCHOR_PREFIX = "item_";
@@ -719,7 +720,7 @@
         var use_phantomjs_requested = !!options.use_phantomjs;
         var use_phantomjs_available = !!phantom;
         var use_phantomjs = use_phantomjs_requested && use_phantomjs_available;
-        var phantomjs_viewport = convertViewportValue(options.phantomjs_viewport || "1280x800");
+        var phantomjs_viewport = convertViewportValue(options.phantomjs_viewport || styledoc.getDefaultPhantomjsViewport());
         var phantomjs_noweak = !!options.phantomjs_noweak;
 
         var output_dir = options.output_dir;
@@ -1408,6 +1409,11 @@
     /** @returns {string} */
     styledoc.getDefaultOutputDir = function () {
         return DEFAULT_OUTPUT_DIR;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultPhantomjsViewport = function () {
+        return DEFAULT_PHANTOMJS_VIEWPORT;
     };
 
     /** @returns {string} */

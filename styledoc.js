@@ -132,7 +132,7 @@
      * @param {string} [options.page_title=""] Main title of document (in HTTP mode, defaults to document.title)
      * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
-     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
      * @param {object} [options.phantomjs_noweak=false] Disable "weak" module usage for PhantomJS instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] Disable console messages (FS mode only)
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
@@ -666,7 +666,7 @@
      * @param {string} options.output_dir= Path to showcase page directory (relative to current location)
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
-     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
      * @param {object} [options.phantomjs_noweak=false] Disable "weak" module usage for PhantomJS instances (FS mode only)
      * @param {boolean} options.silent_mode Disable console messages
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
@@ -718,7 +718,7 @@
         var use_phantomjs_requested = !!options.use_phantomjs;
         var use_phantomjs_available = !!phantom;
         var use_phantomjs = use_phantomjs_requested && use_phantomjs_available;
-        var phantomjs_viewport = options.phantomjs_viewport || { width: 1280, height: 800 }; // @todo more convinient way? (e.g. "1280x800")
+        var phantomjs_viewport = convertViewportValue(options.phantomjs_viewport || "1280x800");
         var phantomjs_noweak = !!options.phantomjs_noweak;
 
         var output_dir = options.output_dir;
@@ -906,6 +906,35 @@
         ).fail(function (e) {
             dfd.reject(e);
         });
+
+        /**
+         * Convert "WIDTHxHEIGHT" string input to { width: WIDTH, height: HEIGHT }
+         * Validate and normalize any object input
+         * Returns undefined for any bad (unconvertable) input
+         * @param {string|object} value
+         * @returns {{ width: {number}, height: {number} } | undefined}
+         */
+        function convertViewportValue(value) {
+            var mask = /^(\d+)x(\d+)$/,
+                matches;
+            if (isString(value) && mask.test(value)) {
+                matches = value.match(mask);
+                return {
+                    width: toInteger(matches[1]),
+                    height: toInteger(matches[2])
+                };
+            } else if (isRegularObject(value) &&
+                value.hasOwnProperty("width") && (value.width >= 1) &&
+                value.hasOwnProperty("height") && (value.height >= 1)
+            ) {
+                return {
+                    width: toInteger(value.width),
+                    height: toInteger(value.height)
+                };
+            } else {
+                return undefined;
+            }
+        }
 
         function mkdirp(path) {
             var dfd = $.Deferred();
@@ -1246,10 +1275,35 @@
 
     /**
      * @param value
+     * @returns {number}
+     */
+    function toInteger(value) {
+        return parseInt(value, 10);
+    }
+
+    /**
+     * @param value
+     * @returns {boolean}
+     */
+    function isString(value) {
+        return (typeof value === "string");
+    }
+
+    /**
+     * @param value
      * @returns {boolean}
      */
     function isArray(value) {
         return value && (value instanceof Array);
+    }
+
+    /**
+     * Is input value an object of {} kind
+     * @param value
+     * @returns {boolean}
+     */
+    function isRegularObject(value) {
+        return (typeof value === "object") && !!value && !isArray(value);
     }
 
     /**

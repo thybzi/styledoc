@@ -46,6 +46,7 @@
     var LANGUAGE_SUBDIR = "language/";
     var PREVIEW_DIR = "preview/";
 
+    var DEFAULT_PAGE_TITLE = "StyleDoc showcase";
     var DEFAULT_LANGUAGE = "en";
     var DEFAULT_DOCTYPE = "html5";
     var DEFAULT_TEMPLATE = "default";
@@ -130,7 +131,7 @@
      * @param {string} [options.template="default"] Name of showcase page template
      * @param {string} [options.language="en"] Language to apply when creating page
      * @param {string} [options.doctype="html5"] Target doctype
-     * @param {string} [options.page_title=""] Main title of showcase page (in HTTP mode, defaults to document.title)
+     * @param {string} [options.page_title="StyleDoc showcase"] Main title of showcase page (in HTTP mode document.title has priority)
      * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
@@ -1418,7 +1419,11 @@
 
     /** @returns {string} */
     styledoc.getDefaultPageTitle = function () {
-        return styledoc.server_mode ? "" : document.title;
+        if (!styledoc.server_mode && isString(document.title) && document.title.length) {
+            return document.title;
+        } else {
+            return DEFAULT_PAGE_TITLE;
+        }
     };
 
 

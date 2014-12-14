@@ -3,6 +3,8 @@
   "version": "0.0.6",
   "description": "Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.",
   "main": "styledoc.js",
+  "bin": "bin/styledoc",
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/thybzi/styledoc.git"
@@ -13,7 +15,8 @@
     "jquery": "^1.11.1 || ^2.1.1",
     "jsdom": "^1.3.1",
     "mustache": "^0.8.2",
-    "request": "^2.48.0"
+    "request": "^2.48.0",
+    "yargs": "^1.3.3"
   },
   "optionalDependencies": {
     "phantom": "^0.7.0"
@@ -36,6 +39,8 @@
     "showcase",
     "presentation",
     "generator",
+    "cli",
+    "command-line",
     "css",
     "less",
     "sass",

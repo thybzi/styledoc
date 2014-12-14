@@ -63,7 +63,7 @@ StyleDoc tool will create a showcase page based on such CSS file.
 It can be created in two ways:
 
 1. *[Browser way](#httpbrowser-way)* (HTTP)
-2. *[NodeJS way](#filesystemnodejs-way)* (filesystem)
+2. *[NodeJS way](#filesystemnodejs-way)* (filesystem), including [CLI usage](#cli-usage)
 
 
 
@@ -175,6 +175,37 @@ JSDom installation could be a bit tricky on Windows (see [corresponding section]
 If you are not enough lucky or patient, just use StyleDoc in HTTP/browser way.
 
 Note that there are also [some PhantomJS usage issues](#phantomjs-optional-dependency) on Windows, but they don't prevent installing or running StyleDoc in non-PhantomJS-mode.
+
+
+#### CLI usage
+*\@todo rewrite the section to describe CLI usage as primary way*
+
+StyleDoc can be used as command-line interface tool.
+
+If StyleDoc is installed globally (`npm install -g styledoc`), use:
+```
+styledoc input_file [options]
+```
+
+Otherwise, from `styledoc` directory, use:
+```
+./bin/styledoc input_file [options]
+```
+
+Where:
+* `input_file` is relative path or absolute URL to CSS file
+* `options` are one or more options as described in *[Configuration](#configuration)* section.    
+  (Note they are named is cli-manner, e.g. `preview_padding` becomes `--preview-padding` etc)
+  
+To get more info, use:
+```
+styledoc --help
+```
+
+Or, from `styledoc` directory, use:
+```
+./bin/styledoc input_file [options]
+```
 
  
 
@@ -430,7 +461,7 @@ Version history
 
 TODO / Wishlist
 ---------------
-* [ ] Utility for cli usage
+* [x] Utility for cli usage
 * [x] Wipe redundant underscores from item IDs (and option to disable this wiping)
 * [ ] Avoid circular imports
 * [ ] PhantomJS + Windows = wrong heights?

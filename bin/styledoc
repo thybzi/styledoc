@@ -1,0 +1,128 @@
+#! /usr/bin/env node
+
+var styledoc = require("../styledoc");
+
+// Describe available arguments and the ways of handling them
+var args_data = {
+    "output-dir": {
+        alias: "o",
+        string: true, _default: styledoc.getDefaultOutputDir(),
+        describe: "Output dir (relative to current dir)" },
+    "page-title": {
+        alias: "t",
+        string: true, _default: styledoc.getDefaultPageTitle(),
+        describe: "Showcase page title" },
+    "template": {
+        string: true, _default: styledoc.getDefaultTemplate(),
+        describe: "Template name" },
+    "language": {
+        string: true, _default: styledoc.getDefaultLanguage(),
+        describe: "Language name" },
+    "doctype": {
+        string: true, _default: styledoc.getDefaultDoctype(),
+        describe: "Target doctype" },
+    "iframe-delay": {
+        number: true, _default: styledoc.getDefaultIframeDelay(),
+        describe: "Delay (ms) to render and measure size for preview iframes" },
+    "use-phantomjs": {
+        alias: "p",
+        boolean: true,
+        describe: "Pre-measure iframes size with PhantomJS (minimizes preview delay)" },
+    "phantomjs-viewport": {
+        string: true, _parse: true, _default: styledoc.getDefaultPhantomjsViewport(),
+        describe: "PhantomJS rendering viewport size" },
+    "phantomjs-noweak": {
+        boolean: true,
+        describe: "Disable 'weak' module for PhantomJS (useful on some Windows systems)" },
+    "templates-dir": {
+        string: true, _default: "<module_dir>/templates/", _target: "module",
+        describe: "Templates dir (relative to current dir)" },
+    "preview-padding": {
+        string: true, _parse: true,
+        describe: "Padding value(s) for preview container (5 or \"[5,10]\" or \"[5,10,3]\" etc.)" },
+    "background-color": {
+        string: true,
+        describe: "Background color (CSS value) for both showcase page and previews" },
+    "silent-mode": {
+        alias: "s",
+        boolean: true,
+        describe: "Disable console logging while generating showcase" },
+    "☺": true // Mr.Smiley prevents ugly diffs
+};
+delete args_data["☺"]; // say goodbye to Mr.Smiley
+
+
+// Add module-side defaults to description (without making them cli tool defaults)
+for (var a in args_data) {
+    if (!args_data.hasOwnProperty(a)) {
+        continue;
+    }
+    if (args_data[a].hasOwnProperty("_default")) {
+        args_data[a].describe += " [default: " + JSON.stringify(args_data[a]._default) + "]";
+    }
+}
+
+// Prepare usage data
+var usage = "\nCLI tool for StyleDoc showcase generator (v" + styledoc.getModuleVersion() + ")" +
+    "\n\nUsage:\n  $0 input_file [options]" +
+    "\n\nInput_file:\n  Relative path or absolute URL to source CSS file";
+
+// Init yargs
+var argv = require("yargs")
+    .usage(usage)
+    .example("$0 my.css", "Basic usage")
+    .example("$0 path/to/my.css -o dir/for/showcase -t \"My styles\"", "Output dir and title")
+    .example("$0 my.css -p", "With PhantomJS")
+    .example("$0 my.css -p --phantomjs-viewport 800x600 --phantomjs-noweak", "Configure PhantomJS")
+    .example("$0 my.css --preview-padding \"[5,10]\" --background-color #eee", "Padding and background")
+    .demand(1, "Missing required 'input_file' argument")
+    .options(args_data)
+    .help("help", "Show this help screen")
+    .version(styledoc.getModuleVersion(), "version", "Show main module version")
+    .strict()
+    .check(function (argv) {
+        for (var a in args_data) {
+            if (!args_data.hasOwnProperty(a)) {
+                continue;
+            }
+            // Check whether string args really contain strings (not boolean e.g.)
+            if (args_data[a].string && argv.hasOwnProperty(a) && (typeof argv[a] !== "string")) {
+                return false;
+            }
+        }
+        return true;
+    })
+    .argv;
+
+
+
+// Process argument values
+var input_file = argv._[0],
+    options = {},
+    option_name,
+    option_value;
+for (a in args_data) {
+    if (!args_data.hasOwnProperty(a)) {
+        continue;
+    }
+    if (argv.hasOwnProperty(a)) {
+        option_name = a.replace("-", "_");
+        option_value = argv[a];
+
+        // Try to parse value for arguments that might contain complex values
+        if (args_data[a]._parse) {
+            try {
+                option_value = JSON.parse(option_value);
+            } catch (ex) {}
+        }
+
+        if (args_data[a]._target === "module") {
+            styledoc[option_name] = option_value; // set module global options immediately
+        } else {
+            options[option_name] = option_value;
+        }
+    }
+}
+
+// Generate showcase
+styledoc.showcaseFile(input_file, options);

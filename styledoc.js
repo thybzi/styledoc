@@ -10,7 +10,6 @@
  * @requires mustache.js
  * Inspired with concept idea of https://github.com/Joony/styledoc/
  *
- * @todo cli usage
  * @todo revise list of supported tags
  * @todo more sophisticated applying of pseudo-class modifiers (instead of adding an attribute)?
  * @todo spaces in selectors (better than wrapping to {})

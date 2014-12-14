@@ -529,7 +529,7 @@
         options.output_dir = output_dir = ensureTrailingSlash(output_dir);
 
         if (!silent_mode) {
-            console.log(chalk.yellow("\nStyleDoc v" + MODULE_VERSION));
+            console.log(chalk.yellow("\nStyleDoc v" + styledoc.getModuleVersion()));
             console.log("Source CSS file:  " + chalk.yellow(css_url));
             console.log("Target directory: " + chalk.yellow(output_dir));
             console.log("\nLoading source CSS...");
@@ -1386,6 +1386,10 @@
     };
 
 
+    /** @returns {string} */
+    styledoc.getModuleVersion = function () {
+        return MODULE_VERSION;
+    };
 
     /** @returns {string} */
     styledoc.getDefaultLanguage = function () {

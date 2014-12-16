@@ -320,7 +320,7 @@ footer {
     padding:15px;
   }
   
-  header ul {
+  header ul, header h2, header h2 ~ p {
     display:none;
   }
 }

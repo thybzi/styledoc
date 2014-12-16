@@ -261,7 +261,7 @@ Also, first text line (e.g. with no tags) is considered to be the **block title*
 All text lines going after the block title are considered to be **block description**.  
 Any text lines, that go after the first tag encountered, are ignored.
 
-*`@todo` revise the list, possible removing some strange tags (like `@version` and `@since`)*
+See StyleDoc tag index at http://usestyledoc.org/tags/
 
 
 Configuration
@@ -496,4 +496,4 @@ TODO / Wishlist
 * [ ] Enable processing non-CSS source files (with imports etc.)
 * [ ] Use LESS sourcemaps for additional info in presentation
 * [ ] StyleDoc syntax for mixins/functions
-* [ ] Tags wiki
+* [x] Tags wiki

@@ -4,25 +4,21 @@
  *
  * @see https://github.com/thybzi/styledoc
  * @author Evgeni Dmitriev <thybzi@gmail.com>
- * @version 0.0.6
+ * @version 0.0.7
  * @requires jQuery 1.11.1+ or 2.1.1+,
  *     or jQuery 1.7.x+ with Sizzle tokenize() exposed: https://github.com/jquery/sizzle/issues/242
  * @requires mustache.js
  * Inspired with concept idea of https://github.com/Joony/styledoc/
  *
- * @todo cli usage
  * @todo revise list of supported tags
  * @todo more sophisticated applying of pseudo-class modifiers (instead of adding an attribute)?
  * @todo spaces in selectors (better than wrapping to {})
- * @todo enable multiple @example, applying to item last matching one
- * @todo grunt module
+ * @todo enable multiple @example, applying to item best matching one
+ * @todo parent and sibling selectors
  * @todo catch exceptions
  * @todo optimize code
- * @todo make examples/demos
+ * @todo make more examples/demos
  * @todo write more tests
- * @todo alternative for newly-modified jQuery Sizzle?
- * @todo get rid of heavy dependencies?
- * @todo actualize dependencies versions
  * @todo hide methods that seem to be private?
  */
 (function (root, factory) {
@@ -43,17 +39,19 @@
 }(this, function (window, $, Mustache) {
     "use strict";
 
-    var MODULE_VERSION = "0.0.6";
+    var MODULE_VERSION = "0.0.7";
 
     var TEMPLATES_SUBDIR = "templates/";
     var LANGUAGE_SUBDIR = "language/";
     var PREVIEW_DIR = "preview/";
 
+    var DEFAULT_PAGE_TITLE = "StyleDoc showcase";
     var DEFAULT_LANGUAGE = "en";
     var DEFAULT_DOCTYPE = "html5";
     var DEFAULT_TEMPLATE = "default";
     var DEFAULT_IFRAME_DELAY = 2000;
     var DEFAULT_OUTPUT_DIR = "showcase/";
+    var DEFAULT_PHANTOMJS_VIEWPORT = "1280x800";
 
     var SECTION_ANCHOR_PREFIX = "section_";
     var ITEM_ANCHOR_PREFIX = "item_";
@@ -63,6 +61,7 @@
 
     styledoc.server_mode = !window.document; // @todo revise?
     styledoc.templates_dir = undefined; // defined few lines below
+    styledoc.item_id_trim_underscores = true; // trim leading, heading and consecutive underscores in showcase item IDs
     styledoc.states_modify_unique_attrs = true; // modify "id" and "for" attr values to preserve their uniqueness when generating states
     styledoc.states_html_glue = "\n"; // @todo showcaseFile option?
 
@@ -131,10 +130,11 @@
      * @param {string} [options.template="default"] Name of showcase page template
      * @param {string} [options.language="en"] Language to apply when creating page
      * @param {string} [options.doctype="html5"] Target doctype
-     * @param {string} [options.page_title=""] Main title of document (in HTTP mode, defaults to document.title)
+     * @param {string} [options.page_title="StyleDoc showcase"] Main title of showcase page (in HTTP mode document.title has priority)
      * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
-     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
+     * @param {object} [options.phantomjs_noweak=false] Disable "weak" module usage for PhantomJS instances (FS mode only)
      * @param {boolean} [options.silent_mode=false] Disable console messages (FS mode only)
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
@@ -145,10 +145,11 @@
 
         // Preprocess common options
         options = options || {};
-        options.template = options.template || DEFAULT_TEMPLATE;
-        options.language = options.language || DEFAULT_LANGUAGE;
-        options.doctype = options.doctype || DEFAULT_DOCTYPE;
-        options.iframe_delay = options.iframe_delay || DEFAULT_IFRAME_DELAY;
+        options.page_title = options.page_title || styledoc.getDefaultPageTitle();
+        options.template = options.template || styledoc.getDefaultTemplate();
+        options.language = options.language || styledoc.getDefaultLanguage();
+        options.doctype = options.doctype || styledoc.getDefaultDoctype();
+        options.iframe_delay = options.iframe_delay || styledoc.getDefaultIframeDelay();
 
         // Preprocess mode-specific options, display welcome message, etc.
         options = styledoc.getShowcaseFileInit()(url, options);
@@ -197,6 +198,7 @@
             parts,
             modifier,
             doc,
+            selector,
             id,
             item_data,
             tag_data,
@@ -295,12 +297,14 @@
             if (item_data.base) {
 
                 // Create base showcase
-                id = getUniqueItemId(item_data.base);
+                selector = item_data.base;
+                id = getUniqueItemId(selector);
                 item_data.subitems.push({
                     id: id,
                     anchor_name: ITEM_ANCHOR_PREFIX + id,
                     base: item_data.base,
                     modifier: null,
+                    selector: selector,
                     description: item_data.base_description || "",
                     //example: styledoc.htmlApplyStates(item_data.example, item_data.base, item_data.states),
                     example: styledoc.htmlApplyModifier(item_data.example, item_data.base, "", item_data.states)
@@ -315,12 +319,14 @@
                         case "modifier":
                             parts = parseComplexContent(tag_content);
                             modifier = parts[0];
-                            id = getUniqueItemId(item_data.base + modifier);
+                            selector = item_data.base + modifier;
+                            id = getUniqueItemId(selector);
                             item_data.subitems.push({
                                 id: id,
                                 anchor_name: ITEM_ANCHOR_PREFIX + id,
                                 base: item_data.base,
                                 modifier: modifier,
+                                selector: selector,
                                 description: parts[1],
                                 example: styledoc.htmlApplyModifier(item_data.example, item_data.base, modifier, item_data.states)
                             });
@@ -518,11 +524,11 @@
      */
     styledoc.showcaseFileInitFs = function (css_url, options) {
         var silent_mode = options.silent_mode = !!options.silent_mode;
-        var output_dir = options.output_dir || DEFAULT_OUTPUT_DIR;
+        var output_dir = options.output_dir || styledoc.getDefaultOutputDir();
         options.output_dir = output_dir = ensureTrailingSlash(output_dir);
 
         if (!silent_mode) {
-            console.log(chalk.yellow("\nStyleDoc v" + MODULE_VERSION));
+            console.log(chalk.yellow("\nStyleDoc v" + styledoc.getModuleVersion()));
             console.log("Source CSS file:  " + chalk.yellow(css_url));
             console.log("Target directory: " + chalk.yellow(output_dir));
             console.log("\nLoading source CSS...");
@@ -550,7 +556,7 @@
      * @param {string} options.language Language to apply when creating page
      * @param {string} options.doctype Target doctype
      * @param {string} [options.$container=$("body")] Root container for showcase in parent document
-     * @param {string} [options.page_title=document.title] Main title of document
+     * @param {string} options.page_title Main title of showcase page
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
@@ -561,7 +567,7 @@
         var dfd = $.Deferred();
 
         var $container = options.$container || $("body");
-        var page_title = options.page_title || document.title;
+        var page_title = options.page_title;
         var language = options.language;
         var doctype = options.doctype;
         var iframe_delay = options.iframe_delay;
@@ -658,11 +664,12 @@
      * @param {string} options.template Name of showcase page template
      * @param {string} options.language Language to apply when creating page
      * @param {string} options.doctype Target doctype
-     * @param {string} [options.page_title=""] Main title of document
+     * @param {string} options.page_title Main title of showcase page
      * @param {string} options.output_dir= Path to showcase page directory (relative to current location)
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
-     * @param {object} [options.phantomjs_viewport={ width: 1280, height: 800 }] Viewport size for PhantomJS instances (FS mode only)
+     * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
+     * @param {object} [options.phantomjs_noweak=false] Disable "weak" module usage for PhantomJS instances (FS mode only)
      * @param {boolean} options.silent_mode Disable console messages
      * @param {number|number[]} [options.preview_padding] Padding value(s) for preview container (4 or [4, 8], or [4, 0, 12, 8] etc.)
      * @param {string} [options.background_color] Background color CSS value for both main showcase page and preview iframe pages
@@ -705,7 +712,7 @@
 
 
 
-        var page_title = options.page_title || "";
+        var page_title = options.page_title;
         var language = options.language;
         var doctype = options.doctype;
         var iframe_delay = options.iframe_delay;
@@ -713,7 +720,8 @@
         var use_phantomjs_requested = !!options.use_phantomjs;
         var use_phantomjs_available = !!phantom;
         var use_phantomjs = use_phantomjs_requested && use_phantomjs_available;
-        var phantomjs_viewport = options.phantomjs_viewport || { width: 1280, height: 800 }; // @todo more convinient way? (e.g. "1280x800")
+        var phantomjs_viewport = convertViewportValue(options.phantomjs_viewport || styledoc.getDefaultPhantomjsViewport());
+        var phantomjs_noweak = !!options.phantomjs_noweak;
 
         var output_dir = options.output_dir;
         var preview_dir = output_dir + PREVIEW_DIR;
@@ -726,6 +734,7 @@
             css_url_preview = css_url;
         } else {
             css_url_preview = path.relative(realpath + preview_dir, realpath + css_url);
+            css_url_preview = css_url_preview.replace(/\\/g, "/"); // avoid backslashes on Windows
         }
 
         var preview_container_style = getPreviewContainerStyle(options);
@@ -834,6 +843,11 @@
                                             });
 
                                         });
+                                    }, {
+                                        /** @see https://github.com/sgentle/phantomjs-node#use-it-in-windows */
+                                        dnodeOpts: {
+                                            weak: !phantomjs_noweak
+                                        }
                                     });
                                 }
                             );
@@ -894,6 +908,35 @@
         ).fail(function (e) {
             dfd.reject(e);
         });
+
+        /**
+         * Convert "WIDTHxHEIGHT" string input to { width: WIDTH, height: HEIGHT }
+         * Validate and normalize any object input
+         * Returns undefined for any bad (unconvertable) input
+         * @param {string|object} value
+         * @returns {{ width: {number}, height: {number} } | undefined}
+         */
+        function convertViewportValue(value) {
+            var mask = /^(\d+)x(\d+)$/,
+                matches;
+            if (isString(value) && mask.test(value)) {
+                matches = value.match(mask);
+                return {
+                    width: toInteger(matches[1]),
+                    height: toInteger(matches[2])
+                };
+            } else if (isRegularObject(value) &&
+                value.hasOwnProperty("width") && (value.width >= 1) &&
+                value.hasOwnProperty("height") && (value.height >= 1)
+            ) {
+                return {
+                    width: toInteger(value.width),
+                    height: toInteger(value.height)
+                };
+            } else {
+                return undefined;
+            }
+        }
 
         function mkdirp(path) {
             var dfd = $.Deferred();
@@ -1234,10 +1277,35 @@
 
     /**
      * @param value
+     * @returns {number}
+     */
+    function toInteger(value) {
+        return parseInt(value, 10);
+    }
+
+    /**
+     * @param value
+     * @returns {boolean}
+     */
+    function isString(value) {
+        return (typeof value === "string");
+    }
+
+    /**
+     * @param value
      * @returns {boolean}
      */
     function isArray(value) {
         return value && (value instanceof Array);
+    }
+
+    /**
+     * Is input value an object of {} kind
+     * @param value
+     * @returns {boolean}
+     */
+    function isRegularObject(value) {
+        return (typeof value === "object") && !!value && !isArray(value);
     }
 
     /**
@@ -1293,8 +1361,13 @@
      * @returns {string}
      */
     function selectorToId(selector) {
-        var mask = /[^a-z0-9_-]/ig;
-        return selector.replace(mask, "_");
+        var id = selector.replace(/[^a-z0-9_-]/ig, "_");
+
+        if (styledoc.item_id_trim_underscores) {
+            id = id.replace(/_{2,}/g, "_").replace(/^_/, "").replace(/_$/, "");
+        }
+
+        return id;
     }
 
 
@@ -1309,6 +1382,51 @@
 
     styledoc.getOutput = function () {
         return styledoc.server_mode ? styledoc.outputFs : styledoc.outputHttp;
+    };
+
+
+    /** @returns {string} */
+    styledoc.getModuleVersion = function () {
+        return MODULE_VERSION;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultLanguage = function () {
+        return DEFAULT_LANGUAGE;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultDoctype = function () {
+        return DEFAULT_DOCTYPE;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultTemplate = function () {
+        return DEFAULT_TEMPLATE;
+    };
+
+    /** @returns {number} */
+    styledoc.getDefaultIframeDelay = function () {
+        return DEFAULT_IFRAME_DELAY;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultOutputDir = function () {
+        return DEFAULT_OUTPUT_DIR;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultPhantomjsViewport = function () {
+        return DEFAULT_PHANTOMJS_VIEWPORT;
+    };
+
+    /** @returns {string} */
+    styledoc.getDefaultPageTitle = function () {
+        if (!styledoc.server_mode && isString(document.title) && document.title.length) {
+            return document.title;
+        } else {
+            return DEFAULT_PAGE_TITLE;
+        }
     };
 
 

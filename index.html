@@ -1,39 +1,12 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>StyleDoc by thybzi</title>
+---
+title: StyleDoc home
+layout: default
+---
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>StyleDoc</h1>
-        <p>Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.</p>
+<h1><a id="top" class="anchor" href="#top" aria-hidden="true"><span class="octicon octicon-link"></span></a>StyleDoc: describe you styles</h1>
+<p>Format specification for JavaDoc-like comments in CSS, LESS, SASS etc.</p>
+<p>Inspired with concept idea of <a href="https://github.com/Joony/styledoc/">https://github.com/Joony/styledoc/</a></p>
 
-        <p class="view"><a href="https://github.com/thybzi/styledoc">View the Project on GitHub <small>thybzi/styledoc</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/thybzi/styledoc/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/thybzi/styledoc/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/thybzi/styledoc">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a id="styledoc-showcase-you-styles" class="anchor" href="#styledoc-showcase-you-styles" aria-hidden="true"><span class="octicon octicon-link"></span></a>StyleDoc: showcase you styles</h1>
-
-<p>Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.<br>
-Written on Javascript, available for both browser and NodeJS usage.<br>
-Inspired with concept idea of <a href="https://github.com/Joony/styledoc/">https://github.com/Joony/styledoc/</a></p>
 
 <h2>
 <a id="syntax-example" class="anchor" href="#syntax-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Syntax example</h2>
@@ -51,59 +24,39 @@ Inspired with concept idea of <a href="https://github.com/Joony/styledoc/">https
     <span class="pl-c">/* styles here */</span>
 } </pre></div>
 
-<h2>
-<a id="what-does-the-tool-do" class="anchor" href="#what-does-the-tool-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>What does the tool do?</h2>
-
-<p>StyleDoc tool <strong>parses CSS file</strong>, extracting styledoc-blocks (like the one above) and <strong>creating showcase page</strong> based on them.</p>
-
-<p>This page contains full list of documented elements and their variations, illustrated with live preview and markup example.</p>
-
-<h2>
-<a id="live-examples" class="anchor" href="#live-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live examples</h2>
-
+<h3><a id="further-reading" class="anchor" href="#further-reading" aria-hidden="true"><span class="octicon octicon-link"></span></a>Further reading</h3>
 <ul>
-<li>
-<strong>CSS source:</strong> <strong><a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/css/main.css">main.css</a></strong><br>
-Built from following LESS files:
-<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/button.less">button.less</a>,
-<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/checkbox.less">checkbox.less</a>,
-<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/__mixins.less">__mixins.less</a>,
-<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/__build.less">__build.less</a></li>
-<li>
-<strong>Showcase pages</strong> generated in different ways:<br>
-<strong><a href="http://thybzi.github.io/styledoc/examples/ex1/showcase/browser/">Browser</a></strong>
-(<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase/browser/index.html">source</a>),
-<strong><a href="http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs/">NodeJS</a></strong>
-(<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs.js">source</a>),
-<strong><a href="http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs_phantomjs/">NodeJS + PhantomJS</a></strong>
-(<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs_phantomjs.js">source</a>)</li>
+    <li><a href="/why/">Why use StyleDoc?</a></li>
+    <li><a href="/basics/">Format basics</a></li>
+    <li><a href="/tags/">Tags index</a></li>
 </ul>
 
+
+<h2><a id="documentor" class="anchor" href="#documentor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentor tool: showcase you styles</h2>
+<p>Parser and showcase generator is available for your StyleDoc'd files. Written on Javascript, available for both browser and NodeJS usage.</p>
+<p>StyleDoc tool <strong>parses CSS file</strong>, extracting styledoc-blocks (like the one above) and <strong>creating showcase page</strong> based on them. This page contains full list of documented elements and their variations, illustrated with live preview and markup example.</p>
+
+<h3><a id="live-examples" class="anchor" href="#live-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Live examples</h3>
+<ul>
+    <li>
+        <strong>CSS source:</strong> <strong><a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/css/main.css">main.css</a></strong><br>
+        Built from following LESS files:
+        <a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/button.less">button.less</a>,
+        <a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/checkbox.less">checkbox.less</a>,
+        <a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/__mixins.less">__mixins.less</a>,
+        <a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/less/__build.less">__build.less</a>
+    </li>
+    <li>
+        <strong>Showcase pages</strong> generated in different ways:<br>
+        <strong><a href="http://thybzi.github.io/styledoc/examples/ex1/showcase/browser/">Browser</a></strong>
+        (<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase/browser/index.html">source</a>),
+        <strong><a href="http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs/">NodeJS</a></strong>
+        (<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs.js">source</a>),
+        <strong><a href="http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs_phantomjs/">NodeJS + PhantomJS</a></strong>
+        (<a href="https://github.com/thybzi/styledoc/tree/master/examples/ex1/showcase_nodejs_phantomjs.js">source</a>)
+    </li>
+</ul>
 <p>All examples sources are available in <em><a href="https://github.com/thybzi/styledoc/tree/master/examples/">examples</a></em> directory of project repository.</p>
 
-
-<h2>
-<a id="more-info" class="anchor" href="#more-info" aria-hidden="true"><span class="octicon octicon-link"></span></a>More info</h2>
-
+<h3><a id="more-info" class="anchor" href="#more-info" aria-hidden="true"><span class="octicon octicon-link"></span></a>More info</h2>
 <p>For more details and source code, view the project on GitHub: <a href="https://github.com/thybzi/styledoc">https://github.com/thybzi/styledoc</a></p>
-
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/thybzi">thybzi</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-57178371-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
-  </body>
-</html>

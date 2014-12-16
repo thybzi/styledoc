@@ -1,0 +1,83 @@
+{% include page/top.html %}
+
+
+
+<h1>@{{ page.title }}</h1>
+
+
+<p><strong>Categories:</strong> {{ page.categories | join: ", " }}</p>
+<p>
+    <strong>Status:</strong>
+    {% include status/draw_any.html implemented=page.implemented draft=page.draft deprecated=page.deprecated %}
+</p>
+
+
+{% capture aliases %}{% for tag in site.posts %}{% if tag.alias_for == page.title %} | {% include tag/link.html tag=tag %}{% endif %}{% endfor %}{% endcapture %}
+{% assign aliases = aliases | strip_newline | remove_first: "|" | split: "|" %}
+{% if aliases.size > 0 %}
+    <p>
+        <strong>Aliases:</strong>
+        {{ aliases | join: ", " }}
+    </p>
+{% endif %}
+
+
+{% if page.alias_for %}
+    <p>
+        <strong>Alias for:</strong>
+        {% for tag in site.posts %}
+            {% if tag.title == page.alias_for %}
+                {% include tag/link.html tag=tag %}
+            {% endif %}
+        {% endfor %}
+    </p>
+{% endif %}
+
+
+{% if page.todo %}
+    {% for todo_item in page.todo %}
+        <p><strong>@todo:</strong> {{ todo_item }}</p>
+    {% endfor %}
+{% endif %}
+
+
+
+{{ content }}
+
+
+
+{% if page.examples %}
+    <h2>Examples</h2>
+    {% for example in page.examples %}
+        {% if example[1] %}
+            <p>{{ example[1] }}:</p>
+            <pre>{{ example[0] | escape }}</pre>
+        {% else %}
+            <pre>{{ example | escape }}</pre>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+{% capture related %}
+    {% for post in site.related_posts %}
+        {% for related_tag in post.tags %}
+            {% for page_tag in page.tags %}
+                {% if post.url != page.url and related_tag == page_tag %}
+                    <li>{% include tag/link.html tag=post %}</li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endcapture %}
+{% assign related_dry = related | strip_newlines | remove: " " %}
+{% if related_dry != "" %}
+    <h2>See also</h2>
+    <ul>
+        {{ related }}
+    </ul>
+{% endif %}
+
+
+
+{% include page/bottom.html %}

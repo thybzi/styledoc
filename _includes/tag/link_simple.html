@@ -1,0 +1,5 @@
+{% for tag in site.posts %}
+    {% if tag.title == include.name %}
+        {% include tag/link.html tag=tag %}
+    {% endif %}
+{% endfor %}

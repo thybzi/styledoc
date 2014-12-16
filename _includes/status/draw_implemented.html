@@ -1,0 +1,5 @@
+{% if include.implemented == true %}
+    {% include status/label/implemented.html %}
+{% elsif include.implemented == "partial" %}
+    {% include status/label/partial.html %}
+{% endif %}

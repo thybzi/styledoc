@@ -1,0 +1,6 @@
+{% if include.tag.url %}
+    <li>
+        {% include tag/link.html tag=include.tag %}
+        {% include status/draw_implemented.html implemented=include.tag.implemented %}
+    </li>
+{% endif %}

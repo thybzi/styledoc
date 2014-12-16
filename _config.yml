@@ -1,0 +1,10 @@
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "tag"
+
+permalink:  /tags/:title/
+lsi:        true

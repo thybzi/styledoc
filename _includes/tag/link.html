@@ -1,0 +1,3 @@
+{% if include.tag.deprecated %}<del title="This tag is deprecated">{% endif %}
+    <a href="{{ include.tag.url }}">@{{ include.tag.title }}</a>
+{% if include.tag.deprecated %}</del>{% endif %}

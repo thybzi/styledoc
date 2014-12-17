@@ -7,4 +7,3 @@ defaults:
       layout: "tag"
 
 permalink:  /tags/:title/
-lsi:        true

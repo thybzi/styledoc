@@ -61,13 +61,16 @@
 
 {% capture related %}
     {% for post in site.posts %}
+        {% capture related_item %}
         {% for related_tag in post.tags %}
             {% for page_tag in page.tags %}
                 {% if post.url != page.url and related_tag == page_tag %}
-                    <li>{% include tag/link.html tag=post %}</li>
+                    <li>{% include tag/link.html tag=post %}</li>|
                 {% endif %}
             {% endfor %}
         {% endfor %}
+        {% endcapture %}
+        {{ related_item | split: "|" | first }}
     {% endfor %}
 {% endcapture %}
 {% assign related_dry = related | strip_newlines | remove: " " %}

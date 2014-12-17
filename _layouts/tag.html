@@ -60,7 +60,7 @@
 
 
 {% capture related %}
-    {% for post in site.related_posts %}
+    {% for post in site.posts %}
         {% for related_tag in post.tags %}
             {% for page_tag in page.tags %}
                 {% if post.url != page.url and related_tag == page_tag %}

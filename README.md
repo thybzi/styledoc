@@ -1,4 +1,4 @@
-StyleDoc: showcase you styles
+StyleDoc: showcase your styles
 ==============
 Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.  
 Written on Javascript, available for both browser and NodeJS usage.  

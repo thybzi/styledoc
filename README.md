@@ -2,7 +2,9 @@ StyleDoc: showcase your styles
 ==============
 Parser and showcase generator for JavaDoc-like comments in CSS, LESS, SASS etc.  
 Written on Javascript, available for both browser and NodeJS usage.  
-Inspired with concept idea of https://github.com/Joony/styledoc/
+
+Implements StyleDoc draft standard: http://usestyledoc.org  
+(Previously inspired with concept idea of https://github.com/Joony/styledoc/)
 
 
 Syntax example
@@ -21,6 +23,8 @@ button {
     /* styles here */
 } 
 ```
+
+You can see the full list of StyleDoc standard tags here: http://usestyledoc.org/tags (some of listed tags and features aren't supported yet, but planned for future support).
 
 Besides normal `/**` docblocks, StyleDoc also supports `/*!` docblock format, which [can be used in Stylus](http://learnboost.github.io/stylus/docs/comments.html#multi-line-buffered) CSS preprocessor.
 

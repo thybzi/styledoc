@@ -5,4 +5,99 @@ layout: default
 
 <h1>{{ page.title }}</h1>
 
-@todo
+<h2>
+    A boring intro about code documenting in general…
+    <small>(<a href="#advantages">skip</a>)</small>
+</h2>
+
+<p>
+    In coding world, if you make a project that should be further maintained, you should document the code you write
+    within that project. Because if you don't, that code could be very difficult <strong>to understand, reuse, improve
+    or fix</strong> for your team-mate or even for yourself after a few months.
+</p>
+
+<p>
+    One good way of program code documenting is to provide <em>docblocks</em> in the beginning of the class, method,
+    etc. Such kind of docblocks describe what does the thing do, and how you can use it. That includes describing the
+    interface of the thing: accepted arguments and their types, returned value, code examples, etc.
+</p>
+
+<p>
+    One of the most popular documenting standards were created for Java, called
+    <a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html" target="_blank">Javadoc</a>.
+    The principles and syntax for this format (<code>/**</code>-based docblocks, <code>@</code>-named tags, etc.)
+    provided a base for similar standards for another languages, such as
+    <a href="http://www.phpdoc.org/" target="_blank">phpDocumentor</a> and
+    <a href="http://usejsdoc.org" target="_blank">JSDoc</a>. So, Javadoc documenting standard became (in some way)
+    cross-language, widely used and easily comprehensible.
+</p>
+
+<p>
+    Also, for the code that uses some popular documented standards (including mentioned Javadoc, phpDocumentor and
+    JSDoc), you can <strong>use automated documentation generators</strong>. For example, such generator tool can create
+    a bunch of nice-looking HTML files that describe your API, contain methods index and cross-links, acceptable
+    argument values, etc. These HTML files can be hosted on a web server and used by partners using your API or the
+    programmers developing it. Each time some docblocks are changed, these files are re-generated, providing actual
+    product information.
+</p>
+
+<p>…And finally, what's about StyleDoc?</p>
+
+
+<h2 id="advantages">Advantages provided by StyleDoc</h2>
+
+<p>
+    Programmers that use Javadoc, phpDocumentor or JSDoc get their code described in a simple, comprehensible way. They
+    also possess automated tools to generate human-readable documentation.
+</p>
+
+<p>StyleDoc provides similar experience for frontend coders that do CSS, LESS, SASS/SCSS or Stylus code.</p>
+
+<ul>
+    <li>A short and neat way to <strong>describe your CSS selectors</strong>, theirs usage variations and examples</li>
+    <li>{% include status/label/not_implemented.html %} A similar way to <strong>describe your mixins</strong></li>
+    <li><strong><a href="https://github.com/thybzi/styledoc">A documentor tool</a></strong> available for both
+        server-side (NodeJS) and client-side (browser) usage
+    </li>
+    <li>And this all comes in familiar <strong>Javadoc-flavoured syntax</strong></li>
+</ul>
+
+<p>
+    <strong>The tool generates a live demo</strong> based on selector variations and examples markup in your docblocks,
+    and <strong>applying real styles from your stylesheet</strong>.
+</p>
+<p>
+    Such kind of demo is useful for your mate developers, designers or managers: they all get an ability to see what you
+    already have in project styles (and what you have not), how that looks, which variations have, and how can be used.
+</p>
+<p>
+    For example the tool can create a live demo
+    <a href="http://thybzi.github.io/styledoc/examples/ex1/showcase/nodejs_phantomjs/" target="_blank">just
+        like this one</a>, basing on the following docblocks in your code .
+</p>
+<pre>
+/**
+ * Buttons
+ * @base button Normal button
+ * @modifier .bright Bright variation of button
+ * @modifier .large Large-sized button
+ * @modifier .large.bright Large-sized bright button
+ * @state :disabled Unpressable button
+ * @example &lt;button&gt;Button text&lt;/button&gt;
+ */
+<em>...your buttons styles follow...</em>
+
+/**
+ * Checkboxes
+ * Using label::before to apply custom box style
+ * @base input[type="checkbox"] Normal checkbox
+ * @modifier .large Large-sized checkbox
+ * @state :checked Pre-checked checkbox
+ * @state :disabled Unchangeble checkbox
+ * @state :disabled:checked Unchangeble pre-checked checkbox
+ * @example
+ *     &lt;input type="checkbox" id="unique_id"&gt;
+ *     &lt;label for="unique_id"&gt;Checkbox label&lt;/label&gt;
+ */
+<em>...your checkboxes styles follow...</em>
+</pre>

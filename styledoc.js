@@ -26,7 +26,7 @@
     if ((typeof define === "function") && define.amd) {
         // AMD
         define(["jquery", "mustache"], function ($, Mustache) {
-            factory(root, $, Mustache);
+            return factory(root, $, Mustache);
         });
     } else if ((typeof module !== "undefined") && module.exports) {
         // Node, CommonJS-like

@@ -445,6 +445,10 @@ Hope that during the way from 0.0.1 to 1.0.0 it will become more neat and beauti
 
 Version history
 ---------------
+* **0.0.8** *(2015-05-12)*:
+  * Support for `css_url_http` option in FS mode to set CSS URL implicitly;
+  * AMD support fixed;
+  * Minor improvements and bugfixes
 * **0.0.7** *(2014-12-14)*:
   * CLI tool for more convinient usage;
   * PhantomJS usage improvements;

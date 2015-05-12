@@ -308,6 +308,8 @@ styledoc.showcaseFile('css/mystyle.css', {
 * **page_title**: Main title (`<h1>`) of showcase page    
   *Default value for HTTP mode:* `document.title`    
   *Default value for FS mode:* `''`
+* **css_url_http**: (FS mode only) HTTP(S) path to CSS file to use in preview (detected automatically by default)    
+  *Default value:* `undefined`
 * **iframe_delay**: Delay (ms) before refreshing iframe height    
   This delay is needed to render preview item iframe page, measure its height, and then apply this height to `<iframe>` element itself    
   Also sets delay before first window resize that resizes iframes

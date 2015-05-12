@@ -131,6 +131,7 @@
      * @param {string} [options.language="en"] Language to apply when creating page
      * @param {string} [options.doctype="html5"] Target doctype
      * @param {string} [options.page_title="StyleDoc showcase"] Main title of showcase page (in HTTP mode document.title has priority)
+     * @param {string} [options.css_url_http] HTTP(S) path to CSS file to use in preview (detected automatically by default) (FS mode only)
      * @param {number} [options.iframe_delay=2000] Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
@@ -666,6 +667,7 @@
      * @param {string} options.doctype Target doctype
      * @param {string} options.page_title Main title of showcase page
      * @param {string} options.output_dir Path to showcase page directory (relative to current location)
+     * @param {string} [options.css_url_http] HTTP(S) path to CSS file to use in preview (detected automatically by default) (FS mode only)
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)
@@ -730,7 +732,9 @@
 
         var realpath = ensureTrailingSlash(fs.realpathSync("./"));
         var css_url_preview;
-        if (isAbsolutePath(css_url)) {
+        if (isString(options.css_url_http)) {
+            css_url_preview = options.css_url_http;
+        } else if (isAbsolutePath(css_url)) {
             css_url_preview = css_url;
         } else {
             css_url_preview = path.relative(realpath + preview_dir, realpath + css_url);

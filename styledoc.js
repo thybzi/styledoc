@@ -161,10 +161,10 @@
             output(showcase_data, url, options).done(function () {
                 dfd.resolve();
             }).fail(function (e) {
-                dfd.reject(e)
+                dfd.reject(e);
             });
         }).fail(function (e) {
-            dfd.reject(e)
+            dfd.reject(e);
         });
 
         return dfd.promise();
@@ -665,7 +665,7 @@
      * @param {string} options.language Language to apply when creating page
      * @param {string} options.doctype Target doctype
      * @param {string} options.page_title Main title of showcase page
-     * @param {string} options.output_dir= Path to showcase page directory (relative to current location)
+     * @param {string} options.output_dir Path to showcase page directory (relative to current location)
      * @param {number} options.iframe_delay Delay (ms) before measuring iframe height
      * @param {boolean} [options.use_phantomjs=false] Use PhantomJS to pre-measure iframes height (FS mode only)
      * @param {string|object} [options.phantomjs_viewport="1280x800"] Viewport size for PhantomJS instances (FS mode only)

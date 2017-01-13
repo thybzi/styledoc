@@ -473,7 +473,7 @@
                         attr_name = ($elem.attr('class')) ? "class" : "";
                         attr_value = ($elem.attr('class')) ? $elem.attr('class') + item.matches[0] : "";
                         replace_class = ($elem.attr('class')) ? true : false;
-                        break:
+                        break;
                 }
                 if (attr_name === "class" && !replace_class) {
                     $elem.addClass(attr_value);

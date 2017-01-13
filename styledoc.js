@@ -446,11 +446,13 @@
             var parsed = $.find.tokenize(modifier).pop();
             var item,
                 attr_name,
-                attr_value;
+                attr_value,
+                replace_class;
             for (var i = 0; i < parsed.length; i++) {
                 item = parsed[i];
                 attr_name = null;
                 attr_value = "";
+                replace_class = false;
                 switch (item.type) {
                     case "ID":
                         attr_name = "id";
@@ -467,8 +469,13 @@
                     case "PSEUDO":
                         attr_name = item.matches[0];
                         break;
+                    case "TAG":
+                        attr_name = ($elem.attr('class')) ? "class" : "";
+                        attr_value = ($elem.attr('class')) ? $elem.attr('class') + item.matches[0] : "";
+                        replace_class = ($elem.attr('class')) ? true : false;
+                        break:
                 }
-                if (attr_name === "class") {
+                if (attr_name === "class" && !replace_class) {
                     $elem.addClass(attr_value);
                 } else if (attr_name) {
                     $elem.attr(attr_name, attr_value);
